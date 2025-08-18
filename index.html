@@ -226,10 +226,6 @@
         <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Yusuf Değerli</span>
       </h1>
 
-      <p class="text-xl sm:text-2xl text-slate-300 mb-8 anim-element delay-200">
-        Ben bir <span class="typed-text"></span>
-      </p>
-
       <div class="flex flex-wrap justify-center gap-4 mb-12 anim-element delay-300">
         <a href="#projects" class="btn-primary">
           Projelere Göz At
@@ -282,26 +278,94 @@
                loading="lazy" />
         </div>
 
-        <div><p class="text-lg text-slate-300 leading-relaxed mb-6 anim-element">
-            Merhaba! Ben Yusuf Değerli, İstanbul'da yaşayan tutkulu bir Flutter geliştiricisiyim. Clean Architecture, SOLID prensipleri ve performanslı Flutter uygulamaları geliştirmeye odaklanıyorum.
-          </p>
+<div class="space-y-6">
+  <!-- Intro -->
+  <p class="text-lg text-slate-300 leading-relaxed anim-element">
+    Merhaba! Ben <span class="font-semibold text-white">Yusuf Değerli</span>, İstanbul’da yaşayan tutkulu bir 
+    <span class="text-cyan-400">Flutter geliştiricisiyim</span>. 
+    <span class="font-semibold">Clean Architecture</span>, <span class="font-semibold">SOLID prensipleri</span> 
+    ve performanslı Flutter uygulamaları geliştirmeye odaklanıyorum.
+  </p>
 
-          <p class="text-lg text-slate-300 leading-relaxed mb-6 anim-element delay-100">
-            Mobil geliştirme serüvenime 5 yıl önce başladım ve Flutter'ın muhteşem ekosistemi ile harika uygulamalar yaratmaktan büyük keyif alıyorum. Kullanıcı deneyimini en üst seviyeye çıkarmak için UI/UX tasarım prensiplerini de yakından takip ediyorum.
-          </p>
+  <!-- Journey -->
+  <p class="text-lg text-slate-300 leading-relaxed anim-element delay-100">
+    Mobil geliştirme yolculuğuma 3 yıl önce başladım. Bu süreçte Flutter’ın güçlü ekosistemi sayesinde kullanıcı dostu 
+    ve yüksek performanslı uygulamalar geliştirdim. UI/UX tasarım prensiplerini yakından takip ederek her zaman 
+    kullanıcı deneyimini ön planda tuttum.
+  </p>
+
+  <!-- Projects / Skills Grid -->
+  <div class="grid md:grid-cols-2 gap-4 anim-element delay-200">
+    <!-- API -->
+    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
+      <i data-lucide="server" class="w-10 h-10 text-cyan-400"></i>
+      <p class="text-slate-300 text-base leading-relaxed">
+        <span class="font-semibold text-white">.NET 8 & EF Core</span> ile RESTful API geliştirme
+      </p>
+    </div>
+
+    <!-- Database -->
+    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
+      <i data-lucide="database" class="w-12 h-12 text-emerald-400"></i>
+      <p class="text-slate-300 text-base leading-relaxed">
+        <span class="font-semibold text-white">SQLite & SQL Server</span> üzerinde veri tabanı tasarımı
+      </p>
+    </div>
+
+    <!-- ASP.NET -->
+    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
+      <i data-lucide="file-cog" class="w-12 h-12 text-purple-400"></i>
+      <p class="text-slate-300 text-base leading-relaxed">
+        <span class="font-semibold text-white">ASP.NET Core</span> ile sipariş ve bilet yönetim sistemleri
+      </p>
+    </div>
+
+    <!-- WebSocket -->
+    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
+      <i data-lucide="wifi" class="w-12 h-12 text-pink-400"></i>
+      <p class="text-slate-300 text-base leading-relaxed">
+        <span class="font-semibold text-white">WebSocket entegrasyonu</span> ile gerçek zamanlı bildirimler
+      </p>
+    </div>
+
+    <!-- POS -->
+    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
+      <i data-lucide="credit-card" class="w-12 h-12 text-yellow-400"></i> 
+      <p class="text-slate-300 text-base leading-relaxed">
+        <span class="font-semibold text-white">POS benzeri ödeme ekranları</span> ve otomasyon çözümleri
+      </p>
+    </div>
+
+    <!-- Unity -->
+    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
+      <i data-lucide="gamepad-2" class="w-12 h-12 text-red-400"></i>
+      <p class="text-slate-300 text-base leading-relaxed">
+        <span class="font-semibold text-white">Unity</span>, gömülü yazılım ve veri bilimi alanlarında deneyim
+      </p>
+    </div>
+  </div>
+
+  <!-- Closing -->
+  <p class="text-lg text-slate-300 leading-relaxed anim-element delay-300">
+    Kısacası, yazılım geliştirmeye hem teknik altyapı hem de kullanıcı deneyimi açısından 
+    <span class="font-semibold text-white">bütünsel bir bakış açısıyla</span> yaklaşıyorum 🚀
+  </p>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+</script>
+
 
           <div class="grid grid-cols-2 gap-4 mb-8 anim-element delay-200">
             <div>
-              <h3 class="text-xl font-bold mb-2">5+</h3>
+              <h3 class="text-xl font-bold mb-2">3+</h3>
               <p class="text-slate-400">Yıl Deneyim</p>
             </div>
             <div>
-              <h3 class="text-xl font-bold mb-2">50+</h3>
+              <h3 class="text-xl font-bold mb-2">10+</h3>
               <p class="text-slate-400">Tamamlanan Proje</p>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold mb-2">20+</h3>
-              <p class="text-slate-400">Mutlu Müşteri</p>
             </div>
             <div>
               <h3 class="text-xl font-bold mb-2">10+</h3>
