@@ -1,12 +1,7 @@
-// Advanced Animation Effects
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize the 3D Carousel
   initCarousel();
-
-  // Initialize Magnetic Buttons
   initMagneticButtons();
 
-  // Initialize Split Text Animation
   initSplitText();
 
   // Initialize Portfolio Showcase Items

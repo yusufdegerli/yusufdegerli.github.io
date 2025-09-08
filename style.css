@@ -1,15 +1,16 @@
 /* Modern Portfolio Site Styles */
 :root {
-  --primary-color: #3B82F6; /* Blue 500 */
-  --primary-light: #60A5FA; /* Blue 400 */
-  --primary-dark: #2563EB; /* Blue 600 */
-  --bg-dark: #0F172A; /* Slate 900 */
-  --bg-card: #1E293B; /* Slate 800 */
-  --bg-lighter: #334155; /* Slate 700 */
-  --text-light: #F1F5F9; /* Slate 100 */
-  --text-muted: #94A3B8; /* Slate 400 */
-  --success: #10B981; /* Emerald 500 */
+  --primary-color: #8B5CF6;   /* Purple 500 */
+  --primary-light: #A78BFA;   /* Purple 400 */
+  --primary-dark: #6D28D9;    /* Purple 700 */
+  --bg-dark: #0F172A;         /* Slate 900 */
+  --bg-card: #1E1B4B;         /* Indigo 950-ish */
+  --bg-lighter: #312E81;      /* Indigo 800 */
+  --text-light: #F1F5F9;      /* Slate 100 */
+  --text-muted: #A5B4FC;      /* Indigo 300 */
+  --success: #F59E0B;         /* Amber 500 */
 }
+
 
 /* Genel Stiller */
 body {
