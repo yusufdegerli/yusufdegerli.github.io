@@ -83,13 +83,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener('mousemove', (e) => {
     gsap.to(cursorFollower, {
       x: e.clientX,
-      y: e.clientY,
+      y: e.clientY + window.scrollY, // Add scroll offset
       duration: 0.3
     });
     
     gsap.to(cursorDot, {
       x: e.clientX,
-      y: e.clientY,
+      y: e.clientY + window.scrollY, // Add scroll offset
       duration: 0.1
     });
   });
