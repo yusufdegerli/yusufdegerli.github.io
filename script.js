@@ -12,15 +12,83 @@ const languageConfig = {
     name: 'Türkçe'
   },
   en: {
-    flag: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAzMiAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjMDAyNDY2Ii8+CjxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjYiIHdpZHRoPSIzMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjEyIiB3aWR0aD0iMzIiIGhlaWdodD0iNiIgZmlsbD0iI0ZGRkZGRiIvPgo8cmVjdCB5PSIxOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjYiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkZGRkZGIi8+CjxzdiB4PSIwIiB5PSIwIiB3aWR0aD0iMTIiIGhlaWdodD0iMjQiIj4KPHN2ZyB4PSIxLjUiIHk9IjEuNSIgd2lkdGg9IjkiIGhlaWdodD0iMjEiPgo8cGF0aCBkPSJNMCAwTDkgMTEuNUwwIDIxVjBaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0wIDBMMSAxLjVMMCAzVjBaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDNMMSA0LjVMMCA2VjNaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDZMMSA3LjVMMCA5VjZaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDlMMSAxMC41TDAgMTJWOVoiIGZpbGw9IiMwMDI0NjYiLz4KPHN2ZyB4PSIwIiB5PSIxMiIgd2lkdGg9IjEiIGhlaWdodD0iOSI+CjxwYXRoIGQ9Ik0wIDBMMSAxLjVMMCAzVjBaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDNMMSA0LjVMMCA2VjNaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDZMMSA3LjVMMCA5VjZaIiBfiWxsPSIjMDAyNDY2Ii8+Cjwvc3ZnPgo8L3N2Zz4KPC9zdmc+Cjwvc3ZnPg==',
+    flag: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAzMiAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjMDAyNDY2Ii8+CjxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjYiIHdpZHRoPSIzMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjEyIiB3aWR0aD0iMzIiIGhlaWdodD0iNiIgZmlsbD0iI0ZGRkZGRiIvPgo8cmVjdCB5PSIxOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjYiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkZGRkZGIi8+CjxzdiB4PSIwIiB5PSIwIiB3aWR0aD0iMTIiIGhlaWdodD0iMjQiIj4KPHN2ZyB4PSIxLjUiIHk9IjEuNSIgd2lkdGg9IjkiIGhlaWdodD0iMjEiPgo8cGF0aCBkPSJNMCAwTDkgMTEuNUwwIDIxVjBaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0wIDBMMSAxLjVMMCAzVjBaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDNMMSA0LjVMMCA2VjNaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDZMMSA3LjVMMCA5VjZaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDlMMSAxMC41TDAgMTJWOVoiIGZpbGw9IiMwMDI0NjYiLz4KPHN2ZyB4PSIwIiB5PSIxMiIgd2lkdGg9IjEiIGhlaWdodD0iOSI+CjxwYXRoIGQ9Ik0wIDBMMSAxLjVMMCAzVjBaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDNMMSA0LjVMMCA2VjNaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDZMMSA3LjVMMCA5VjZaIiBmaWxsPSIjMDAyNDY2Ii8+Cjwvc3ZnPgo8L3N2Zz4KPC9zdmc+Cjwvc3ZnPg==',
     name: 'English'
   }
 };
 
 let currentLanguage = localStorage.getItem('language') || 'tr';
+let translations = {};
+
+// Load translations from JSON files
+async function loadTranslations() {
+  try {
+    const trResponse = await fetch('tr.json');
+    const enResponse = await fetch('en.json');
+    
+    translations.tr = await trResponse.json();
+    translations.en = await enResponse.json();
+    
+    console.log('Translations loaded successfully');
+  } catch (error) {
+    console.error('Error loading translations:', error);
+    // Fallback to hardcoded translations if JSON files fail
+    translations = {
+      tr: {
+        'nav.about': 'Hakkımda',
+        'nav.skills': 'Yetenekler',
+        'nav.projects': 'Projeler',
+        'nav.contact': 'İletişim',
+        'hero.title': 'Flutter Geliştirici & UI Tasarımcı',
+        'hero.greeting': 'Merhaba, Ben Yusuf',
+        'hero.view_projects': 'Projelere Göz At',
+        'hero.contact': 'İletişime Geç',
+        'hero.quick_contact': 'Hızlı İletişim',
+        'hero.call_me': 'Beni Ara',
+        'about.section_title': 'Hakkımda',
+        'about.title': 'Profesyonel bir',
+        'about.subtitle': 'Flutter Geliştiricisiyim',
+        'form.name': 'Adınız',
+        'form.phone': 'Telefon Numaranız',
+        'form.email': 'E-posta Adresiniz',
+        'form.message': 'Mesajınız',
+        'form.send': 'Gönder',
+        'language.turkish': 'Türkçe',
+        'language.english': 'English',
+        'theme.dark_light': 'Koyu/Açık Mod'
+      },
+      en: {
+        'nav.about': 'About',
+        'nav.skills': 'Skills',
+        'nav.projects': 'Projects',
+        'nav.contact': 'Contact',
+        'hero.title': 'Flutter Developer & UI Designer',
+        'hero.greeting': 'Hello, I\'m Yusuf',
+        'hero.view_projects': 'View Projects',
+        'hero.contact': 'Get In Touch',
+        'hero.quick_contact': 'Quick Contact',
+        'hero.call_me': 'Call Me',
+        'about.section_title': 'About',
+        'about.title': 'I am a professional',
+        'about.subtitle': 'Flutter Developer',
+        'form.name': 'Your Name',
+        'form.phone': 'Your Phone Number',
+        'form.email': 'Your Email',
+        'form.message': 'Your Message',
+        'form.send': 'Send',
+        'language.turkish': 'Türkçe',
+        'language.english': 'English',
+        'theme.dark_light': 'Dark/Light Mode'
+      }
+    };
+  }
+}
 
 // Sayfa yüklenme animasyonu
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // Load translations first
+  await loadTranslations();
+  
   // Initialize EmailJS
   if (window.emailjs) {
     emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -51,14 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Language System Functions
-async function initLanguage() {
-  await i18next.init({
-    lng: currentLanguage,
-    resources: {
-      tr: { translation: await (await fetch('tr.json')).json() },
-      en: { translation: await (await fetch('en.json')).json() }
-    }
-  });
+function initLanguage() {
   updateLanguage(currentLanguage);
 }
 
@@ -69,50 +130,62 @@ function toggleLanguage() {
 }
 
 function updateLanguage(lang) {
-  i18next.changeLanguage(lang, () => {
-    // Update flag images
-    const desktopFlag = document.getElementById('current-flag');
-    const mobileFlag = document.getElementById('current-flag-mobile');
-    const tooltipText = document.getElementById('language-tooltip-text');
-    const mobileLanguageText = document.getElementById('mobile-language-text');
-    
-    if (desktopFlag) {
-      desktopFlag.src = languageConfig[lang].flag;
-      desktopFlag.alt = languageConfig[lang].name;
-    }
-    
-    if (mobileFlag) {
-      mobileFlag.src = languageConfig[lang].flag;
-      mobileFlag.alt = languageConfig[lang].name;
-    }
-    
-    if (tooltipText) {
-      tooltipText.textContent = languageConfig[lang].name;
-    }
-    
-    if (mobileLanguageText) {
-      mobileLanguageText.textContent = i18next.t(`language.${lang}`);
-    }
+  // Update flag images
+  const desktopFlag = document.getElementById('current-flag');
+  const mobileFlag = document.getElementById('current-flag-mobile');
+  const tooltipText = document.getElementById('language-tooltip-text');
+  const mobileLanguageText = document.getElementById('mobile-language-text');
+  
+  if (desktopFlag) {
+    desktopFlag.src = languageConfig[lang].flag;
+    desktopFlag.alt = languageConfig[lang].name;
+  }
+  
+  if (mobileFlag) {
+    mobileFlag.src = languageConfig[lang].flag;
+    mobileFlag.alt = languageConfig[lang].name;
+  }
+  
+  if (tooltipText) {
+    tooltipText.textContent = languageConfig[lang].name;
+  }
+  
+  if (mobileLanguageText) {
+    mobileLanguageText.textContent = languageConfig[lang].name;
+  }
 
-    // Update all translatable elements
-    document.querySelectorAll('[data-translate]').forEach(element => {
-      const key = element.getAttribute('data-translate');
-      element.textContent = i18next.t(key);
-    });
-
-    // Update placeholder texts
-    document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
-      const key = element.getAttribute('data-translate-placeholder');
-      element.placeholder = i18next.t(key);
-    });
-
-    // Update HTML lang attribute
-    document.documentElement.lang = lang;
+  // Update all translatable elements
+  const elements = document.querySelectorAll('[data-translate]');
+  elements.forEach(element => {
+    const key = element.getAttribute('data-translate');
+    if (translations[lang] && translations[lang][key]) {
+      element.textContent = translations[lang][key];
+    }
   });
+
+  // Update placeholder texts
+  const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+  placeholderElements.forEach(element => {
+    const key = element.getAttribute('data-translate-placeholder');
+    if (translations[lang] && translations[lang][key]) {
+      element.placeholder = translations[lang][key];
+    }
+  });
+
+  // Update HTML lang attribute
+  document.documentElement.lang = lang;
+  
+  // Update page title
+  if (lang === 'tr') {
+    document.title = 'Yusuf Değerli | Flutter Geliştirici & UI/UX Tasarımcı';
+  } else {
+    document.title = 'Yusuf Değerli | Flutter Developer & UI/UX Designer';
+  }
 }
 
 // Initialize animations
 function initAnimations() {
+  // Intersections Observer ile bölüm animasyonları
   const sections = document.querySelectorAll("section");
   const options = {
     threshold: 0.1,
@@ -183,21 +256,21 @@ function submitContactForm(event) {
   let isValid = true;
 
   if (!nameInput.value.trim()) {
-    markInvalid(nameInput, i18next.t('form.name_error'));
+    markInvalid(nameInput, translations[currentLanguage]['form.name_error'] || 'İsim gerekli');
     isValid = false;
   } else {
     markValid(nameInput);
   }
 
   if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
-    markInvalid(emailInput, i18next.t('form.email_error'));
+    markInvalid(emailInput, translations[currentLanguage]['form.email_error'] || 'Geçerli bir e-posta giriniz');
     isValid = false;
   } else {
     markValid(emailInput);
   }
 
   if (!messageInput.value.trim()) {
-    markInvalid(messageInput, i18next.t('form.message_error'));
+    markInvalid(messageInput, translations[currentLanguage]['form.message_error'] || 'Mesaj gerekli');
     isValid = false;
   } else {
     markValid(messageInput);
@@ -205,7 +278,7 @@ function submitContactForm(event) {
 
   if (isValid) {
     submitButton.disabled = true;
-    submitButton.innerHTML = `<i class="ri-loader-4-line animate-spin mr-2"></i>${i18next.t('form.sending')}`;
+    submitButton.innerHTML = `<i class="ri-loader-4-line animate-spin mr-2"></i>${translations[currentLanguage]['form.sending'] || 'Gönderiliyor...'}`;
 
     if (window.emailjs) {
       const templateParams = {
@@ -220,21 +293,21 @@ function submitContactForm(event) {
           console.log('SUCCESS!', response.status, response.text);
           form.reset();
           submitButton.disabled = false;
-          submitButton.innerHTML = `${i18next.t('form.send')} <i class="ri-send-plane-fill ml-2"></i>`;
-          showMessage(i18next.t('form.success_message'), 'success');
+          submitButton.innerHTML = `${translations[currentLanguage]['form.send'] || 'Gönder'} <i class="ri-send-plane-fill ml-2"></i>`;
+          showMessage(translations[currentLanguage]['form.success_message'] || 'Mesajınız başarıyla gönderildi! Teşekkürler.', 'success');
         })
         .catch(function(error) {
           console.log('FAILED...', error);
           submitButton.disabled = false;
-          submitButton.innerHTML = `${i18next.t('form.send')} <i class="ri-send-plane-fill ml-2"></i>`;
-          showMessage(i18next.t('form.error_message'), 'error');
+          submitButton.innerHTML = `${translations[currentLanguage]['form.send'] || 'Gönder'} <i class="ri-send-plane-fill ml-2"></i>`;
+          showMessage(translations[currentLanguage]['form.error_message'] || 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.', 'error');
         });
     } else {
       setTimeout(() => {
         form.reset();
         submitButton.disabled = false;
-        submitButton.innerHTML = `${i18next.t('form.send')} <i class="ri-send-plane-fill ml-2"></i>`;
-        showMessage(i18next.t('form.emailjs_error'), 'error');
+        submitButton.innerHTML = `${translations[currentLanguage]['form.send'] || 'Gönder'} <i class="ri-send-plane-fill ml-2"></i>`;
+        showMessage(translations[currentLanguage]['form.emailjs_error'] || 'EmailJS yüklenemedi. Lütfen sayfayı yenileyin.', 'error');
       }, 1500);
     }
   }
@@ -305,7 +378,7 @@ function submitQuickContact(event) {
   const phone = formData.get('phone');
   
   if (!name.trim() || !phone.trim()) {
-    alert(i18next.t('form.quick_contact_error'));
+    alert(translations[currentLanguage]['form.quick_contact_error'] || 'Lütfen tüm alanları doldurun.');
     return;
   }
   
@@ -313,15 +386,15 @@ function submitQuickContact(event) {
   const originalText = button.innerHTML;
   
   button.disabled = true;
-  button.innerHTML = `<i class="ri-loader-4-line animate-spin mr-2"></i>${i18next.t('form.sending')}`;
+  button.innerHTML = `<i class="ri-loader-4-line animate-spin mr-2"></i>${translations[currentLanguage]['form.sending'] || 'Gönderiliyor...'}`;
   
   if (window.emailjs) {
     const templateParams = {
       from_name: name.trim(),
       from_phone: phone.trim(),
-      message: `${name} ${i18next.t('form.quick_contact_message')} ${phone}`,
+      message: `${name} adlı kişi hızlı iletişim formu ile sizi aramak istiyor. Telefon: ${phone}`,
       to_email: 'yusufdgrl72@gmail.com',
-      subject: i18next.t('form.quick_contact_subject')
+      subject: 'Hızlı İletişim Talebi'
     };
     
     emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
@@ -330,20 +403,20 @@ function submitQuickContact(event) {
         form.reset();
         button.disabled = false;
         button.innerHTML = originalText;
-        alert(i18next.t('form.quick_contact_success'));
+        alert(translations[currentLanguage]['form.quick_contact_success'] || 'Talebiniz alındı! En kısa sürede size dönüş yapacağım.');
       })
       .catch(function(error) {
         console.log('Quick contact FAILED...', error);
         button.disabled = false;
         button.innerHTML = originalText;
-        alert(i18next.t('form.quick_contact_error_message'));
+        alert(translations[currentLanguage]['form.quick_contact_error_message'] || 'Bir hata oluştu. Lütfen tekrar deneyin.');
       });
   } else {
     setTimeout(() => {
       form.reset();
       button.disabled = false;
       button.innerHTML = originalText;
-      alert(i18next.t('form.emailjs_error'));
+      alert(translations[currentLanguage]['form.emailjs_error'] || 'EmailJS yüklenemedi. Lütfen sayfayı yenileyin.');
     }, 1500);
   }
 }
