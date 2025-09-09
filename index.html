@@ -60,12 +60,12 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "url": "https://www.Yusufozer.com",
+      "url": "https://www.yusufdegerli.github.io",
       "name": "Yusuf Değerli | Flutter Geliştirici & UI/UX Tasarımcı",
       "description": "Flutter Geliştirici ve UI/UX Tasarımcı Portföy Sitesi",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://www.Yusufozer.com/search?q={search_term}",
+        "target": "https://www.yusufdegerli.github.io/search?q={search_term}",
         "query-input": "required name=search_term"
       }
     }
@@ -79,8 +79,8 @@
         {
           "@type": "SoftwareApplication",
           "position": 1,
-          "name": "ShopEase E-Commerce App",
-          "image": "https://cdn.dribbble.com/users/1138853/screenshots/15142314/media/3101ade3e8c20e36f713e9a4f57fa038.png",
+          "name": "Restaurant Order Program",
+          "image": "restaurant_app.png",
           "applicationCategory": "MobileApplication",
           "operatingSystem": "Android, iOS",
           "offers": {
@@ -92,8 +92,8 @@
         {
           "@type": "SoftwareApplication",
           "position": 2,
-          "name": "FitTrack Fitness App",
-          "image": "https://cdn.dribbble.com/users/2244431/screenshots/15465653/media/6d0d8d19cb73b44a3fd0a102bbeca404.png",
+          "name": "Card Game (Godot)",
+          "image": "card_game.png",
           "applicationCategory": "MobileApplication",
           "operatingSystem": "Android, iOS",
           "offers": {
@@ -105,8 +105,8 @@
         {
           "@type": "SoftwareApplication",
           "position": 3,
-          "name": "FinTech UI Kit",
-          "image": "https://cdn.dribbble.com/users/1615584/screenshots/16127919/media/9414c17cb211b60a1595e236bd85454d.jpg",
+          "name": "Taboo-Like Game",
+          "image": "taboo-like.png",
           "applicationCategory": "DesignApplication",
           "operatingSystem": "Android, iOS",
           "offers": {
@@ -144,6 +144,7 @@
 
   <!-- External Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans scroll-smooth">
   <!-- Loading Screen -->
@@ -156,7 +157,7 @@
     <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
       <div class="text-xl font-bold flex items-center">
         <img src="flutter_logo.png" alt="Logo" class="w-8 h-8 mr-2" />
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Yusuf Değerli</span>
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-500">Yusuf Değerli</span>
       </div>
 
       <!-- Desktop Menu -->
@@ -217,13 +218,13 @@
     <div class="hero-bg-circle2 absolute"></div>
 
     <div class="container mx-auto max-w-4xl relative z-10">
-      <div class="mb-6 inline-block p-2 bg-blue-600 bg-opacity-20 rounded-lg anim-element">
-        <span class="text-blue-400 font-medium">Flutter Geliştirici & UI Tasarımcı</span>
+      <div class="mb-6 inline-block p-2 bg-orange-500 bg-opacity-20 rounded-lg anim-element">
+        <span class="text-orange-400 font-medium">Flutter Geliştirici & UI Tasarımcı</span>
       </div>
 
       <h1 class="text-5xl sm:text-6xl font-bold mb-6 anim-element" data-parallax-element>
-        Merhaba, Ben
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Yusuf Değerli</span>
+        Merhaba, Ben Yusuf
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-500">Yusuf Değerli</span>
       </h1>
 
       <div class="flex flex-wrap justify-center gap-4 mb-12 anim-element delay-300">
@@ -231,7 +232,7 @@
           Projelere Göz At
           <i class="ri-arrow-right-line ml-2"></i>
         </a>
-        <a href="#contact" class="border border-slate-600 text-slate-300 hover:border-blue-400 hover:text-blue-400 py-2.5 px-5 rounded-md transition-all">
+        <a href="#contact" class="border border-slate-600 text-slate-300 hover:border-orange-400 hover:text-orange-400 py-2.5 px-5 rounded-md transition-all">
           İletişime Geç
         </a>
       </div>
@@ -239,19 +240,19 @@
       <!-- Quick Contact -->
       <div class="quick-contact mt-12 p-5 bg-slate-800 bg-opacity-50 backdrop-filter backdrop-blur-md rounded-xl max-w-md mx-auto anim-element delay-400">
         <h3 class="text-lg font-semibold mb-4">Hızlı İletişim</h3>
-        <form class="quick-contact-form">
+        <form class="quick-contact-form" onsubmit="submitQuickContact(event)">
           <div class="grid md:grid-cols-2 gap-4 mb-4">
-            <input type="text" placeholder="Adınız" class="form-input py-2 px-3 text-sm" required>
-            <input type="tel" placeholder="Telefon Numaranız" class="form-input py-2 px-3 text-sm" required>
+            <input type="text" name="name" placeholder="Adınız" class="form-input py-2 px-3 text-sm" required>
+            <input type="tel" name="phone" placeholder="Telefon Numaranız" class="form-input py-2 px-3 text-sm" required>
           </div>
-          <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition-all text-sm">
+          <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md transition-all text-sm">
             <i class="ri-phone-line mr-2"></i> Beni Ara
           </button>
         </form>
       </div>
 
       <div class="mt-16 animate-float">
-        <i class="ri-arrow-down-line text-3xl text-blue-400 animate-pulse"></i>
+        <i class="ri-arrow-down-line text-3xl text-orange-400 animate-pulse"></i>
       </div>
     </div>
 
@@ -265,11 +266,11 @@
   <section id="about" class="py-24 px-6">
     <div class="max-w-5xl mx-auto">
       <div class="text-center mb-16">
-        <span class="inline-block text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">Hakkımda</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Hakkımda</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Profesyonel bir <span class="text-blue-400">Flutter Geliştiricisiyim</span>
+          Profesyonel bir <span class="text-orange-400">Flutter Geliştiricisiyim</span>
         </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto"></div>
+        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
       </div>      <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="anim-element">
           <img src="unnamed.png"
@@ -385,11 +386,11 @@
     <div class="skill-bg-circle absolute"></div>
     <div class="max-w-5xl mx-auto relative z-10">
       <div class="text-center mb-16">
-        <span class="inline-block text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">Yeteneklerim</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Yeteneklerim</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Uzman Olduğum <span class="text-blue-400">Teknolojiler</span>
+          Uzman Olduğum <span class="text-orange-400">Teknolojiler</span>
         </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto"></div>
+        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
       </div>
 
       <div class="grid md:grid-cols-2 gap-12">
@@ -403,7 +404,7 @@
                 <span>95%</span>
               </div>
               <div class="w-full bg-slate-700 rounded-full h-2">
-                <div class="bg-blue-500 h-2 rounded-full skill-progress" style="width: 95%"></div>
+                <div class="bg-orange-500 h-2 rounded-full skill-progress" style="width: 95%"></div>
               </div>
             </div>
 
@@ -433,7 +434,7 @@
                 <span>75%</span>
               </div>
               <div class="w-full bg-slate-700 rounded-full h-2">
-                <div class="bg-blue-500 h-2 rounded-full skill-progress" style="width: 95%"></div>
+                <div class="bg-orange-500 h-2 rounded-full skill-progress" style="width: 95%"></div>
               </div>
             </div>
           </div>
@@ -481,11 +482,11 @@
     <div class="process-bg-circle absolute"></div>
     <div class="max-w-6xl mx-auto relative z-10">
       <div class="text-center mb-16">
-        <span class="inline-block text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">Çalışma Sürecim</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Çalışma Sürecim</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Nasıl <span class="text-blue-400">Çalışıyorum</span>
+          Nasıl <span class="text-orange-400">Çalışıyorum</span>
         </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto mb-8"></div>
+        <div class="w-16 h-1 bg-orange-500 mx-auto mb-8"></div>
         <p class="text-slate-300 max-w-2xl mx-auto">
           Her projeyi sistematik bir süreç içerisinde geliştiriyorum. Bu yaklaşım, kaliteli sonuçlar elde etmemi ve müşteri memnuniyetini en üst seviyede tutmamı sağlıyor.
         </p>
@@ -495,7 +496,7 @@
         <!-- Step 1 -->
         <div class="bg-slate-800 rounded-xl p-8 relative process-step">
           <div class="process-step-number">01</div>
-          <div class="text-blue-400 text-4xl mb-6">
+          <div class="text-orange-400 text-4xl mb-6">
             <i class="ri-discuss-line"></i>
           </div>
           <h3 class="text-xl font-bold mb-4">Görüşme & Analiz</h3>
@@ -507,7 +508,7 @@
         <!-- Step 2 -->
         <div class="bg-slate-800 rounded-xl p-8 relative process-step">
           <div class="process-step-number">02</div>
-          <div class="text-blue-400 text-4xl mb-6">
+          <div class="text-orange-400 text-4xl mb-6">
             <i class="ri-layout-masonry-line"></i>
           </div>
           <h3 class="text-xl font-bold mb-4">UI/UX Tasarımı</h3>
@@ -519,7 +520,7 @@
         <!-- Step 3 -->
         <div class="bg-slate-800 rounded-xl p-8 relative process-step">
           <div class="process-step-number">03</div>
-          <div class="text-blue-400 text-4xl mb-6">
+          <div class="text-orange-400 text-4xl mb-6">
             <i class="ri-code-box-line"></i>
           </div>
           <h3 class="text-xl font-bold mb-4">Geliştirme</h3>
@@ -531,7 +532,7 @@
         <!-- Step 4 -->
         <div class="bg-slate-800 rounded-xl p-8 relative process-step">
           <div class="process-step-number">04</div>
-          <div class="text-blue-400 text-4xl mb-6">
+          <div class="text-orange-400 text-4xl mb-6">
             <i class="ri-rocket-line"></i>
           </div>
           <h3 class="text-xl font-bold mb-4">Test & Yayınlama</h3>
@@ -548,11 +549,11 @@
     <div class="showcase-bg"></div>
     <div class="max-w-6xl mx-auto relative z-10">
       <div class="text-center mb-16">
-        <span class="inline-block text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">Göz Atın</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Göz Atın</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4 split-text">
           En İyi Çalışmalarım
         </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto mb-8"></div>
+        <div class="w-16 h-1 bg-orange-500 mx-auto mb-8"></div>
         <p class="text-slate-300 max-w-2xl mx-auto">
           En çok ses getiren ve kullanıcı deneyimi odaklı projelerim. Tam ekran görmek için projelere tıklayabilirsiniz.
         </p>
@@ -563,37 +564,37 @@
         <div class="carousel-wrapper">
           <!-- Carousel Item 1 -->
           <div class="carousel-item" data-index="0">
-            <img src="https://existek3-838c.kxcdn.com/wp-content/uploads/2021/10/8-1.webp" alt="FinTech App" />
+            <img src="restaurant_app.png" alt="Restaurant App" />
             <div class="carousel-item-content">
-              <h3>FinTech Mobile App</h3>
-              <p>Mobil finans uygulaması tasarımı ve geliştirmesi</p>
+              <h3>Restaurant Order Program </h3>
+              <p>Mobil sipariş uygulaması tasarımı ve geliştirmesi</p>
             </div>
           </div>
 
           <!-- Carousel Item 2 -->
           <div class="carousel-item" data-index="1">
-            <img src="https://cdn.sanity.io/images/ordgikwe/production/5435fc97b95cabed7ff9dfe38461a9eb32b8d69f-1600x1200.jpg?w=1600&h=1200&auto=format" alt="FitTrack App" />
+            <img src="taboo-like.png" alt="Taboo-Like Game" />
             <div class="carousel-item-content">
-              <h3>FitTrack Fitness App</h3>
-              <p>Fitness takip uygulaması UI/UX ve Flutter geliştirmesi</p>
+              <h3>Taboo-Like Game</h3>
+              <p>Kartlı oyun için geliştirdiğim UI kiti. Animasyon ve etkileşimli prototipler içerir.</p>
             </div>
           </div>
 
           <!-- Carousel Item 3 -->
           <div class="carousel-item" data-index="2">
-            <img src="https://cdn.dribbble.com/userupload/15546202/file/original-3bed56b46b35937331f458756b22e9d2.png" alt="E-Commerce App" />
+            <img src="card_game.png" alt="Card Game"/>
             <div class="carousel-item-content">
-              <h3>ShopEase E-Commerce</h3>
-              <p>Flutter ile geliştirilen tam kapsamlı e-ticaret uygulaması</p>
+              <h3>Card Game (Godot)</h3>
+              <p>Card Game (Godot) ile geliştirilen kart oyunu. Stratejik ve eğlenceli bir oyun.</p>
             </div>
           </div>
 
           <!-- Carousel Item 4 -->
           <div class="carousel-item" data-index="3">
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/dd31e3143341645.627922d860921.png" alt="Weather App" />
+            <img src="coffe_program.png" alt="Restaurant Order App" />
             <div class="carousel-item-content">
-              <h3>Weather Tracker App</h3>
-              <p>Hava durumu takip uygulaması</p>
+              <h3>Coffe Order Program (.NET)</h3>
+              <p>Restorant Sipariş programı</p>
             </div>
           </div>
         </div>
@@ -630,31 +631,31 @@
   <section id="projects" class="py-24 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16">
-        <span class="inline-block text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">Portföy</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Portföy</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Son <span class="text-blue-400">Projelerim</span>
+          Son <span class="text-orange-400">Projelerim</span>
         </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto"></div>
+        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
       </div>
 
       <!-- Project Filters -->
       <div class="flex flex-wrap justify-center gap-4 mb-12">
-        <button class="filter-btn active bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition"
+        <button class="filter-btn active bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition"
                 data-filter="all"
                 onclick="filterProjects('all')">
           Tümü
         </button>
-        <button class="filter-btn bg-slate-700 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition"
+        <button class="filter-btn bg-slate-700 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition"
                 data-filter="mobile"
                 onclick="filterProjects('mobile')">
           Mobil Uygulamalar
         </button>
-        <button class="filter-btn bg-slate-700 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition"
+        <button class="filter-btn bg-slate-700 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition"
                 data-filter="ui"
                 onclick="filterProjects('ui')">
           UI Tasarımlar
         </button>
-        <button class="filter-btn bg-slate-700 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition"
+        <button class="filter-btn bg-slate-700 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition"
                 data-filter="web"
                 onclick="filterProjects('web')">
           Web Projeleri
@@ -665,13 +666,13 @@
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Proje 1 -->
         <div class="project-card bg-slate-700 rounded-xl overflow-hidden shadow-lg" data-category="mobile">
-          <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/dd31e3143341645.627922d860921.png"
-               alt="E-Commerce App"
+          <img src="card_game.png"
+               alt="Card Game"
                class="project-img w-full">
           <div class="p-6">
             <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xl font-bold">ShopEase</h3>
-              <span class="bg-blue-500 text-xs text-white px-2 py-1 rounded-full">Mobil</span>
+              <h3 class="text-xl font-bold">Card Game</h3>
+              <span class="bg-orange-500 text-xs text-white px-2 py-1 rounded-full">Mobil</span>
             </div>
             <p class="text-slate-300 mb-6">Flutter ve Firebase kullanarak geliştirdiğim tam kapsamlı bir e-ticaret uygulaması. Kullanıcı dostu arayüz ve gelişmiş filtreleme özellikleri sunuyor.</p>
             <div class="flex flex-wrap gap-2 mb-6">
@@ -680,10 +681,10 @@
               <span class="text-xs bg-slate-600 px-2 py-1 rounded">Stripe</span>
             </div>
             <div class="flex gap-4">
-              <a href="https://github.com/username/shopease" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="https://github.com/username/shopease" target="_blank" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-github-fill text-lg"></i> Kod
               </a>
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-external-link-line text-lg"></i> Demo
               </a>
             </div>
@@ -692,15 +693,15 @@
 
         <!-- Proje 2 -->
         <div class="project-card bg-slate-700 rounded-xl overflow-hidden shadow-lg" data-category="mobile">
-          <img src="https://cdn.dribbble.com/users/2244431/screenshots/15465653/media/6d0d8d19cb73b44a3fd0a102bbeca404.png?compress=1&resize=800x600"
-               alt="Fitness App"
+          <img src="taboo-like.png"
+               alt="Taboo-Like Game"
                class="project-img w-full">
           <div class="p-6">
             <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xl font-bold">FitTrack</h3>
-              <span class="bg-blue-500 text-xs text-white px-2 py-1 rounded-full">Mobil</span>
+              <h3 class="text-xl font-bold">Taboo-Like Game</h3>
+              <span class="bg-orange-500 text-xs text-white px-2 py-1 rounded-full">Mobil</span>
             </div>
-            <p class="text-slate-300 mb-6">Egzersiz takibi ve beslenme planlaması için geliştirilmiş Flutter uygulaması. Clean Architecture ile geliştirdim.</p>
+            <p class="text-slate-300 mb-6">Kartlı oyun için geliştirdiğim UI kiti. Animasyon ve etkileşimli prototipler içerir.</p>
             <div class="flex flex-wrap gap-2 mb-6">
               <span class="text-xs bg-slate-600 px-2 py-1 rounded">Flutter</span>
               <span class="text-xs bg-slate-600 px-2 py-1 rounded">BLoC</span>
@@ -710,7 +711,7 @@
               <a href="https://github.com/username/fittrack" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
                 <i class="ri-github-fill text-lg"></i> Kod
               </a>
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-external-link-line text-lg"></i> Demo
               </a>
             </div>
@@ -734,10 +735,10 @@
               <span class="text-xs bg-slate-600 px-2 py-1 rounded">Prototype</span>
             </div>
             <div class="flex gap-4">
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-dribbble-fill text-lg"></i> Dribbble
               </a>
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-external-link-line text-lg"></i> Demo
               </a>
             </div>
@@ -764,7 +765,7 @@
               <a href="https://github.com/username/weather" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
                 <i class="ri-github-fill text-lg"></i> Kod
               </a>
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-external-link-line text-lg"></i> Demo
               </a>
             </div>
@@ -779,7 +780,7 @@
           <div class="p-6">
             <div class="flex justify-between items-start mb-4">
               <h3 class="text-xl font-bold">ChitChat</h3>
-              <span class="bg-blue-500 text-xs text-white px-2 py-1 rounded-full">Mobil</span>
+              <span class="bg-orange-500 text-xs text-white px-2 py-1 rounded-full">Mobil</span>
             </div>
             <p class="text-slate-300 mb-6">Gerçek zamanlı mesajlaşma uygulaması. Firebase kullanarak end-to-end şifreleme ile geliştirdim.</p>
             <div class="flex flex-wrap gap-2 mb-6">
@@ -791,7 +792,7 @@
               <a href="https://github.com/username/chitchat" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
                 <i class="ri-github-fill text-lg"></i> Kod
               </a>
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-google-play-fill text-lg"></i> Play Store
               </a>
             </div>
@@ -800,25 +801,25 @@
 
         <!-- Proje 6 -->
         <div class="project-card bg-slate-700 rounded-xl overflow-hidden shadow-lg" data-category="ui">
-          <img src="https://cdn.dribbble.com/users/1615584/screenshots/16127919/media/9414c17cb211b60a1595e236bd85454d.jpg?compress=1&resize=800x600"
+          <img src="taboo-like.png"
                alt="Mobile Banking"
                class="project-img w-full">
           <div class="p-6">
             <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xl font-bold">FinTech UI Kit</h3>
+              <h3 class="text-xl font-bold">Taboo-Like Game</h3>
               <span class="bg-purple-500 text-xs text-white px-2 py-1 rounded-full">UI Design</span>
             </div>
-            <p class="text-slate-300 mb-6">Finans uygulamaları için geliştirdiğim kapsamlı UI kiti. 100+ ekran ve çeşitli komponentler içerir.</p>
+            <p class="text-slate-300 mb-6">Kartlı oyun için geliştirdiğim UI kiti. Animasyon ve etkileşimli prototipler içerir.</p>
             <div class="flex flex-wrap gap-2 mb-6">
               <span class="text-xs bg-slate-600 px-2 py-1 rounded">Figma</span>
               <span class="text-xs bg-slate-600 px-2 py-1 rounded">Design System</span>
               <span class="text-xs bg-slate-600 px-2 py-1 rounded">Components</span>
             </div>
             <div class="flex gap-4">
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-behance-fill text-lg"></i> Behance
               </a>
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">
+              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
                 <i class="ri-shopping-cart-line text-lg"></i> Satın Al
               </a>
             </div>
@@ -838,11 +839,11 @@
   <section class="awards-section py-24 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16">
-        <span class="inline-block text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">Başarılar</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Başarılar</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4 split-text">
           Ödüller & Takdir
         </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto mb-8"></div>
+        <div class="w-16 h-1 bg-orange-500 mx-auto mb-8"></div>
         <p class="text-slate-300 max-w-2xl mx-auto">
           Aldığım ödüller ve başarılar, kaliteli iş yapma konusundaki taahhüdümü yansıtır.
         </p>
@@ -900,17 +901,17 @@
   <section class="py-24 px-6 bg-slate-800">
     <div class="max-w-5xl mx-auto">
       <div class="text-center mb-16">
-        <span class="inline-block text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">Referanslar</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Referanslar</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Müşteri <span class="text-blue-400">Yorumları</span>
+          Müşteri <span class="text-orange-400">Yorumları</span>
         </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto"></div>
+        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
       </div>
 
       <div class="grid md:grid-cols-2 gap-8">
         <!-- Testimonial 1 -->
         <div class="bg-slate-700 p-8 rounded-xl shadow-lg relative anim-element">
-          <div class="text-blue-400 text-5xl absolute -top-5 -left-2">"</div>          <p class="text-slate-300 mb-6 pt-4 relative z-10">
+          <div class="text-orange-400 text-5xl absolute -top-5 -left-2">"</div>          <p class="text-slate-300 mb-6 pt-4 relative z-10">
             Yusuf ile çalışmak harika bir deneyimdi. Tüm gereksinimlerimizi ve daha fazlasını karşılayan bir mobil uygulama geliştirdi. Özellikle kullanıcı arayüzü tasarımındaki yeteneği bizi çok etkiledi.
           </p>
           <div class="flex items-center">
@@ -924,7 +925,7 @@
 
         <!-- Testimonial 2 -->
         <div class="bg-slate-700 p-8 rounded-xl shadow-lg relative anim-element delay-200">
-          <div class="text-blue-400 text-5xl absolute -top-5 -left-2">"</div>          <p class="text-slate-300 mb-6 pt-4 relative z-10">
+          <div class="text-orange-400 text-5xl absolute -top-5 -left-2">"</div>          <p class="text-slate-300 mb-6 pt-4 relative z-10">
             Projemiz için Flutter kullanarak geliştirdiği uygulama, hem iOS hem de Android'de kusursuz çalışıyor. Yusuf'nın zamanında teslimat ve kaliteli kod yazma becerisi kesinlikle takdire şayan.
           </p>
           <div class="flex items-center">
@@ -943,11 +944,11 @@
   <section id="contact" class="py-24 px-6">
     <div class="max-w-5xl mx-auto">
       <div class="text-center mb-16">
-        <span class="inline-block text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">İletişim</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">İletişim</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Benimle <span class="text-blue-400">İletişime Geç</span>
+          Benimle <span class="text-orange-400">İletişime Geç</span>
         </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto"></div>
+        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
         <p class="text-slate-300 mt-6 max-w-xl mx-auto">
           Bir projeniz mi var? Hemen iletişime geçin ve nasıl yardımcı olabileceğimi konuşalım.
         </p>
@@ -965,7 +966,7 @@
             <div class="space-y-4">
               <div class="flex items-start">
                 <div class="bg-slate-700 p-3 rounded-lg mr-4">
-                  <i class="ri-map-pin-line text-blue-400 text-xl"></i>
+                  <i class="ri-map-pin-line text-orange-400 text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-medium mb-1">Konum</h4>
@@ -975,7 +976,7 @@
 
               <div class="flex items-start">
                 <div class="bg-slate-700 p-3 rounded-lg mr-4">
-                  <i class="ri-mail-line text-blue-400 text-xl"></i>
+                  <i class="ri-mail-line text-orange-400 text-xl"></i>
                 </div>                <div>
                   <h4 class="font-medium mb-1">Email</h4>
                   <p class="text-slate-400">yusufdgrl72@gmail.com</p>
@@ -1044,25 +1045,25 @@
         <div class="mb-4 md:mb-0">
           <nav>
             <ul class="flex space-x-6">
-              <li><a href="#about" class="hover:text-blue-400 transition-colors">Hakkımda</a></li>
-              <li><a href="#skills" class="hover:text-blue-400 transition-colors">Yetenekler</a></li>
-              <li><a href="#projects" class="hover:text-blue-400 transition-colors">Projeler</a></li>
-              <li><a href="#contact" class="hover:text-blue-400 transition-colors">İletişim</a></li>
+              <li><a href="#about" class="hover:text-orange-400 transition-colors">Hakkımda</a></li>
+              <li><a href="#skills" class="hover:text-orange-400 transition-colors">Yetenekler</a></li>
+              <li><a href="#projects" class="hover:text-orange-400 transition-colors">Projeler</a></li>
+              <li><a href="#contact" class="hover:text-orange-400 transition-colors">İletişim</a></li>
             </ul>
           </nav>
         </div>
       </div>      <div class="mt-6 pt-6 border-t border-slate-700">
         <p>© 2025 Yusuf Değerli - Tüm Hakları Saklıdır.</p>
         <p class="mt-2">
-          <a href="#" class="text-blue-400 hover:underline">Gizlilik Politikası</a> •
-          <a href="#" class="text-blue-400 hover:underline">Kullanım Şartları</a>
+          <a href="#" class="text-orange-400 hover:underline">Gizlilik Politikası</a> •
+          <a href="#" class="text-orange-400 hover:underline">Kullanım Şartları</a>
         </p>
       </div>
     </div>
   </footer>
 
   <!-- Back to Top Button -->
-  <a href="#" class="back-to-top fixed bottom-6 right-6 bg-blue-500 hover:bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0">
+  <a href="#" class="back-to-top fixed bottom-6 right-6 bg-orange-500 hover:bg-orange-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0">
     <i class="ri-arrow-up-line text-xl"></i>
   </a>
 
@@ -1075,7 +1076,7 @@
       <button class="text-slate-300 border border-slate-600 px-4 py-2 rounded hover:bg-slate-700 transition">
         Daha Fazla Bilgi
       </button>
-      <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" onclick="acceptCookies()">
+      <button class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition" onclick="acceptCookies()">
         Kabul Et
       </button>
     </div>

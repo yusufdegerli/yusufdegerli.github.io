@@ -1,11 +1,21 @@
 // Modern Portfolio JavaScript
 
+// EmailJS Configuration
+const EMAILJS_SERVICE_ID = 'service_9g35zqx'; // Bu değerleri EmailJS'den alacaksınız
+const EMAILJS_TEMPLATE_ID = 'template_8vb7g73'; // Bu değerleri EmailJS'den alacaksınız
+const EMAILJS_PUBLIC_KEY = 'ZuSt59qnLq6eXtV3z'; // Bu değerleri EmailJS'den alacaksınız
+
 // Sayfa yüklenme animasyonu
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize GSAP and ScrollTrigger
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
     initGSAPAnimations();
+  }
+
+  // Initialize EmailJS
+  if (window.emailjs) {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
   }
 
   // Initialize Locomotive Scroll for smooth scrolling if available
@@ -116,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     element.addEventListener('mouseenter', () => {
       gsap.to(cursorFollower, {
         scale: 1.5,
-        borderColor: 'rgba(59, 130, 246, 0.8)',
+        borderColor: 'rgba(255, 107, 53, 0.8)',
         duration: 0.3
       });
     });
@@ -124,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     element.addEventListener('mouseleave', () => {
       gsap.to(cursorFollower, {
         scale: 1,
-        borderColor: 'rgba(59, 130, 246, 0.4)',
+        borderColor: 'rgba(255, 107, 53, 0.4)',
         duration: 0.3
       });
     });
@@ -508,33 +518,47 @@ function submitContactForm(event) {
 
   if (isValid) {
     submitButton.disabled = true;
-    submitButton.innerText = 'Gönderiliyor...';
+    submitButton.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i>Gönderiliyor...';
 
-    // Simulate sending (In real project, use fetch API)
-    setTimeout(() => {
-      form.reset();
-      submitButton.disabled = false;
-      submitButton.innerText = 'Gönder';
+    // EmailJS ile mail gönderimi
+    if (window.emailjs) {
+      const templateParams = {
+        from_name: nameInput.value.trim(),
+        from_email: emailInput.value.trim(),
+        message: messageInput.value.trim(),
+        to_email: 'yusufdgrl72@gmail.com'
+      };
 
-      // Show success message
-      const successMsg = document.createElement('div');
-      successMsg.className = 'success-message bg-green-500 text-white p-4 rounded mt-4';
-      successMsg.innerText = 'Mesajınız başarıyla gönderildi!';
-      form.appendChild(successMsg);
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          
+          // Form'u temizle
+          form.reset();
+          submitButton.disabled = false;
+          submitButton.innerHTML = 'Gönder <i class="ri-send-plane-fill ml-2"></i>';
 
+          // Başarı mesajı göster
+          showMessage('Mesajınız başarıyla gönderildi! Teşekkürler.', 'success');
+        })
+        .catch(function(error) {
+          console.log('FAILED...', error);
+          
+          submitButton.disabled = false;
+          submitButton.innerHTML = 'Gönder <i class="ri-send-plane-fill ml-2"></i>';
+          
+          // Hata mesajı göster
+          showMessage('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+        });
+    } else {
+      // EmailJS yüklenmemişse fallback
       setTimeout(() => {
-        if (window.gsap) {
-          gsap.to(successMsg, {
-            opacity: 0,
-            y: -20,
-            duration: 0.5,
-            onComplete: () => successMsg.remove()
-          });
-        } else {
-          successMsg.remove();
-        }
-      }, 5000);
-    }, 1500);
+        form.reset();
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Gönder <i class="ri-send-plane-fill ml-2"></i>';
+        showMessage('EmailJS yüklenemedi. Lütfen sayfayı yenileyin.', 'error');
+      }, 1500);
+    }
   }
 }
 
@@ -542,6 +566,51 @@ function submitContactForm(event) {
 function isValidEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
+}
+
+// Show message function
+function showMessage(message, type = 'success') {
+  const form = document.getElementById('contact-form');
+  
+  // Remove existing messages
+  const existingMessage = form.querySelector('.form-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+  
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `form-message ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white p-4 rounded mt-4 transition-all duration-300`;
+  messageDiv.innerHTML = `
+    <div class="flex items-center">
+      <i class="ri-${type === 'success' ? 'check-line' : 'error-warning-line'} mr-2"></i>
+      <span>${message}</span>
+    </div>
+  `;
+  
+  form.appendChild(messageDiv);
+  
+  // Animate message
+  if (window.gsap) {
+    gsap.fromTo(messageDiv, 
+      { opacity: 0, y: -20 }, 
+      { opacity: 1, y: 0, duration: 0.3 }
+    );
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+      gsap.to(messageDiv, {
+        opacity: 0,
+        y: -20,
+        duration: 0.3,
+        onComplete: () => messageDiv.remove()
+      });
+    }, 5000);
+  } else {
+    // Fallback animation
+    setTimeout(() => {
+      messageDiv.remove();
+    }, 5000);
+  }
 }
 
 function markInvalid(input, message) {
@@ -583,3 +652,57 @@ function initTheme() {
 
 // Initialize theme on page load
 initTheme();
+
+// Quick contact form handler
+function submitQuickContact(event) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const formData = new FormData(form);
+  const name = formData.get('name');
+  const phone = formData.get('phone');
+  
+  if (!name.trim() || !phone.trim()) {
+    alert('Lütfen tüm alanları doldurun.');
+    return;
+  }
+  
+  const button = form.querySelector('button');
+  const originalText = button.innerHTML;
+  
+  button.disabled = true;
+  button.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i>Gönderiliyor...';
+  
+  // EmailJS ile hızlı iletişim maili gönder
+  if (window.emailjs) {
+    const templateParams = {
+      from_name: name.trim(),
+      from_phone: phone.trim(),
+      message: `${name} adlı kişi hızlı iletişim formu ile sizi aramak istiyor. Telefon: ${phone}`,
+      to_email: 'yusufdgrl72@gmail.com',
+      subject: 'Hızlı İletişim Talebi'
+    };
+    
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+      .then(function(response) {
+        console.log('Quick contact SUCCESS!', response.status, response.text);
+        form.reset();
+        button.disabled = false;
+        button.innerHTML = originalText;
+        alert('Talebiniz alındı! En kısa sürede size dönüş yapacağım.');
+      })
+      .catch(function(error) {
+        console.log('Quick contact FAILED...', error);
+        button.disabled = false;
+        button.innerHTML = originalText;
+        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+      });
+  } else {
+    setTimeout(() => {
+      form.reset();
+      button.disabled = false;
+      button.innerHTML = originalText;
+      alert('EmailJS yüklenemedi. Lütfen sayfayı yenileyin.');
+    }, 1500);
+  }
+}
