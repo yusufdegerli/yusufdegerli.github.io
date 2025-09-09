@@ -162,15 +162,26 @@
 
       <!-- Desktop Menu -->
       <ul class="hidden md:flex space-x-8">
-        <li><a href="#about" class="hover:text-blue-400 transition-colors py-2">Hakkımda</a></li>
-        <li><a href="#skills" class="hover:text-blue-400 transition-colors py-2">Yetenekler</a></li>
-        <li><a href="#projects" class="hover:text-blue-400 transition-colors py-2">Projeler</a></li>
-        <li><a href="#contact" class="hover:text-blue-400 transition-colors py-2">İletişim</a></li>
+        <li><a href="#about" class="hover:text-blue-400 transition-colors py-2" data-translate="nav.about">Hakkımda</a></li>
+        <li><a href="#skills" class="hover:text-blue-400 transition-colors py-2" data-translate="nav.skills">Yetenekler</a></li>
+        <li><a href="#projects" class="hover:text-blue-400 transition-colors py-2" data-translate="nav.projects">Projeler</a></li>
+        <li><a href="#contact" class="hover:text-blue-400 transition-colors py-2" data-translate="nav.contact">İletişim</a></li>
       </ul>
 
-      <!-- Dark Mode Toggle -->
-      <div class="hidden md:flex items-center ml-6">
-        <div class="dark-mode-toggle mr-4" onclick="toggleDarkMode()"></div>
+      <!-- Language and Dark Mode Toggle -->
+      <div class="hidden md:flex items-center ml-6 space-x-4">
+        <!-- Language Toggle -->
+        <div class="language-toggle relative" onclick="toggleLanguage()">
+          <div class="language-flag cursor-pointer w-8 h-8 rounded-full overflow-hidden border-2 border-white/20 hover:border-orange-400 transition-all duration-300">
+            <img id="current-flag" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAzMiAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkY2QjM1Ii8+CjxjaXJjbGUgY3g9IjE2IiBjeT0iMTIiIHI9IjQiIGZpbGw9IiNGRkZGRkYiLz4KPHN2ZyB4PSIxMiIgeT0iOCIgd2lkdGg9IjgiIGhlaWdodD0iOCI+CjxjaXJjbGUgY3g9IjQiIGN5PSI0IiByPSIxLjUiIGZpbGw9IiNGRjZCMzUiLz4KPC9zdmc+Cjwvc3ZnPg==" alt="Türkçe" class="w-full h-full object-cover">
+          </div>
+          <div class="language-tooltip absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-2 py-1 rounded text-xs whitespace-nowrap opacity-0 transition-opacity duration-300">
+            <span id="language-tooltip-text">Türkçe</span>
+          </div>
+        </div>
+        
+        <!-- Dark Mode Toggle -->
+        <div class="dark-mode-toggle" onclick="toggleDarkMode()"></div>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -185,16 +196,29 @@
     <div class="mobile-menu md:hidden fixed top-16 left-0 w-full h-0 bg-slate-800 overflow-hidden transition-all duration-300 z-50">
       <div class="container mx-auto px-6 py-8">
         <ul class="flex flex-col space-y-6 mb-8">
-          <li><a href="#about" class="text-lg block hover:text-blue-400 transition-colors">Hakkımda</a></li>
-          <li><a href="#skills" class="text-lg block hover:text-blue-400 transition-colors">Yetenekler</a></li>
-          <li><a href="#projects" class="text-lg block hover:text-blue-400 transition-colors">Projeler</a></li>
-          <li><a href="#contact" class="text-lg block hover:text-blue-400 transition-colors">İletişim</a></li>
+          <li><a href="#about" class="text-lg block hover:text-blue-400 transition-colors" data-translate="nav.about">Hakkımda</a></li>
+          <li><a href="#skills" class="text-lg block hover:text-blue-400 transition-colors" data-translate="nav.skills">Yetenekler</a></li>
+          <li><a href="#projects" class="text-lg block hover:text-blue-400 transition-colors" data-translate="nav.projects">Projeler</a></li>
+          <li><a href="#contact" class="text-lg block hover:text-blue-400 transition-colors" data-translate="nav.contact">İletişim</a></li>
         </ul>
 
-        <!-- Mobile Dark Mode Toggle -->
-        <div class="flex items-center">
-          <div class="dark-mode-toggle" onclick="toggleDarkMode()"></div>
-          <span class="ml-3">Koyu/Açık Mod</span>
+        <!-- Mobile Language and Dark Mode Toggle -->
+        <div class="space-y-4">
+          <!-- Mobile Language Toggle -->
+          <div class="flex items-center">
+            <div class="language-toggle relative" onclick="toggleLanguage()">
+              <div class="language-flag cursor-pointer w-8 h-8 rounded-full overflow-hidden border-2 border-white/20 hover:border-orange-400 transition-all duration-300">
+                <img id="current-flag-mobile" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAzMiAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkY2QjM1Ii8+CjxjaXJjbGUgY3g9IjE2IiBjeT0iMTIiIHI9IjQiIGZpbGw9IiNGRkZGRkYiLz4KPHN2ZyB4PSIxMiIgeT0iOCIgd2lkdGg9IjgiIGhlaWdodD0iOCI+CjxjaXJjbGUgY3g9IjQiIGN5PSI0IiByPSIxLjUiIGZpbGw9IiNGRjZCMzUiLz4KPC9zdmc+Cjwvc3ZnPg==" alt="Türkçe" class="w-full h-full object-cover">
+              </div>
+            </div>
+            <span class="ml-3" id="mobile-language-text">Türkçe</span>
+          </div>
+          
+          <!-- Mobile Dark Mode Toggle -->
+          <div class="flex items-center">
+            <div class="dark-mode-toggle" onclick="toggleDarkMode()"></div>
+            <span class="ml-3" id="mobile-theme-text">Koyu/Açık Mod</span>
+          </div>
         </div>
 
         <!-- Mobile Social Links -->
@@ -219,34 +243,34 @@
 
     <div class="container mx-auto max-w-4xl relative z-10">
       <div class="mb-6 inline-block p-2 bg-orange-500 bg-opacity-20 rounded-lg anim-element">
-        <span class="text-orange-400 font-medium">Flutter Geliştirici & UI Tasarımcı</span>
+        <span class="text-orange-400 font-medium" data-translate="hero.title">Flutter Geliştirici & UI Tasarımcı</span>
       </div>
 
       <h1 class="text-5xl sm:text-6xl font-bold mb-6 anim-element" data-parallax-element>
-        Merhaba, Ben Yusuf
+        <span data-translate="hero.greeting">Merhaba, Ben Yusuf</span>
         <span class="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-500">Yusuf Değerli</span>
       </h1>
 
       <div class="flex flex-wrap justify-center gap-4 mb-12 anim-element delay-300">
         <a href="#projects" class="btn-primary">
-          Projelere Göz At
+          <span data-translate="hero.view_projects">Projelere Göz At</span>
           <i class="ri-arrow-right-line ml-2"></i>
         </a>
         <a href="#contact" class="border border-slate-600 text-slate-300 hover:border-orange-400 hover:text-orange-400 py-2.5 px-5 rounded-md transition-all">
-          İletişime Geç
+          <span data-translate="hero.contact">İletişime Geç</span>
         </a>
       </div>
 
       <!-- Quick Contact -->
       <div class="quick-contact mt-12 p-5 bg-slate-800 bg-opacity-50 backdrop-filter backdrop-blur-md rounded-xl max-w-md mx-auto anim-element delay-400">
-        <h3 class="text-lg font-semibold mb-4">Hızlı İletişim</h3>
+        <h3 class="text-lg font-semibold mb-4" data-translate="hero.quick_contact">Hızlı İletişim</h3>
         <form class="quick-contact-form" onsubmit="submitQuickContact(event)">
           <div class="grid md:grid-cols-2 gap-4 mb-4">
-            <input type="text" name="name" placeholder="Adınız" class="form-input py-2 px-3 text-sm" required>
-            <input type="tel" name="phone" placeholder="Telefon Numaranız" class="form-input py-2 px-3 text-sm" required>
+            <input type="text" name="name" data-translate-placeholder="form.name" placeholder="Adınız" class="form-input py-2 px-3 text-sm" required>
+            <input type="tel" name="phone" data-translate-placeholder="form.phone" placeholder="Telefon Numaranız" class="form-input py-2 px-3 text-sm" required>
           </div>
           <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md transition-all text-sm">
-            <i class="ri-phone-line mr-2"></i> Beni Ara
+            <i class="ri-phone-line mr-2"></i> <span data-translate="hero.call_me">Beni Ara</span>
           </button>
         </form>
       </div>
@@ -266,9 +290,9 @@
   <section id="about" class="py-24 px-6">
     <div class="max-w-5xl mx-auto">
       <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Hakkımda</span>
+        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4" data-translate="about.section_title">Hakkımda</span>
         <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Profesyonel bir <span class="text-orange-400">Flutter Geliştiricisiyim</span>
+          <span data-translate="about.title">Profesyonel bir</span> <span class="text-orange-400" data-translate="about.subtitle">Flutter Geliştiricisiyim</span>
         </h2>
         <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
       </div>      <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -281,8 +305,8 @@
 
 <div class="space-y-6">
   <!-- Intro -->
-  <p class="text-lg text-slate-300 leading-relaxed anim-element">
-    Merhaba! Ben <span class="font-semibold text-white">Yusuf Değerli</span>, İstanbul’da yaşayan tutkulu bir 
+  <p class="text-lg text-slate-300 leading-relaxed anim-element" data-translate="about.intro">
+    Merhaba! Ben <span class="font-semibold text-white">Yusuf Değerli</span>, İstanbul'da yaşayan tutkulu bir 
     <span class="text-cyan-400">Flutter geliştiricisiyim</span>. 
     <span class="font-semibold">Clean Architecture</span>, <span class="font-semibold">SOLID prensipleri</span> 
     ve performanslı Flutter uygulamaları geliştirmeye odaklanıyorum.
@@ -501,7 +525,7 @@
           </div>
           <h3 class="text-xl font-bold mb-4">Görüşme & Analiz</h3>
           <p class="text-slate-300">
-            Detaylı görüşmeler yaparak ihtiyaçlarınızı ve beklentilerinizi tam olarak anlıyorum. Proje kapsamını belirliyor ve teknik gereksinimleri analiz ediyorum.
+            Detaylı görüşmeler yaparak ihtiyaçlarınızı ve beklentilerinizi tam olarak anlıyorum. Prohttps://cdn.sanity.io/images/ordgikwe/production/5435fc97b95cabed7ff9dfe38461a9eb32b8d69f-1600x1200.jpgelirliyFitorrckiAppreksinimleri analiz ediyorum.
           </p>
         </div>
 

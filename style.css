@@ -543,6 +543,29 @@ body.menu-open {
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
 
+/* Language Toggle */
+.language-toggle {
+  position: relative;
+}
+
+.language-flag {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.language-flag:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.language-tooltip {
+  pointer-events: none;
+}
+
+.language-toggle:hover .language-tooltip {
+  opacity: 1;
+}
+
 /* Dark Mode Toggle */
 .dark-mode-toggle {
   position: relative;
