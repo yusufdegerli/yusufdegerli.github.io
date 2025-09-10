@@ -169,11 +169,11 @@
       </ul>
 
       <!-- Language and Dark Mode Toggle -->
-      <div class="hidden md:flex items-center ml-6 space-x-4">
+      <div class="hidden md:flex items-center ml-4 space-x-2">
         <!-- Language Toggle -->
         <div class="language-toggle relative" onclick="toggleLanguage()">
           <div class="language-flag cursor-pointer w-8 h-8 rounded-full overflow-hidden border-2 border-white/20 hover:border-orange-400 transition-all duration-300">
-            <img id="current-flag" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAzMiAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkY2QjM1Ii8+CjxjaXJjbGUgY3g9IjE2IiBjeT0iMTIiIHI9IjQiIGZpbGw9IiNGRkZGRkYiLz4KPHN2ZyB4PSIxMiIgeT0iOCIgd2lkdGg9IjgiIGhlaWdodD0iOCI+CjxjaXJjbGUgY3g9IjQiIGN5PSI0IiByPSIxLjUiIGZpbGw9IiNGRjZCMzUiLz4KPC9zdmc+Cjwvc3ZnPg==" alt="Türkçe" class="w-full h-full object-cover">
+            <div id="current-flag" class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
           </div>
           <div class="language-tooltip absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-2 py-1 rounded text-xs whitespace-nowrap opacity-0 transition-opacity duration-300">
             <span id="language-tooltip-text">Türkçe</span>
@@ -208,7 +208,7 @@
           <div class="flex items-center">
             <div class="language-toggle relative" onclick="toggleLanguage()">
               <div class="language-flag cursor-pointer w-8 h-8 rounded-full overflow-hidden border-2 border-white/20 hover:border-orange-400 transition-all duration-300">
-                <img id="current-flag-mobile" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAzMiAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkY2QjM1Ii8+CjxjaXJjbGUgY3g9IjE2IiBjeT0iMTIiIHI9IjQiIGZpbGw9IiNGRkZGRkYiLz4KPHN2ZyB4PSIxMiIgeT0iOCIgd2lkdGg9IjgiIGhlaWdodD0iOCI+CjxjaXJjbGUgY3g9IjQiIGN5PSI0IiByPSIxLjUiIGZpbGw9IiNGRjZCMzUiLz4KPC9zdmc+Cjwvc3ZnPg==" alt="Türkçe" class="w-full h-full object-cover">
+                <div id="current-flag-mobile" class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
               </div>
             </div>
             <span class="ml-3" id="mobile-language-text">Türkçe</span>

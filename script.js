@@ -1,4 +1,3 @@
-// Modern Portfolio JavaScript
 
 // EmailJS Configuration
 const EMAILJS_SERVICE_ID = 'service_9g35zqx';
@@ -12,31 +11,39 @@ const languageConfig = {
     name: 'Türkçe'
   },
   en: {
-    flag: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAzMiAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjMDAyNDY2Ii8+CjxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjYiIHdpZHRoPSIzMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjEyIiB3aWR0aD0iMzIiIGhlaWdodD0iNiIgZmlsbD0iI0ZGRkZGRiIvPgo8cmVjdCB5PSIxOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjYiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkZGRkZGIi8+CjxzdiB4PSIwIiB5PSIwIiB3aWR0aD0iMTIiIGhlaWdodD0iMjQiIj4KPHN2ZyB4PSIxLjUiIHk9IjEuNSIgd2lkdGg9IjkiIGhlaWdodD0iMjEiPgo8cGF0aCBkPSJNMCAwTDkgMTEuNUwwIDIxVjBaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0wIDBMMSAxLjVMMCAzVjBaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDNMMSA0LjVMMCA2VjNaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDZMMSA3LjVMMCA5VjZaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDlMMSAxMC41TDAgMTJWOVoiIGZpbGw9IiMwMDI0NjYiLz4KPHN2ZyB4PSIwIiB5PSIxMiIgd2lkdGg9IjEiIGhlaWdodD0iOSI+CjxwYXRoIGQ9Ik0wIDBMMSAxLjVMMCAzVjBaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDNMMSA0LjVMMCA2VjNaIiBmaWxsPSIjMDAyNDY2Ii8+CjxwYXRoIGQ9Ik0wIDZMMSA3LjVMMCA5VjZaIiBmaWxsPSIjMDAyNDY2Ii8+Cjwvc3ZnPgo8L3N2Zz4KPC9zdmc+Cjwvc3ZnPg==',
+    flag: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAzMiAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjMDAyNDY2Ii8+CjxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjYiIHdpZHRoPSIzMiIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjEyIiB3aWR0aD0iMzIiIGhlaWdodD0iNiIgZmlsbD0iI0ZGRkZGRiIvPgo8cmVjdCB5PSIxOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjYiIGZpbGw9IiNGRkZGRkYiLz4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkZGRkZGIi8+CjxzdiB4PSIwIiB5PSIwIiB3aWR0aD0iMTIiIGhlaWdodD0iMjQiPgo8c3ZnIHg9IjEuNSIgeT0iMS41IiB3aWR0aD0iOSIgaGVpZ2h0PSIyMSI+CjxwYXRoIGQ9Ik0wIDBMOSAxMS41TDAgMjFWMFoiIGZpbGw9IiNGRkZGRkYiLz4KPHN2ZyB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSI5Ij4KPHN2ZyB4PSIwIiB5PSIxMiIgd2lkdGg9IjEiIGhlaWdodD0iOSI+Cjwvc3ZnPgo8L3N2Zz4KPC9zdmc+Cjwvc3ZnPg==',
     name: 'English'
   }
 };
 
 let currentLanguage = localStorage.getItem('language') || 'tr';
 let translations = {};
+let translationsLoaded = false;
 
-// Load translations from JSON files
+// Load translations - Embedded translations as fallback
 async function loadTranslations() {
   try {
-    const trResponse = await fetch('tr.json');
-    const enResponse = await fetch('en.json');
+    // JSON dosyalarını yüklemeyi dene
+    const [trResponse, enResponse] = await Promise.all([
+      fetch('./tr.json').catch(() => null),
+      fetch('./en.json').catch(() => null)
+    ]);
     
-    translations.tr = await trResponse.json();
-    translations.en = await enResponse.json();
-    
-    console.log('Translations loaded successfully');
+    if (trResponse && trResponse.ok && enResponse && enResponse.ok) {
+      translations.tr = await trResponse.json();
+      translations.en = await enResponse.json();
+      console.log('Translations loaded from JSON files');
+    } else {
+      throw new Error('JSON files not accessible');
+    }
   } catch (error) {
-    console.error('Error loading translations:', error);
-    // Fallback to hardcoded translations if JSON files fail
+    console.warn('JSON files not found, using embedded translations:', error);
+    
+    // Fallback - gömülü çeviriler
     translations = {
       tr: {
         'nav.about': 'Hakkımda',
-        'nav.skills': 'Yetenekler',
+        'nav.skills': 'Yetenekler', 
         'nav.projects': 'Projeler',
         'nav.contact': 'İletişim',
         'hero.title': 'Flutter Geliştirici & UI Tasarımcı',
@@ -55,18 +62,21 @@ async function loadTranslations() {
         'form.send': 'Gönder',
         'language.turkish': 'Türkçe',
         'language.english': 'English',
-        'theme.dark_light': 'Koyu/Açık Mod'
+        'theme.dark_light': 'Koyu/Açık Mod',
+        'contact.section_title': 'İletişim',
+        'contact.subtitle': 'Benimle İletişime Geç',
+        'contact.send_message': 'Mesaj Gönder'
       },
       en: {
         'nav.about': 'About',
         'nav.skills': 'Skills',
-        'nav.projects': 'Projects',
+        'nav.projects': 'Projects', 
         'nav.contact': 'Contact',
         'hero.title': 'Flutter Developer & UI Designer',
         'hero.greeting': 'Hello, I\'m Yusuf',
         'hero.view_projects': 'View Projects',
         'hero.contact': 'Get In Touch',
-        'hero.quick_contact': 'Quick Contact',
+        'hero.quick_contact': 'Quick Contact', 
         'hero.call_me': 'Call Me',
         'about.section_title': 'About',
         'about.title': 'I am a professional',
@@ -74,27 +84,35 @@ async function loadTranslations() {
         'form.name': 'Your Name',
         'form.phone': 'Your Phone Number',
         'form.email': 'Your Email',
-        'form.message': 'Your Message',
+        'form.message': 'Your Message', 
         'form.send': 'Send',
         'language.turkish': 'Türkçe',
         'language.english': 'English',
-        'theme.dark_light': 'Dark/Light Mode'
+        'theme.dark_light': 'Dark/Light Mode',
+        'contact.section_title': 'Contact',
+        'contact.subtitle': 'Get In Touch With Me',
+        'contact.send_message': 'Send Message'
       }
     };
   }
+  
+  translationsLoaded = true;
+  console.log('Translations loaded successfully:', translations);
 }
 
-// Sayfa yüklenme animasyonu
+// Sayfa yüklenme 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Load translations first
+  console.log('DOM Content Loaded');
+  
+  // Çevirileri yükle
   await loadTranslations();
   
-  // Initialize EmailJS
+  // EmailJS'i başlat
   if (window.emailjs) {
     emailjs.init(EMAILJS_PUBLIC_KEY);
   }
 
-  // Initialize language system
+  // Dil sistemini başlat
   initLanguage();
 
   // Yükleme animasyonu
@@ -109,73 +127,174 @@ document.addEventListener("DOMContentLoaded", async () => {
     initAnimations();
   }
 
-  // Initialize theme
+  // Temayı başlat
   initTheme();
 
-  // Add language toggle event listeners
-  document.querySelectorAll('#current-flag, #current-flag-mobile').forEach(flag => {
-    flag.addEventListener('click', toggleLanguage);
-  });
+  // Dil değiştirme butonlarına event listener ekle
+  setupLanguageToggleEvents();
 });
 
-// Language System Functions
+// Dil değiştirme olaylarını ayarla
+function setupLanguageToggleEvents() {
+  const languageElements = document.querySelectorAll('#current-flag, #current-flag-mobile, .language-toggle');
+  
+  languageElements.forEach(element => {
+    element.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('Language toggle clicked');
+      toggleLanguage();
+    });
+  });
+  
+  console.log('Language toggle events set up for', languageElements.length, 'elements');
+}
+
+// Dil sistemini başlat
 function initLanguage() {
+  console.log('Initializing language system with:', currentLanguage);
   updateLanguage(currentLanguage);
 }
 
+const turkeyFlagSvg = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480">
+    <path fill="#e30a17" d="M0 0h640v480H0z"/>
+    <circle cx="230" cy="240" r="100" fill="#fff"/>
+    <circle cx="250" cy="240" r="80" fill="#e30a17"/>
+    <path fill="#fff" d="M320 240l49 15.2-30.3-41.6V267l30.3-41.6z"/>
+  </svg>
+`;
+
+const ukFlagSvg = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30">
+    <clipPath id="s">
+      <path d="M0,0 v30 h60 v-30 z"/>
+    </clipPath>
+    <clipPath id="t">
+      <path d="M30,15 h30 v15 z v-30 h-30 z M0,0 v15 h30 v-15 z"/>
+    </clipPath>
+    <g clip-path="url(#s)">
+      <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+      <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+    </g>
+  </svg>
+`;
+
+// Dil değiştir
 function toggleLanguage() {
-  currentLanguage = currentLanguage === 'tr' ? 'en' : 'tr';
+  if (!translationsLoaded) {
+    console.warn('Translations not loaded yet');
+    return;
+  }
+
+  const newLanguage = currentLanguage === 'tr' ? 'en' : 'tr';
+  if (currentLanguage === "tr") {
+    document.documentElement.lang = "en";
+    document.getElementById("language-tooltip-text").innerText = "English";
+    document.getElementById("mobile-language-text").innerText = "English";
+    document.getElementById("current-flag").innerHTML = ukFlagSvg;
+    document.getElementById("current-flag-mobile").innerHTML = ukFlagSvg;
+  } else {
+    document.documentElement.lang = "tr";
+    document.getElementById("language-tooltip-text").innerText = "Türkçe";
+    document.getElementById("mobile-language-text").innerText = "Türkçe";
+    document.getElementById("current-flag").innerHTML = turkeyFlagSvg;
+    document.getElementById("current-flag-mobile").innerHTML = turkeyFlagSvg;
+  }
+
+  currentLanguage = newLanguage;
   localStorage.setItem('language', currentLanguage);
   updateLanguage(currentLanguage);
 }
 
+
+// Dili güncelle
 function updateLanguage(lang) {
-  // Update flag images
+  console.log('Updating language to:', lang);
+  
+  if (!translationsLoaded || !translations[lang]) {
+    console.error('Translations not available for language:', lang);
+    return;
+  }
+
+  // Bayrak resimlerini güncelle
+  updateFlags(lang);
+  
+  // Tooltip ve mobil metinleri güncelle
+  updateLanguageLabels(lang);
+
+  // Çevirilebilir elementleri güncelle  
+  updateTranslatableElements(lang);
+
+  // Placeholder'ları güncelle
+  updatePlaceholders(lang);
+
+  // HTML lang attribute güncelle
+  document.documentElement.lang = lang;
+  
+  // Sayfa başlığını güncelle
+  updatePageTitle(lang);
+  
+  console.log('Language updated to:', lang);
+}
+
+function updateFlags(lang) {
   const desktopFlag = document.getElementById('current-flag');
   const mobileFlag = document.getElementById('current-flag-mobile');
-  const tooltipText = document.getElementById('language-tooltip-text');
-  const mobileLanguageText = document.getElementById('mobile-language-text');
   
-  if (desktopFlag) {
+  if (desktopFlag && languageConfig[lang]) {
     desktopFlag.src = languageConfig[lang].flag;
     desktopFlag.alt = languageConfig[lang].name;
   }
   
-  if (mobileFlag) {
+  if (mobileFlag && languageConfig[lang]) {
     mobileFlag.src = languageConfig[lang].flag;
     mobileFlag.alt = languageConfig[lang].name;
   }
+}
+
+function updateLanguageLabels(lang) {
+  const tooltipText = document.getElementById('language-tooltip-text');
+  const mobileLanguageText = document.getElementById('mobile-language-text');
   
-  if (tooltipText) {
+  if (tooltipText && languageConfig[lang]) {
     tooltipText.textContent = languageConfig[lang].name;
   }
   
-  if (mobileLanguageText) {
+  if (mobileLanguageText && languageConfig[lang]) {
     mobileLanguageText.textContent = languageConfig[lang].name;
   }
+}
 
-  // Update all translatable elements
+function updateTranslatableElements(lang) {
   const elements = document.querySelectorAll('[data-translate]');
+  console.log('Found', elements.length, 'translatable elements');
+  
   elements.forEach(element => {
     const key = element.getAttribute('data-translate');
     if (translations[lang] && translations[lang][key]) {
       element.textContent = translations[lang][key];
+      console.log('Translated:', key, '->', translations[lang][key]);
+    } else {
+      console.warn('Translation missing for key:', key, 'in language:', lang);
     }
   });
+}
 
-  // Update placeholder texts
+function updatePlaceholders(lang) {
   const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+  
   placeholderElements.forEach(element => {
     const key = element.getAttribute('data-translate-placeholder');
     if (translations[lang] && translations[lang][key]) {
       element.placeholder = translations[lang][key];
     }
   });
+}
 
-  // Update HTML lang attribute
-  document.documentElement.lang = lang;
-  
-  // Update page title
+function updatePageTitle(lang) {
   if (lang === 'tr') {
     document.title = 'Yusuf Değerli | Flutter Geliştirici & UI/UX Tasarımcı';
   } else {
