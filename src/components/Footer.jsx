@@ -17,7 +17,7 @@ function Footer() {
               <div className="footer-logo">
                 <span className="logo-icon">☕</span>
                 <div className="logo-text-wrap">
-                  <span className="logo-text">Göksu & Doğu</span>
+                  <span className="logo-text">Göksu & Doğa</span>
                   <span className="logo-subtext">Nature Coffee</span>
                 </div>
               </div>
@@ -161,7 +161,7 @@ function Footer() {
 
         <div className="footer-bottom">
           <p className="copyright">
-            © {currentYear} Göksu & Doğu. Tüm hakları saklıdır.
+            © {currentYear} Göksu & Doğa. Tüm hakları saklıdır.
           </p>
           <div className="footer-bottom-links">
             <a href="#">Kullanım Koşulları</a>

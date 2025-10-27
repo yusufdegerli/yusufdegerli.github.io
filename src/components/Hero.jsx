@@ -59,7 +59,7 @@ function Hero() {
           <img
             className="cup-body-img"
             src="/assets/logo.png"
-            alt="Göksu & Doğu cup logo"
+            alt="Göksu & Doğa cup logo"
           />
           <div className="steam steam-1">~</div>
           <div className="steam steam-2">~</div>

@@ -45,10 +45,10 @@ function Header({ onSelectCategory }) {
           <img
             className="logo-icon"
             src="/assets/logo.png"
-            alt="Göksu & Doğu logo"
+            alt="Göksu & Doğa logo"
           />
           <div className="logo-text-wrap">
-            <span className="logo-text">Göksu & Doğu</span>
+            <span className="logo-text">Göksu & Doğa</span>
             <span className="logo-subtext">Nature Coffee</span>
           </div>
         </div>
