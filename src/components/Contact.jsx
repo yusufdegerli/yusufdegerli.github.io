@@ -10,6 +10,7 @@ function Contact() {
     message: "",
   });
 
+
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
@@ -68,9 +69,7 @@ function Contact() {
                 <div className="detail-content">
                   <h4 className="detail-title">E-posta</h4>
                   <p className="detail-text">
-                    info@coffeeparadise.com
-                    <br />
-                    destek@coffeeparadise.com
+                    hh.34foodcompany@gmail.com
                   </p>
                 </div>
               </div>
@@ -79,11 +78,7 @@ function Contact() {
                 <div className="detail-icon">📱</div>
                 <div className="detail-content">
                   <h4 className="detail-title">Telefon</h4>
-                  <p className="detail-text">
-                    +90 (212) 555 01 23
-                    <br />
-                    +90 (555) 123 45 67
-                  </p>
+                  <p className="detail-text">0 536 417 06 34</p>
                 </div>
               </div>
 
@@ -133,9 +128,6 @@ function Contact() {
                       onChange={handleChange}
                       required
                     />
-                  </div>
-
-                  <div className="form-group">
                     <label htmlFor="email" className="form-label">
                       <span className="label-icon">📧</span>
                       E-posta *

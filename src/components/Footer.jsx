@@ -59,7 +59,7 @@ function Footer() {
                   <FaTwitter />
                 </a>
                 <a
-                  href="https://wa.me/905551234567"
+                  href="https://wa.me/905364170634"
                   className="social-link whatsapp"
                   aria-label="WhatsApp"
                   title="WhatsApp"
@@ -123,11 +123,11 @@ function Footer() {
               </li>
               <li>
                 <span className="contact-icon">📧</span>
-                <span>info@coffeeparadise.com</span>
+                <span>hh.34foodcompany@gmail.com</span>
               </li>
               <li>
                 <span className="contact-icon">📱</span>
-                <span>+90 (212) 555 0123</span>
+                <span>0 536 417 06 34</span>
               </li>
               <li>
                 <span className="contact-icon">🕐</span>
