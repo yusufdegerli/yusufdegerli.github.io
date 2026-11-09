@@ -1,3 +1,5 @@
 node_modules/
-dist/
+# dist/ is committed: GitHub Pages serves it directly (no CI build step).
+# Rebuild with `npm run build` after editing src/.
+dist/*.map
 *.tsbuildinfo
