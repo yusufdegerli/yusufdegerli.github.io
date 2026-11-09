@@ -27,6 +27,11 @@ const Draw = {
     h = Math.max(1, h | 0);
     this.canvas.width = Math.max(1, (w * this.dpr) | 0);
     this.canvas.height = Math.max(1, (h * this.dpr) | 0);
+    // Minimap backing store follows the display ratio too (CSS size is fixed in style.css).
+    // It may be display:none before the game starts, so fall back to its 196px layout size.
+    this.miniCss = this.mini.clientWidth || 196;
+    this.mini.width = Math.round(this.miniCss * this.dpr);
+    this.mini.height = Math.round(this.miniCss * this.dpr);
     Cam.resize(w, h);
   },
 
@@ -223,8 +228,9 @@ const Draw = {
 
   minimap() {
     const g = this.mctx;
-    const w = this.mini.width;
-    const h = this.mini.height;
+    g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    const w = this.miniCss || 196;
+    const h = w;
     const sx = w / (CFG.mapW * CFG.tile);
     const sy = h / (CFG.mapH * CFG.tile);
     g.fillStyle = "#12160f";
