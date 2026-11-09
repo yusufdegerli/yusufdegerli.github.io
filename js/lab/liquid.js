@@ -61,7 +61,7 @@ export function mount(root, t) {
       for (let y = ground; y < H; y += 1) cells[y * W + x] = WALL;
     }
 
-    paintLine(12, 36, 64, 50, 2, WALL); // sloped ledge under the source
+    paintLine(12, 36, 88, 54, 2, WALL); // sloped ledge: pours into the basin
     paintLine(78, 58, 78, 79, 2, WALL); // basin
     paintLine(78, 79, 112, 79, 2, WALL);
     paintLine(112, 64, 112, 79, 2, WALL);
@@ -172,7 +172,7 @@ export function mount(root, t) {
   canvas.addEventListener('pointerup', release);
   canvas.addEventListener('pointercancel', release);
 
-  const modeLabel = () => t(`js.liquid.mode_${mode}`, { water: 'Tool: water', wall: 'Tool: wall', erase: 'Tool: erase' }[mode]);
+  const modeLabel = () => t(`js.liquid.mode_${mode}`, { water: 'Water', wall: 'Wall', erase: 'Erase' }[mode]);
   modeButton?.addEventListener('click', () => {
     mode = MODES[(MODES.indexOf(mode) + 1) % MODES.length];
     modeButton.textContent = modeLabel();

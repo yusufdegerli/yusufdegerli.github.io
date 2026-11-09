@@ -49,8 +49,9 @@ export function mount(root, t) {
   function resize() {
     const rect = canvas.getBoundingClientRect();
     const scale = Math.min(window.devicePixelRatio || 1, 2) * 0.75; // slightly under native: crisp enough, cheap
-    width = Math.max(240, Math.round(rect.width * scale));
-    height = Math.max(120, Math.round(rect.height * scale));
+    const ratio = Math.min(1, 960 / (rect.width * scale)); // cap at 960 rays per frame
+    width = Math.max(240, Math.round(rect.width * scale * ratio));
+    height = Math.max(120, Math.round(rect.height * scale * ratio));
     canvas.width = width;
     canvas.height = height;
     runner?.renderOnce();
@@ -62,7 +63,7 @@ export function mount(root, t) {
     colors = {
       sky: p['surface-2'],
       floor: p.bg,
-      wall: p.text,
+      wall: mix(p.text, p['surface-2'], 0.28),
       accent: p.accent,
       fog: p['surface-2'],
       faint: p.faint,

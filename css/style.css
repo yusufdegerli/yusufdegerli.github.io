@@ -532,6 +532,16 @@ a:focus-visible > .arrow-ne {
   overflow: hidden;
 }
 
+.panel {
+  container-type: inline-size;
+}
+
+@container (max-width: 440px) {
+  .panel-stat {
+    display: none;
+  }
+}
+
 .panel-bar {
   display: flex;
   align-items: center;
@@ -558,6 +568,8 @@ a:focus-visible > .arrow-ne {
 }
 
 .panel-btn {
+  flex: none;
+  white-space: nowrap;
   display: inline-grid;
   place-items: center;
   height: 26px;
@@ -747,8 +759,14 @@ a:focus-visible > .arrow-ne {
   width: 100%;
   height: 100%;
   image-rendering: pixelated;
-  touch-action: none;
+  touch-action: pan-y; /* vertical swipes still scroll the page on phones */
   cursor: crosshair;
+}
+
+@media (hover: none) {
+  .hide-on-touch {
+    display: none;
+  }
 }
 
 .figure-caption {
@@ -977,10 +995,9 @@ a:focus-visible > .arrow-ne {
 }
 
 .demo-note {
-  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--space-5);
+  align-content: start;
+  gap: var(--space-2);
   align-items: start;
   padding: var(--space-5);
   border: 1px dashed var(--line-strong);
@@ -989,6 +1006,23 @@ a:focus-visible > .arrow-ne {
 
 .demo-note .demo-text {
   margin-top: 4px;
+}
+
+.rules {
+  margin: var(--space-4) 0 0;
+  padding: var(--space-4);
+  overflow-x: auto;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.rules span {
+  color: var(--accent);
 }
 
 .demo-note-index {
