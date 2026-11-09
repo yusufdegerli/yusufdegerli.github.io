@@ -119,6 +119,7 @@ export function initArcade() {
   }
 
   dialog.addEventListener('close', () => {
+    if (dialog.open) return; // reopened before the queued close event ran
     if (fullscreenElement()) (document.exitFullscreen?.() ?? document.webkitExitFullscreen?.())?.catch?.(() => {});
     iframe.removeAttribute('src'); // unload: stops game loops and audio
     iframe.src = 'about:blank';
