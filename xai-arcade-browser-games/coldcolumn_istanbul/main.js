@@ -4,6 +4,8 @@
   const canvas = document.getElementById("game");
   const ctx = canvas.getContext("2d");
   const overlay = document.getElementById("overlay");
+  // index.html is the single source of truth for the title menu; showMenu() restores it.
+  const MENU_HTML = overlay.innerHTML;
   const hud = document.getElementById("hud");
   const hudWeapon = document.getElementById("weapon-name");
   const hudAmmo = document.getElementById("weapon-ammo");
@@ -2939,8 +2941,7 @@
     cam.y = player.y;
     hud.style.display = "none";
     overlay.className = "show menu";
-    overlay.innerHTML =
-      '<div class="overlay-inner"><p class="eyebrow">ISTANBUL MINT — TONIGHT</p><h1>COLD<br />COLUMN</h1><p class="tagline">MASKS ON. ONE HIT. NO NAMES.</p><ul class="controls"><li><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move</li><li><kbd>SHIFT</kbd> sprint &nbsp; <kbd>C</kbd> dodge</li><li><kbd>LMB</kbd> shoot / break doors</li><li><kbd>SPACE</kbd> restart / skip talk</li></ul><button id="start-btn" type="button">START HEIST</button><p class="credit">Music: Nihilore — Creative Commons Attribution</p></div>';
+    overlay.innerHTML = MENU_HTML;
     const btn = document.getElementById("start-btn");
     if (btn) btn.addEventListener("click", startGame);
   }
