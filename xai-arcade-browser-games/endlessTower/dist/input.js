@@ -19,6 +19,60 @@ export class Keyboard {
             this.held.delete(event.code);
         });
     }
+    /**
+     * Touch / pen support on the play area. The canvas is split into thirds:
+     * hold the left or right third to run, tap the middle third to jump.
+     * Any new touch also queues a restart, so tapping retries after Game Over.
+     * Mouse pointers are ignored; desktop keeps the keyboard scheme.
+     */
+    attachTouch(element) {
+        const zones = new Map();
+        const zoneAt = (event) => {
+            const rect = element.getBoundingClientRect();
+            const t = (event.clientX - rect.left) / rect.width;
+            return t < 1 / 3 ? 'left' : t > 2 / 3 ? 'right' : 'jump';
+        };
+        const sync = () => {
+            const values = [...zones.values()];
+            this.setHeld('ArrowLeft', values.includes('left'));
+            this.setHeld('ArrowRight', values.includes('right'));
+        };
+        element.addEventListener('pointerdown', (event) => {
+            if (event.pointerType === 'mouse')
+                return;
+            event.preventDefault();
+            element.setPointerCapture(event.pointerId);
+            const zone = zoneAt(event);
+            zones.set(event.pointerId, zone);
+            if (zone === 'jump')
+                this.jumpQueued = true;
+            this.restartQueued = true;
+            sync();
+        });
+        element.addEventListener('pointermove', (event) => {
+            if (!zones.has(event.pointerId))
+                return;
+            const zone = zoneAt(event);
+            // Sliding a held thumb between the side thirds switches direction;
+            // sliding into the middle does not trigger a jump.
+            if (zone !== 'jump')
+                zones.set(event.pointerId, zone);
+            sync();
+        });
+        const release = (event) => {
+            if (zones.delete(event.pointerId))
+                sync();
+        };
+        element.addEventListener('pointerup', release);
+        element.addEventListener('pointercancel', release);
+        element.addEventListener('lostpointercapture', release);
+    }
+    setHeld(code, on) {
+        if (on)
+            this.held.add(code);
+        else
+            this.held.delete(code);
+    }
     get left() {
         return this.held.has('ArrowLeft');
     }

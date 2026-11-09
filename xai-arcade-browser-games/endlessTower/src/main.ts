@@ -16,7 +16,9 @@ canvas.height = Math.floor(VIEW_HEIGHT * dpr);
 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
 const shop = new HtmlShop();
-const game = new Game(ctx, new Keyboard(), shop);
+const controls = new Keyboard();
+controls.attachTouch(canvas);
+const game = new Game(ctx, controls, shop);
 shop.bind({
   buy: (id) => game.buy(id),
   continue: () => game.beginNextLevel(),

@@ -3,6 +3,9 @@ import type { GhostFrame } from './ghost.js';
 import { clamp, lerp } from './math.js';
 import type { Coin, GameStatus, Platform } from './types.js';
 
+/** Primary input is a finger (phones, tablets): show touch hints instead of keys. */
+const TOUCH_UI = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
+
 export interface DrawPlayer {
   x: number;
   y: number;
@@ -256,7 +259,11 @@ export class Renderer {
       ctx.fillStyle = 'rgba(247,244,234,0.9)';
       ctx.font = '600 16px ui-sans-serif, system-ui, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Arrows move    Space jumps', VIEW_WIDTH / 2, VIEW_HEIGHT - 84);
+      ctx.fillText(
+        TOUCH_UI ? 'Hold sides to run    Tap middle to jump' : 'Arrows move    Space jumps',
+        VIEW_WIDTH / 2,
+        VIEW_HEIGHT - 84,
+      );
       ctx.font = '500 13px ui-sans-serif, system-ui, sans-serif';
       ctx.fillText('Bronze 1   ·   Silver 5   ·   Gold 10', VIEW_WIDTH / 2, VIEW_HEIGHT - 60);
     }
@@ -283,7 +290,7 @@ export class Renderer {
 
     ctx.fillStyle = '#ffe08a';
     ctx.font = '600 16px ui-sans-serif, system-ui, sans-serif';
-    ctx.fillText('Space or R to retry', VIEW_WIDTH / 2, VIEW_HEIGHT / 2 + 110);
+    ctx.fillText(TOUCH_UI ? 'Tap to retry' : 'Space or R to retry', VIEW_WIDTH / 2, VIEW_HEIGHT / 2 + 110);
   }
 
   private drawGoal(targetHeight: number, cameraBottom: number): void {

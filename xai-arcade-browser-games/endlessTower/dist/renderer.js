@@ -1,5 +1,7 @@
 import { FRAGILE_BREAK_SECONDS, PLAYER_HEIGHT, PLAYER_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './constants.js';
 import { clamp, lerp } from './math.js';
+/** Primary input is a finger (phones, tablets): show touch hints instead of keys. */
+const TOUCH_UI = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
 export class Renderer {
     ctx;
     constructor(ctx) {
@@ -203,7 +205,7 @@ export class Renderer {
             ctx.fillStyle = 'rgba(247,244,234,0.9)';
             ctx.font = '600 16px ui-sans-serif, system-ui, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('Arrows move    Space jumps', VIEW_WIDTH / 2, VIEW_HEIGHT - 84);
+            ctx.fillText(TOUCH_UI ? 'Hold sides to run    Tap middle to jump' : 'Arrows move    Space jumps', VIEW_WIDTH / 2, VIEW_HEIGHT - 84);
             ctx.font = '500 13px ui-sans-serif, system-ui, sans-serif';
             ctx.fillText('Bronze 1   ·   Silver 5   ·   Gold 10', VIEW_WIDTH / 2, VIEW_HEIGHT - 60);
         }
@@ -226,7 +228,7 @@ export class Renderer {
         ctx.fillText(`Best combo x${snapshot.bestCombo}`, VIEW_WIDTH / 2, VIEW_HEIGHT / 2 + 56);
         ctx.fillStyle = '#ffe08a';
         ctx.font = '600 16px ui-sans-serif, system-ui, sans-serif';
-        ctx.fillText('Space or R to retry', VIEW_WIDTH / 2, VIEW_HEIGHT / 2 + 110);
+        ctx.fillText(TOUCH_UI ? 'Tap to retry' : 'Space or R to retry', VIEW_WIDTH / 2, VIEW_HEIGHT / 2 + 110);
     }
     drawGoal(targetHeight, cameraBottom) {
         const { ctx } = this;
