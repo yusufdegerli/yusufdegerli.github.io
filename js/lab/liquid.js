@@ -189,14 +189,14 @@ export function mount(root, t) {
   // ---- rendering -----------------------------------------------------------
   let colors;
   function updateColors() {
-    const p = readPalette(['surface-2', 'faint', 'muted', 'accent', 'text', 'bg']);
+    const p = readPalette(['surface-2', 'faint', 'muted', 'water', 'text', 'bg']);
     colors = {
       empty: p['surface-2'],
       wall: mix(p['surface-2'], p.faint, 0.55),
       wallTop: mix(p['surface-2'], p.muted, 0.95),
-      foam: mix(p.accent, p.text, 0.45),
-      water: p.accent,
-      deep: mix(p.accent, p.bg, 0.55),
+      foam: mix(p.water, p.text, 0.45),
+      water: p.water,
+      deep: mix(p.water, p.bg, 0.55),
     };
   }
   updateColors();
