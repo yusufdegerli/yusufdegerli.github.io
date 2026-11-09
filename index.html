@@ -81,6 +81,7 @@
         <ul class="nav-list">
           <li><a class="nav-link" href="#experience" data-i18n="nav.experience">Experience</a></li>
           <li><a class="nav-link" href="#lab" data-i18n="nav.lab">Lab</a></li>
+          <li><a class="nav-link" href="#arcade" data-i18n="nav.arcade">Arcade</a></li>
           <li><a class="nav-link" href="#work" data-i18n="nav.work">Work</a></li>
           <li><a class="nav-link" href="#about" data-i18n="nav.about">About</a></li>
           <li><a class="nav-link" href="#contact" data-i18n="nav.contact">Contact</a></li>
@@ -327,11 +328,188 @@
       </div>
     </section>
 
+    <!-- ============================================================== Arcade -->
+    <section class="section" id="arcade" aria-labelledby="arcade-title">
+      <div class="wrap grid-12">
+        <header class="section-head">
+          <p class="section-index">03</p>
+          <h2 class="section-title" id="arcade-title" data-i18n="arcade.title">Arcade</h2>
+          <p class="section-note" data-i18n="arcade.note">Browser games built with AI coding agents under my direction. Each one runs right here, with no install.</p>
+        </header>
+
+        <div class="section-body">
+          <p class="arcade-kicker"><span class="eyebrow" data-i18n="arcade.kicker">Canvas engineering · featured</span></p>
+
+          <div class="arcade-features">
+            <!-- 1 · Galactic Customs Inspector -->
+            <article class="panel game-feature spotlight" data-game="galactic_customs_inspector" data-reveal
+                     data-touch="partial" aria-labelledby="g-gci-title">
+              <button class="game-poster" type="button" data-play aria-labelledby="g-gci-play g-gci-title">
+                <img src="assets/img/arcade/galactic_customs_inspector.jpg" width="960" height="600" loading="lazy" decoding="async"
+                     alt="Galactic Customs Inspector: an alien silhouette at the inspection window, a passport and stamps on the desk">
+                <span class="poster-play" id="g-gci-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <div class="game-body">
+                <p class="project-kicker" data-i18n="arcade.gci.kicker">Document-inspection sim · DOM + CSS, no canvas</p>
+                <h3 class="game-title" id="g-gci-title">Galactic Customs Inspector</h3>
+                <p class="project-text" data-i18n="arcade.gci.text">Six shifts at an alien border post. Every traveller brings a generated passport, a spoken reason for visiting and a four-character alias. Approve, deny or quarantine them against a rulebook that grows each day, before a 25-second timer runs out.</p>
+                <ul class="game-notes">
+                  <li data-i18n="arcade.gci.n1"><strong>Rules are data.</strong> Each day’s rulebook is a list of objects with a <code>violates(traveler)</code> predicate, so judging, generation and the rulebook UI all read one source of truth.</li>
+                  <li data-i18n="arcade.gci.n2"><strong>Decidable by construction.</strong> Travellers are generated valid, then 40% get exactly one injected violation, so every case has a single correct stamp.</li>
+                  <li data-i18n="arcade.gci.n3"><strong>No images, no canvas.</strong> Nine alien species are drawn in pure CSS, the desk uses pointer-captured drag and drop, and every sound is synthesised with Web Audio.</li>
+                </ul>
+                <ul class="tags" aria-label="Stack">
+                  <li class="tag">Vanilla JS</li><li class="tag">CSS art</li><li class="tag">Web Audio</li><li class="tag">Pointer events</li>
+                </ul>
+                <p class="game-controls" data-i18n="arcade.gci.controls">Mouse to drag documents · A / D / Q stamp · R rulebook</p>
+                <div class="game-actions">
+                  <button class="btn btn-primary" type="button" data-play><span data-i18n="arcade.play">Play live</span> <span class="arrow" aria-hidden="true">→</span></button>
+                  <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/galactic_customs_inspector" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2 · Cold Column -->
+            <article class="panel game-feature spotlight" data-game="coldcolumn_istanbul" data-reveal
+                     data-touch="false" aria-labelledby="g-cc-title">
+              <button class="game-poster" type="button" data-play aria-labelledby="g-cc-play g-cc-title">
+                <img src="assets/img/arcade/coldcolumn_istanbul.jpg" width="960" height="600" loading="lazy" decoding="async"
+                     alt="Cold Column: top-down view of the mint lobby with the masked player and two guards">
+                <span class="poster-play" id="g-cc-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <div class="game-body">
+                <p class="project-kicker" data-i18n="arcade.cc.kicker">Top-down heist action · Canvas 2D</p>
+                <h3 class="game-title" id="g-cc-title">Cold Column: The Istanbul Job</h3>
+                <p class="project-text" data-i18n="arcade.cc.text">A one-hit-kill heist across two floors of the Istanbul Mint. Seven weapons you can also throw, doors you can slam, glass that shatters, a combo meter, and dialogue scenes between floors.</p>
+                <ul class="game-notes">
+                  <li data-i18n="arcade.cc.n1"><strong>Guards perceive the world.</strong> An 83° view cone with a 420 px range, ray-tested for line of sight against every wall, plus hearing radii per noise type, from gunshots (560 px) to footsteps (108 px).</li>
+                  <li data-i18n="arcade.cc.n2"><strong>Patrol → search → combat.</strong> Search routes come from A* over a 40 px navigation grid stored in typed arrays, re-planned roughly every 0.4 s.</li>
+                  <li data-i18n="arcade.cc.n3"><strong>Physical props.</strong> Doors are hinged with angular velocity and damping, so slamming one stuns a guard. Bullets test glass along their path. Music streams Creative Commons tracks, with a Web Audio synth score as fallback.</li>
+                </ul>
+                <ul class="tags" aria-label="Stack">
+                  <li class="tag">Canvas 2D</li><li class="tag">A* pathfinding</li><li class="tag">Line of sight</li><li class="tag">Web Audio</li>
+                </ul>
+                <p class="game-controls" data-i18n="arcade.cc.controls">WASD move · mouse aim · LMB shoot · RMB throw · Shift sprint · C dodge</p>
+                <div class="game-actions">
+                  <button class="btn btn-primary" type="button" data-play><span data-i18n="arcade.play">Play live</span> <span class="arrow" aria-hidden="true">→</span></button>
+                  <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/coldcolumn_istanbul" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- 3 · RIMWRECK (carCrash) -->
+            <article class="panel game-feature spotlight" data-game="carCrash" data-reveal
+                     data-touch="false" aria-labelledby="g-rw-title">
+              <button class="game-poster" type="button" data-play aria-labelledby="g-rw-play g-rw-title">
+                <img src="assets/img/arcade/carCrash.jpg" width="960" height="540" loading="lazy" decoding="async"
+                     alt="RIMWRECK: a blue tractor and a red monster truck facing off over a ball in a pixel-art arena">
+                <span class="poster-play" id="g-rw-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <div class="game-body">
+                <p class="project-kicker" data-i18n="arcade.rw.kicker">Local 2-player car soccer · Planck.js (Box2D)</p>
+                <h3 class="game-title" id="g-rw-title">RIMWRECK</h3>
+                <p class="project-text" data-i18n="arcade.rw.text">Two players on one keyboard, five vehicles, one ball, first to five goals. Cars shed bumpers, hoods and roofs as they take hits, and pickups shrink, grow, reverse or arm them, or resize a goal.</p>
+                <ul class="game-notes">
+                  <li data-i18n="arcade.rw.n1"><strong>Real suspension.</strong> Each vehicle is a multi-fixture rigid body on spring <code>WheelJoint</code>s tuned per vehicle (2.7–7.4 Hz), driven by wheel motors, with torque control in mid-air.</li>
+                  <li data-i18n="arcade.rw.n2"><strong>Damage from impulses.</strong> A post-solve contact listener measures relative normal velocity at each contact. Hard enough impacts detach body parts as separate physics debris.</li>
+                  <li data-i18n="arcade.rw.n3"><strong>Instant replay.</strong> A 3.6-second ring buffer of frame snapshots replays every goal at 0.3× speed. The physics step is fixed at 60 Hz, separate from rendering.</li>
+                </ul>
+                <ul class="tags" aria-label="Stack">
+                  <li class="tag">Planck.js</li><li class="tag">Rigid-body physics</li><li class="tag">Canvas 2D</li><li class="tag">Web Audio</li>
+                </ul>
+                <p class="game-controls" data-i18n="arcade.rw.controls">P1: W/S drive · A/D rotate · Space jump — P2: arrows · Shift/Enter jump</p>
+                <div class="game-actions">
+                  <button class="btn btn-primary" type="button" data-play><span data-i18n="arcade.play">Play live</span> <span class="arrow" aria-hidden="true">→</span></button>
+                  <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/carCrash" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="subhead">
+            <h3 data-i18n="arcade.more.title">More from the arcade</h3>
+            <p data-i18n="arcade.more.note">Six more, all playable in the browser</p>
+          </div>
+
+          <ul class="arcade-grid">
+            <li class="game-card" data-game="ringfall" data-touch="false" data-reveal>
+              <button class="game-thumb" type="button" data-play>
+                <img src="assets/img/arcade/ringfall.jpg" width="960" height="600" loading="lazy" decoding="async" alt="Ringfall arena with the player surrounded by enemies">
+                <span class="poster-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <h3 class="game-title">Ringfall</h3>
+              <p class="game-card-kind" data-i18n="arcade.ring.kind">Wave survival · Canvas 2D</p>
+              <p class="game-card-text" data-i18n="arcade.ring.text">Auto-aiming weapons, 30-second waves and a shop between rounds. Engine logic is covered by 16 Node tests.</p>
+              <p class="game-controls" data-i18n="arcade.ring.controls">WASD move · weapons fire automatically</p>
+              <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/ringfall" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+            </li>
+            <li class="game-card" data-game="rogue-like" data-touch="false" data-reveal>
+              <button class="game-thumb" type="button" data-play>
+                <img src="assets/img/arcade/rogue-like.jpg" width="960" height="540" loading="lazy" decoding="async" alt="Ashen Years: a fighter in a dark ruined pit">
+                <span class="poster-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <h3 class="game-title">Ashen Years</h3>
+              <p class="game-card-kind" data-i18n="arcade.ashen.kind">Action platformer · Phaser 3</p>
+              <p class="game-card-text" data-i18n="arcade.ashen.text">Timing-based melee with parries and a grapple, in pits carved by BSP generation each run. Every death ages your fighter.</p>
+              <p class="game-controls" data-i18n="arcade.ashen.controls">A/D move · Space jump · J strike · Shift dash</p>
+              <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/rogue-like" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+            </li>
+            <li class="game-card" data-game="villager" data-touch="false" data-reveal>
+              <button class="game-thumb" type="button" data-play>
+                <img src="assets/img/arcade/villager.jpg" width="960" height="600" loading="lazy" decoding="async" alt="Villager: a town hall on a grassy map with resources and a minimap">
+                <span class="poster-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <h3 class="game-title">Villager</h3>
+              <p class="game-card-kind" data-i18n="arcade.vil.kind">Historical RTS · Canvas 2D</p>
+              <p class="game-card-text" data-i18n="arcade.vil.text">Gather four resources, build, train soldiers and advance an age against three AI rivals, with fog of war and A* unit pathfinding.</p>
+              <p class="game-controls" data-i18n="arcade.vil.controls">LMB select · RMB move / gather / attack · 1/2/5 speed</p>
+              <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/villager" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+            </li>
+            <li class="game-card" data-game="colony_simulation" data-touch="false" data-reveal>
+              <button class="game-thumb" type="button" data-play>
+                <img src="assets/img/arcade/colony_simulation.jpg" width="960" height="600" loading="lazy" decoding="async" alt="Asterhold: a colony habitat dug into rock with ice and ore tiles">
+                <span class="poster-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <h3 class="game-title">Asterhold</h3>
+              <p class="game-card-kind" data-i18n="arcade.ast.kind">Colony simulation · ES modules</p>
+              <p class="game-card-text" data-i18n="arcade.ast.text">Keep four survivors alive in sealed rock. Gas and liquid flow cell by cell, heat transfers, and power networks and a job queue drive the colonists.</p>
+              <p class="game-controls" data-i18n="arcade.ast.controls">Mouse to dig, build and inspect · G dig tool</p>
+              <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/colony_simulation" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+            </li>
+            <li class="game-card" data-game="endlessTower" data-touch="true" data-reveal>
+              <button class="game-thumb" type="button" data-play>
+                <img src="assets/img/arcade/endlessTower.jpg" width="480" height="720" loading="lazy" decoding="async" alt="Endless Tower: a climber jumping between platforms and coins">
+                <span class="poster-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <h3 class="game-title">Endless Tower</h3>
+              <p class="game-card-kind" data-i18n="arcade.tower.kind">Vertical platformer · TypeScript</p>
+              <p class="game-card-text" data-i18n="arcade.tower.text">Climb generated platforms (fragile ones crumble, springs launch you), buy upgrades between levels, and race a ghost of your previous run.</p>
+              <p class="game-controls" data-i18n="arcade.tower.controls">Arrows move · Space jump · touch: hold sides, tap middle</p>
+              <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/endlessTower" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+            </li>
+            <li class="game-card" data-game="mayhem_cleaner" data-touch="false" data-reveal>
+              <button class="game-thumb" type="button" data-play>
+                <img src="assets/img/arcade/mayhem_cleaner.jpg" width="960" height="600" loading="lazy" decoding="async" alt="Mayhem Cleaner: first-person view holding a mop in a dim room">
+                <span class="poster-play"><span aria-hidden="true">▶</span> <span data-i18n="arcade.play">Play live</span></span>
+              </button>
+              <h3 class="game-title">Mayhem Cleaner</h3>
+              <p class="game-card-kind" data-i18n="arcade.may.kind">First-person sim · Three.js</p>
+              <p class="game-card-text" data-i18n="arcade.may.text">Clean up a crime scene. Dirty mops smear, shoes track blood prints, and full bins go to the incinerator.</p>
+              <p class="game-controls" data-i18n="arcade.may.controls">Click to capture mouse · WASD walk · 1/2 tools · Esc release</p>
+              <a class="text-link" href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/mayhem_cleaner" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+            </li>
+          </ul>
+
+          <p class="arcade-native" data-i18n="arcade.native">Also in the suite, as native C++ builds that don’t run in the browser: <a href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/doom2" rel="noopener">a raylib raycaster (C++20)</a> and <a href="https://github.com/yusufdegerli/yusufdegerli.github.io/tree/main/xai-arcade-browser-games/minecraft2" rel="noopener">a voxel engine on OpenGL (C++17)</a>.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ================================================================ Work -->
     <section class="section" id="work" aria-labelledby="work-title">
       <div class="wrap grid-12">
         <header class="section-head">
-          <p class="section-index">03</p>
+          <p class="section-index">04</p>
           <h2 class="section-title" id="work-title" data-i18n="work.title">Selected work</h2>
           <p class="section-note" data-i18n="work.note">Production apps, R&amp;D and systems projects, from Next.js front ends down to sockets and threads.</p>
         </header>
@@ -606,7 +784,7 @@
     <section class="section" id="recognition" aria-labelledby="rec-title">
       <div class="wrap grid-12">
         <header class="section-head">
-          <p class="section-index">04</p>
+          <p class="section-index">05</p>
           <h2 class="section-title" id="rec-title" data-i18n="rec.title">Recognition</h2>
         </header>
 
@@ -645,7 +823,7 @@
     <section class="section" id="about" aria-labelledby="about-title">
       <div class="wrap grid-12">
         <header class="section-head">
-          <p class="section-index">05</p>
+          <p class="section-index">06</p>
           <h2 class="section-title" id="about-title" data-i18n="about.title">About</h2>
         </header>
 
@@ -706,7 +884,7 @@
     <section class="section" id="contact" aria-labelledby="contact-title">
       <div class="wrap grid-12">
         <header class="section-head">
-          <p class="section-index">06</p>
+          <p class="section-index">07</p>
           <h2 class="section-title" id="contact-title" data-i18n="contact.title">Contact</h2>
         </header>
 
@@ -763,6 +941,34 @@
       </div>
     </section>
   </main>
+
+  <!-- ======================================================= Arcade player -->
+  <dialog class="player" id="arcade-player" aria-labelledby="player-title">
+    <div class="player-frame">
+      <header class="player-bar">
+        <div class="player-heading">
+          <span class="live-dot" aria-hidden="true"></span>
+          <h2 class="player-title" id="player-title">Game</h2>
+          <p class="player-controls mono" id="player-controls"></p>
+        </div>
+        <div class="player-actions">
+          <button class="panel-btn" type="button" data-player="restart" data-i18n-attr="aria-label:player.restart" aria-label="Restart"><span aria-hidden="true">↻</span> <span data-i18n="player.restart">Restart</span></button>
+          <button class="panel-btn" type="button" data-player="fullscreen" data-i18n-attr="aria-label:player.fullscreen" aria-label="Fullscreen"><span aria-hidden="true">⤢</span> <span data-i18n="player.fullscreen">Fullscreen</span></button>
+          <a class="panel-btn" id="player-source" href="#" rel="noopener" target="_blank" data-i18n-attr="aria-label:player.source_label" aria-label="Source code on GitHub"><span class="player-source-icon" aria-hidden="true">&lt;/&gt;</span> <span data-i18n="player.source">Source</span></a>
+          <a class="panel-btn player-newtab" id="player-newtab" href="#" target="_blank"><span data-i18n="player.newtab">New tab</span> <span aria-hidden="true">↗</span></a>
+          <button class="panel-btn player-close" type="button" data-player="close" data-i18n-attr="aria-label:player.close" aria-label="Close player">✕</button>
+        </div>
+      </header>
+      <div class="player-stage" id="player-stage">
+        <iframe id="player-iframe" title="Game" allow="fullscreen; autoplay; gamepad" allowfullscreen></iframe>
+        <div class="player-loading" id="player-loading" aria-hidden="true"><span class="loader-dots"></span><span data-i18n="player.loading">Loading</span></div>
+        <div class="player-notice" id="player-notice" hidden>
+          <p data-i18n="player.touch_notice">This game is built for a keyboard and mouse. It will load, but it may not be playable on a touch screen.</p>
+          <button class="btn btn-primary" type="button" data-player="dismiss"><span data-i18n="player.load_anyway">Load anyway</span></button>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <footer class="site-footer">
     <div class="wrap footer-inner">

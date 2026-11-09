@@ -2,6 +2,7 @@ import { initI18n, t } from './i18n.js';
 import { initTheme } from './theme.js';
 import { initHeader, initMenu, initActiveSection, initReveal, initSpotlight, initFilters } from './ui.js';
 import { initCopy, initContactForm } from './contact.js';
+import { initArcade } from './arcade.js';
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -17,6 +18,7 @@ initSpotlight();
 initFilters($('.filters'), $$('.project'));
 initCopy($('.copy-btn'), t);
 initContactForm($('#contact-form'), t);
+initArcade();
 
 // Interactive canvases are loaded on demand, shortly before they scroll into view.
 const demos = {

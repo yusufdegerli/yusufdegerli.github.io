@@ -14,13 +14,14 @@ export function createRunner({ root, step, render, hz = 60, t, onStats }) {
   let wantsToRun = !reducedMotion.matches; // the visitor's choice
   let inView = false;
   let pageVisible = document.visibilityState === 'visible';
+  let covered = false; // the arcade player is open on top of the page
   let rafId = 0;
   let last = 0;
   let accumulator = 0;
   let ticks = 0;
   let statsClock = 0;
 
-  const active = () => wantsToRun && inView && pageVisible;
+  const active = () => wantsToRun && inView && pageVisible && !covered;
 
   function frame(now) {
     rafId = requestAnimationFrame(frame);
@@ -79,6 +80,12 @@ export function createRunner({ root, step, render, hz = 60, t, onStats }) {
   });
 
   document.addEventListener('langchange', sync);
+
+  // Leave the CPU/GPU to the game while the arcade player is open.
+  document.addEventListener('arcadeplayer', (event) => {
+    covered = event.detail.open;
+    sync();
+  });
 
   return {
     /** Resume after user interaction even if reduced motion paused the demo. */
