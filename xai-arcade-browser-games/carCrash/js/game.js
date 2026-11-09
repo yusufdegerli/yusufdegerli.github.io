@@ -3450,13 +3450,19 @@
     var dt = Math.min(0.05, (now - last) / 1000);
     last = now;
     acc += dt;
+    var stepped = false;
     while (acc >= STEP) {
       update(STEP);
       acc -= STEP;
+      stepped = true;
     }
     render();
-    just = Object.create(null);
-    mouse.clicked = false;
+    // On displays faster than 60 Hz some frames run no update step. Keep this
+    // frame's key presses and clicks until a step has had the chance to read them.
+    if (stepped) {
+      just = Object.create(null);
+      mouse.clicked = false;
+    }
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
