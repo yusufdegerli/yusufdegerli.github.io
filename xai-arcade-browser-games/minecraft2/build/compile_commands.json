@@ -1,0 +1,104 @@
+[
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/cc  -I/Users/yusufdegerli/minecraft2/external/glad/include -g -std=gnu11 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/glad.dir/external/glad/src/gl.c.o -c /Users/yusufdegerli/minecraft2/external/glad/src/gl.c",
+  "file": "/Users/yusufdegerli/minecraft2/external/glad/src/gl.c",
+  "output": "CMakeFiles/glad.dir/external/glad/src/gl.c.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/main.cpp.o -c /Users/yusufdegerli/minecraft2/src/main.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/main.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/main.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/core/SimulationThread.cpp.o -c /Users/yusufdegerli/minecraft2/src/core/SimulationThread.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/core/SimulationThread.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/core/SimulationThread.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/render/Camera.cpp.o -c /Users/yusufdegerli/minecraft2/src/render/Camera.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/render/Camera.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/render/Camera.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/render/Shader.cpp.o -c /Users/yusufdegerli/minecraft2/src/render/Shader.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/render/Shader.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/render/Shader.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/render/Texture.cpp.o -c /Users/yusufdegerli/minecraft2/src/render/Texture.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/render/Texture.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/render/Texture.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/render/ChunkMesh.cpp.o -c /Users/yusufdegerli/minecraft2/src/render/ChunkMesh.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/render/ChunkMesh.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/render/ChunkMesh.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/render/ChunkRenderer.cpp.o -c /Users/yusufdegerli/minecraft2/src/render/ChunkRenderer.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/render/ChunkRenderer.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/render/ChunkRenderer.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/world/Chunk.cpp.o -c /Users/yusufdegerli/minecraft2/src/world/Chunk.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/world/Chunk.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/world/Chunk.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/world/World.cpp.o -c /Users/yusufdegerli/minecraft2/src/world/World.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/world/World.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/world/World.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/world/Water.cpp.o -c /Users/yusufdegerli/minecraft2/src/world/Water.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/world/Water.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/world/Water.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/world/Redstone.cpp.o -c /Users/yusufdegerli/minecraft2/src/world/Redstone.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/world/Redstone.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/world/Redstone.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/math/Raycast.cpp.o -c /Users/yusufdegerli/minecraft2/src/math/Raycast.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/math/Raycast.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/math/Raycast.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/physics/Physics.cpp.o -c /Users/yusufdegerli/minecraft2/src/physics/Physics.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/physics/Physics.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/physics/Physics.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/entity/Entities.cpp.o -c /Users/yusufdegerli/minecraft2/src/entity/Entities.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/entity/Entities.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/entity/Entities.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/ui/UI.cpp.o -c /Users/yusufdegerli/minecraft2/src/ui/UI.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/ui/UI.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/ui/UI.cpp.o"
+},
+{
+  "directory": "/Users/yusufdegerli/minecraft2/build",
+  "command": "/usr/bin/c++  -I/Users/yusufdegerli/minecraft2/include -I/Users/yusufdegerli/minecraft2/src -I/Users/yusufdegerli/minecraft2/external/glad/include -I/Users/yusufdegerli/minecraft2/external/FastNoiseLite -I/Users/yusufdegerli/minecraft2/external/stb -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -g -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/minecraft2.dir/src/ui/Chat.cpp.o -c /Users/yusufdegerli/minecraft2/src/ui/Chat.cpp",
+  "file": "/Users/yusufdegerli/minecraft2/src/ui/Chat.cpp",
+  "output": "CMakeFiles/minecraft2.dir/src/ui/Chat.cpp.o"
+}
+]

@@ -1,0 +1,412 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #07040a;
+  color: #f4e8ee;
+  font-family: "Share Tech Mono", ui-monospace, monospace;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  cursor: none;
+}
+
+#frame {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #07040a;
+}
+
+#game {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #0b0710;
+  outline: none;
+  touch-action: none;
+}
+
+#scanlines,
+#vignette,
+#grain {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+#scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.14) 0px,
+    rgba(0, 0, 0, 0.14) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+}
+
+#vignette {
+  background: radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+#grain {
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+#hud {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 22px 28px 26px;
+  z-index: 3;
+}
+
+#weapon-name,
+#kill-count {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.08em;
+  line-height: 0.9;
+}
+
+#weapon-name {
+  font-size: 42px;
+  color: #e10600;
+  text-shadow: 0 0 18px rgba(225, 6, 0, 0.55);
+}
+
+#weapon-ammo,
+#track-name {
+  margin-top: 4px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: #c9b4c0;
+}
+
+#kill-count {
+  font-size: 28px;
+  text-align: right;
+  color: #d4af37;
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.45);
+}
+
+#track-name {
+  text-align: right;
+  max-width: 360px;
+}
+
+#combo {
+  pointer-events: none;
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  z-index: 4;
+  text-align: center;
+  transform: translate(-50%, 0);
+  transform-origin: 50% 50%;
+}
+
+#combo.off {
+  display: none;
+}
+
+#combo-mult {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(64px, 10vw, 118px);
+  line-height: 0.78;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow:
+    4px 0 0 #e10600,
+    -4px 0 0 #d4af37,
+    0 6px 0 #14030a,
+    0 0 28px rgba(255, 45, 106, 0.7);
+}
+
+#combo-word {
+  margin-top: 2px;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(28px, 5vw, 48px);
+  letter-spacing: 0.18em;
+  color: #ffe566;
+  text-shadow:
+    3px 3px 0 #14030a,
+    0 0 18px rgba(255, 229, 102, 0.55);
+}
+
+#combo-bar {
+  width: 168px;
+  height: 6px;
+  margin: 10px auto 0;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+#combo-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #33e1ff, #ff2d6a);
+  transform-origin: left center;
+}
+
+#combo.pop #combo-mult {
+  animation: comboPunch 0.22s cubic-bezier(0.12, 1.4, 0.3, 1);
+}
+
+#combo.pop #combo-word {
+  animation: comboWord 0.28s cubic-bezier(0.12, 1.5, 0.3, 1);
+}
+
+#combo.hot #combo-mult {
+  color: #ffe566;
+  text-shadow:
+    5px 0 0 #e10600,
+    -5px 0 0 #d4af37,
+    0 7px 0 #14030a,
+    0 0 36px rgba(255, 229, 102, 0.85);
+}
+
+#combo.hot #combo-word {
+  color: #e10600;
+}
+
+@keyframes comboPunch {
+  0% {
+    transform: scale(0.35) rotate(-8deg);
+    filter: blur(2px);
+  }
+  60% {
+    transform: scale(1.28) rotate(3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes comboWord {
+  0% {
+    transform: translateY(12px) scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+#hud.hidden,
+#hud.hide {
+  display: none;
+}
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 2, 8, 0.62);
+  cursor: default;
+}
+
+#overlay.show {
+  display: flex;
+}
+
+#overlay.dead {
+  background: rgba(70, 0, 14, 0.55);
+}
+
+#overlay.won {
+  background: rgba(18, 8, 0, 0.58);
+}
+
+#overlay.menu {
+  background: rgba(8, 2, 2, 0.72);
+}
+
+.overlay-inner {
+  text-align: center;
+  padding: 24px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.46em;
+  color: #d4af37;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(72px, 14vw, 168px);
+  line-height: 0.82;
+  letter-spacing: 0.04em;
+  color: #e10600;
+  text-shadow:
+    6px 6px 0 #14030a,
+    0 0 40px rgba(225, 6, 0, 0.45);
+}
+
+.tagline {
+  margin-top: 18px;
+  letter-spacing: 0.28em;
+  font-size: 14px;
+  color: #f4e8ee;
+}
+
+.controls {
+  list-style: none;
+  margin: 28px auto 0;
+  display: grid;
+  gap: 8px;
+  max-width: 360px;
+  text-align: left;
+  font-size: 13px;
+  color: #d7c4ce;
+}
+
+.controls li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 28px;
+  padding: 3px 7px;
+  border: 1px solid #e10600;
+  color: #e10600;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+#start-btn {
+  margin-top: 32px;
+  border: 0;
+  background: #e10600;
+  color: #14030a;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.16em;
+  padding: 12px 28px;
+  cursor: pointer;
+}
+
+#start-btn:hover {
+  background: #d4af37;
+}
+
+#talk {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+}
+
+#talk.off {
+  display: none;
+}
+
+#talk-top,
+#talk-bot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #070204;
+}
+
+#talk-top {
+  top: 0;
+  height: 12%;
+}
+
+#talk-bot {
+  bottom: 0;
+  min-height: 28%;
+  padding: 22px 8% 28px;
+  border-top: 3px solid #e10600;
+}
+
+#talk-who {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.22em;
+  color: #d4af37;
+  margin-bottom: 8px;
+}
+
+#talk-line {
+  font-size: 20px;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  color: #f6ece8;
+  min-height: 3.2em;
+  white-space: pre-wrap;
+}
+
+#talk-hint {
+  margin-top: 12px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: #8a7380;
+  animation: blink 0.9s steps(2, end) infinite;
+}
+
+#talk.dread #talk-bot {
+  border-top-color: #6a1020;
+  background: #0a0306;
+}
+
+#talk.dread #talk-who {
+  color: #e10600;
+}
+
+.credit {
+  margin-top: 18px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #8a7380;
+}
+
+#overlay.dead h1,
+#overlay.won h1 {
+  font-size: clamp(64px, 12vw, 140px);
+}
+
+#overlay .prompt {
+  margin-top: 22px;
+  font-size: 16px;
+  letter-spacing: 0.28em;
+  color: #fff;
+  animation: blink 0.9s steps(2, end) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

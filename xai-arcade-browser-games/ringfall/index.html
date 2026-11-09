@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ringfall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Sora:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="arena" width="1280" height="720" aria-label="Open arena"></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+
+      <div id="hud" class="hud hidden">
+        <div class="hud-top">
+          <div class="wave-pill">Wave <span id="wave-num">1</span></div>
+          <div class="timer-wrap">
+            <div id="timer" class="timer">0:30</div>
+            <div class="timer-track"><div id="timer-fill"></div></div>
+          </div>
+          <div class="currency-pill">
+            <span class="gem-icon" aria-hidden="true"></span>
+            <span id="currency">0</span>
+          </div>
+        </div>
+        <div class="xp-row">
+          <span id="level-label">Lv 1</span>
+          <div class="xp-track" aria-hidden="true"><div id="xp-fill"></div></div>
+        </div>
+        <div class="hud-bottom">
+          <dl class="stats">
+            <div><dt>Max Health</dt><dd id="stat-max">100</dd></div>
+            <div><dt>Current Health</dt><dd id="stat-hp">100</dd></div>
+            <div><dt>Movement Speed</dt><dd id="stat-speed">235</dd></div>
+            <div><dt>Damage Multiplier</dt><dd id="stat-dmg">1.00</dd></div>
+            <div><dt>Collection Radius</dt><dd id="stat-radius">120</dd></div>
+            <div><dt>Attack Speed</dt><dd id="stat-aspd">0</dd></div>
+            <div><dt>Health Regen</dt><dd id="stat-regen">0</dd></div>
+            <div><dt>Life Steal</dt><dd id="stat-steal">0%</dd></div>
+            <div><dt>Armor</dt><dd id="stat-armor">0</dd></div>
+            <div><dt>Wave Heal</dt><dd id="stat-wave-heal">20%</dd></div>
+          </dl>
+          <div id="weapon-bar" class="weapon-bar" aria-label="Weapons"></div>
+        </div>
+      </div>
+
+      <p id="banner" class="banner hidden" aria-live="polite"></p>
+
+      <section id="screen-start" class="overlay">
+        <div class="panel">
+          <p class="eyebrow">Open arena</p>
+          <h1>Ringfall</h1>
+          <p class="lede">Move with WASD. Your weapons attack on their own.</p>
+          <ul class="rules">
+            <li>The field has no walls. Enemies walk straight at you from outside the screen.</li>
+            <li>You start with an axe and a bow. Weapons aim themselves. You can hold six.</li>
+            <li>A touch hurts, then you are invincible for half a second. Armor reduces that hit.</li>
+            <li>Green gems give 1 currency and XP. Fill the bar to level up and heal.</li>
+            <li>Each wave lasts 30 seconds, then the shop opens. A new wave heals 20% of max health.</li>
+          </ul>
+          <div class="legend" aria-label="Color legend">
+            <span><i class="swatch player"></i> Player</span>
+            <span><i class="swatch melee"></i> Axe</span>
+            <span><i class="swatch arrow"></i> Arrow</span>
+            <span><i class="swatch rocket"></i> Rocket</span>
+            <span><i class="swatch basic"></i> Basic</span>
+            <span><i class="swatch fast"></i> Fast</span>
+            <span><i class="swatch gem"></i> Gem</span>
+          </div>
+          <button id="btn-start" class="btn primary" type="button">Start Run</button>
+        </div>
+      </section>
+
+      <section id="screen-shop" class="overlay hidden">
+        <div class="panel shop-panel">
+          <div class="shop-scroll">
+            <p class="eyebrow">Between waves</p>
+            <h2>The Shop</h2>
+            <p id="shop-wave" class="lede"></p>
+            <div class="shop-meta">
+              <div class="currency-large" id="shop-currency-wrap">
+                <span class="gem-icon" aria-hidden="true"></span>
+                <span id="shop-currency">0</span>
+              </div>
+              <p id="shop-loadout"></p>
+            </div>
+            <div id="shop-stats" class="shop-stats"></div>
+            <div id="shop-weapons" class="weapon-bar"></div>
+            <div id="shop-offers" class="shop-grid"></div>
+          </div>
+          <button id="btn-next" class="btn primary wide" type="button">Start Next Wave</button>
+        </div>
+      </section>
+
+      <section id="screen-over" class="overlay hidden">
+        <div class="panel">
+          <p class="eyebrow">Run ended</p>
+          <h2>Game Over</h2>
+          <p class="lede">The swarm caught you.</p>
+          <ul class="summary">
+            <li>Wave reached <strong id="over-wave">1</strong></li>
+            <li>Level <strong id="over-level">1</strong></li>
+            <li>Enemies defeated <strong id="over-kills">0</strong></li>
+            <li>Currency left <strong id="over-currency">0</strong></li>
+          </ul>
+          <div class="actions">
+            <button id="btn-retry" class="btn primary" type="button">Try Again</button>
+            <button id="btn-menu" class="btn" type="button">Title Screen</button>
+          </div>
+        </div>
+      </section>
+    </div>
+    <noscript>This game needs JavaScript.</noscript>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

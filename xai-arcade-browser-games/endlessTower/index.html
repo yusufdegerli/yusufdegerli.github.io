@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Endless Tower</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #090b10;
+        color: #f7f4ea;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+      }
+
+      .stage {
+        position: relative;
+        width: min(100vw, calc(100vh * 480 / 720));
+        aspect-ratio: 480 / 720;
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        background: #16324f;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      }
+
+      .shop {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        background: rgba(8, 6, 16, 0.72);
+        box-sizing: border-box;
+      }
+
+      .shop[hidden] {
+        display: none;
+      }
+
+      .shop-card {
+        width: min(100%, 360px);
+        max-height: 100%;
+        overflow: auto;
+        padding: 20px 18px 16px;
+        background: #1c1612;
+        border: 2px solid #e7c27a;
+        border-radius: 16px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .shop-kicker {
+        margin: 0;
+        color: #e7c27a;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        margin: 6px 0 8px;
+        font-size: 28px;
+      }
+
+      .shop-next,
+      .upgrade p {
+        margin: 0;
+        color: rgba(247, 244, 234, 0.78);
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .shop-balance {
+        margin: 14px 0;
+        font-size: 18px;
+      }
+
+      .shop-balance strong {
+        color: #ffd15a;
+        font-size: 28px;
+      }
+
+      .upgrade {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 4px 12px;
+        align-items: center;
+        padding: 12px 0;
+        border-top: 1px solid rgba(231, 194, 122, 0.25);
+      }
+
+      .upgrade h3,
+      .upgrade .rank {
+        margin: 0;
+        font-size: 16px;
+      }
+
+      .upgrade p {
+        grid-column: 1 / -1;
+      }
+
+      .rank {
+        color: #e7c27a;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: 0;
+        border-radius: 999px;
+      }
+
+      .upgrade button {
+        grid-column: 1 / -1;
+        justify-self: start;
+        margin-top: 6px;
+        padding: 8px 14px;
+        background: #ff6b4a;
+        color: #1c1612;
+        font-weight: 700;
+      }
+
+      .upgrade button:disabled {
+        cursor: default;
+        opacity: 0.4;
+      }
+
+      #shop-continue {
+        width: 100%;
+        margin-top: 8px;
+        padding: 12px 16px;
+        background: #e7c27a;
+        color: #1c1612;
+        font-size: 16px;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <canvas width="480" height="720" aria-label="Endless Tower"></canvas>
+      <section id="shop" class="shop" hidden>
+        <div class="shop-card" role="dialog" aria-modal="true" aria-labelledby="shop-title">
+          <p class="shop-kicker">Stop</p>
+          <h2 id="shop-title">Level complete</h2>
+          <p id="shop-next" class="shop-next"></p>
+          <p class="shop-balance">Coins <strong id="shop-balance">0</strong></p>
+          <article class="upgrade">
+            <h3>Higher jump</h3>
+            <span class="rank" id="rank-jump">Not owned</span>
+            <p id="detail-jump"></p>
+            <button type="button" id="buy-jump">Buy</button>
+          </article>
+          <article class="upgrade">
+            <h3>Faster run</h3>
+            <span class="rank" id="rank-run">Not owned</span>
+            <p id="detail-run"></p>
+            <button type="button" id="buy-run">Buy</button>
+          </article>
+          <article class="upgrade">
+            <h3>Coin magnet</h3>
+            <span class="rank" id="rank-magnet">Not owned</span>
+            <p id="detail-magnet"></p>
+            <button type="button" id="buy-magnet">Buy</button>
+          </article>
+          <article class="upgrade">
+            <h3>Quantum Teleporter</h3>
+            <span class="rank" id="rank-teleport">Not owned</span>
+            <p id="detail-teleport"></p>
+            <button type="button" id="buy-teleport">Buy</button>
+          </article>
+          <button type="button" id="shop-continue">Continue</button>
+        </div>
+      </section>
+    </div>
+    <script type="module" src="./dist/main.js"></script>
+  </body>
+</html>
