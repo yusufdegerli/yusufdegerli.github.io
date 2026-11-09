@@ -41,6 +41,11 @@ export class MenuScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
+    // Keyboard start, matching the GameOver screen (Enter / Space / J).
+    this.starting = false;
+    const kb = this.input.keyboard;
+    ["keydown-ENTER", "keydown-SPACE", "keydown-J"].forEach((evt) => kb.once(evt, () => this.start()));
+
     if (new URLSearchParams(window.location.search).has("play")) {
       this.time.delayedCall(80, () => this.start(true));
     }
@@ -63,6 +68,8 @@ export class MenuScene extends Phaser.Scene {
   }
 
   start(skipFade = false) {
+    if (this.starting) return; // click + key in the same moment must not start twice
+    this.starting = true;
     audio.resume();
     audio.ui();
     this.registry.set("age", START_AGE);
