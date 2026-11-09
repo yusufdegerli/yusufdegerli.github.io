@@ -1,4 +1,0 @@
-/Users/yusufdegerli/minecraft2/build/CMakeFiles/glad.dir
-/Users/yusufdegerli/minecraft2/build/CMakeFiles/minecraft2.dir
-/Users/yusufdegerli/minecraft2/build/CMakeFiles/edit_cache.dir
-/Users/yusufdegerli/minecraft2/build/CMakeFiles/rebuild_cache.dir
