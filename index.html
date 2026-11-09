@@ -1,1073 +1,775 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Yusuf Değerli - Flutter Geliştirici ve UI/UX Tasarımcı. Mobil uygulama geliştirme, kullanıcı arayüzü tasarımı ve temiz kod mimarisinde uzman.">
-  <meta name="keywords" content="flutter, mobile app, ui design, ux design, developer, Yusuf Değerli, türkiye, istanbul, dart, firebase">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yusuf Değerli — Software Engineer · Frontend, Graphics &amp; AI Evaluation</title>
+  <meta name="description" content="Software engineer building complex web interfaces and real-time graphics, and evaluating how frontier AI models write code at xAI. Systems-trained in C/C++ at 42 Istanbul.">
   <meta name="author" content="Yusuf Değerli">
+  <link rel="canonical" href="https://yusufdegerli.github.io/">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.Yusufozer.com/">
-  <meta property="og:title" content="Yusuf Değerli | Flutter Geliştirici ve UI/UX Tasarımcı">
-  <meta property="og:description" content="Flutter ile mobil uygulama geliştirme ve kullanıcı deneyimi tasarımında uzman. Projelerinizi hayata geçirelim.">
-  <meta property="og:image" content="https://www.Yusufozer.com/images/og-image.jpg">
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://yusufdegerli.github.io/">
+  <meta property="og:title" content="Yusuf Değerli — Software Engineer">
+  <meta property="og:description" content="Frontend, interactive graphics and AI evaluation. C/C++ systems foundation from 42 Istanbul.">
+  <meta property="og:image" content="https://yusufdegerli.github.io/assets/img/portrait.jpg">
+  <meta name="twitter:card" content="summary">
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://www.Yusufozer.com/">
-  <meta property="twitter:title" content="Yusuf Değerli | Flutter Geliştirici ve UI/UX Tasarımcı">
-  <meta property="twitter:description" content="Flutter ile mobil uygulama geliştirme ve kullanıcı deneyimi tasarımında uzman. Projelerinizi hayata geçirelim.">
-  <meta property="twitter:image" content="https://www.Yusufozer.com/images/og-image.jpg">
+  <meta name="theme-color" content="#0d0d0c" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <!-- Canonical URL -->
-  <meta rel="canonical" href="https://www.Yusufozer.com/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
 
-  <title>Yusuf Değerli | Flutter Geliştirici & UI/UX Tasarımcı</title>
-  <!-- Structured Data for SEO -->
-  <script type="application/ld+json" class="structured-data">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Yusuf Değerli",
-      "url": "https://www.Yusufozer.com",
-      "image": "https://www.Yusufozer.com/images/profile.jpg",
-      "jobTitle": "Flutter Geliştirici & UI/UX Tasarımcı",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Freelance"
-      },
-      "sameAs": [
-        "https://github.com/username",
-        "https://linkedin.com/in/username",
-        "https://twitter.com/username",
-        "https://dribbble.com/username"
-      ],
-      "knowsAbout": ["Flutter", "Dart", "UI/UX Design", "Mobile App Development", "Firebase"]
-    }
-  </script>
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
+    // Apply the saved theme before first paint to avoid a flash.
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+      } catch (e) {}
+    })();
   </script>
-    <script type="application/ld+json" class="structured-data">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "url": "https://www.yusufdegerli.github.io",
-      "name": "Yusuf Değerli | Flutter Geliştirici & UI/UX Tasarımcı",
-      "description": "Flutter Geliştirici ve UI/UX Tasarımcı Portföy Sitesi",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.yusufdegerli.github.io/search?q={search_term}",
-        "query-input": "required name=search_term"
-      }
-    }
+  <script type="module" src="js/main.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Yusuf Değerli",
+    "alternateName": "Muhammed Yusuf Değerli",
+    "url": "https://yusufdegerli.github.io/",
+    "image": "https://yusufdegerli.github.io/assets/img/portrait.jpg",
+    "jobTitle": "Software Engineer",
+    "address": { "@type": "PostalAddress", "addressLocality": "Istanbul", "addressCountry": "TR" },
+    "alumniOf": [
+      { "@type": "EducationalOrganization", "name": "42 Istanbul" },
+      { "@type": "CollegeOrUniversity", "name": "Anadolu University" }
+    ],
+    "knowsAbout": ["Frontend engineering", "HTML5 Canvas", "Raycasting", "LLM code evaluation", "C", "C++", "TypeScript", "Next.js", ".NET", "Flutter"],
+    "sameAs": [
+      "https://github.com/yusufdegerli",
+      "https://www.linkedin.com/in/yusufdegerli",
+      "https://medium.com/@yusufdgrl72"
+    ]
+  }
   </script>
-
-  <script type="application/ld+json" class="structured-data">
-    {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "itemListElement": [
-        {
-          "@type": "SoftwareApplication",
-          "position": 1,
-          "name": "Restaurant Order Program",
-          "image": "restaurant_app.png",
-          "applicationCategory": "MobileApplication",
-          "operatingSystem": "Android, iOS",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          }
-        },
-        {
-          "@type": "SoftwareApplication",
-          "position": 2,
-          "name": "Card Game (Godot)",
-          "image": "card_game.png",
-          "applicationCategory": "MobileApplication",
-          "operatingSystem": "Android, iOS",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          }
-        },
-        {
-          "@type": "SoftwareApplication",
-          "position": 3,
-          "name": "Taboo-Like Game",
-          "image": "taboo-like.png",
-          "applicationCategory": "DesignApplication",
-          "operatingSystem": "Android, iOS",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          }        }
-      ]
-    }
-  </script>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/000000/flutter.png"/>
-
-  <!-- Font imports -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Flutter Geliştirici ve UI/UX Tasarımcı Portföy Sitesi">
-  <meta name="keywords" content="flutter, mobile app, ui design, ux design, developer">
-  <title>Modern Portföy | Flutter Geliştirici</title>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/000000/flutter.png"/>
-
-  <!-- Font imports -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Icons and CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="3d-effects.css">
-
-  <!-- External Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans scroll-smooth">
-  <!-- Loading Screen -->
-  <div class="loader">
-    <div class="loader-circle"></div>
-  </div>
+<body>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
-  <!-- Navbar -->
-  <header class="fixed top-0 left-0 w-full bg-transparent shadow-none z-50">
-    <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
-      <div class="text-xl font-bold flex items-center">
-        <img src="flutter_logo.png" alt="Logo" class="w-8 h-8 mr-2" />
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-500">Yusuf Değerli</span>
-      </div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></symbol>
+  </svg>
 
-      <!-- Desktop Menu -->
-      <ul class="hidden md:flex space-x-8">
-        <li><a href="#about" class="hover:text-blue-400 transition-colors py-2" data-translate="nav.about">Hakkımda</a></li>
-        <li><a href="#skills" class="hover:text-blue-400 transition-colors py-2" data-translate="nav.skills">Yetenekler</a></li>
-        <li><a href="#projects" class="hover:text-blue-400 transition-colors py-2" data-translate="nav.projects">Projeler</a></li>
-        <li><a href="#contact" class="hover:text-blue-400 transition-colors py-2" data-translate="nav.contact">İletişim</a></li>
-      </ul>
+  <!-- ================================================================== Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Yusuf Değerli — home">
+        <img class="brand-mark" src="assets/favicon.svg" alt="" width="28" height="28">
+        <span>Yusuf Değerli</span>
+      </a>
 
-      <!-- Language and Dark Mode Toggle -->
-      <div class="hidden md:flex items-center ml-4 space-x-2">
-        <!-- Language Toggle -->
-        <div class="language-toggle relative" onclick="toggleLanguage()">
-          <div class="language-flag cursor-pointer w-8 h-8 rounded-full overflow-hidden border-2 border-white/20 hover:border-orange-400 transition-all duration-300">
-            <div id="current-flag" class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
-          </div>
-          <div class="language-tooltip absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-2 py-1 rounded text-xs whitespace-nowrap opacity-0 transition-opacity duration-300">
-            <span id="language-tooltip-text">Türkçe</span>
-          </div>
-        </div>
-        
-        <!-- Dark Mode Toggle -->
-        <div class="dark-mode-toggle" onclick="toggleDarkMode()"></div>
-      </div>
-
-      <!-- Mobile Menu Button -->
-      <button class="md:hidden menu-button flex flex-col justify-center items-center w-8 h-8" onclick="toggleMobileMenu()">
-        <span class="w-6 h-0.5 bg-white mb-1.5 transition-all"></span>
-        <span class="w-6 h-0.5 bg-white mb-1.5 transition-all"></span>
-        <span class="w-6 h-0.5 bg-white transition-all"></span>
-      </button>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu md:hidden fixed top-16 left-0 w-full h-0 bg-slate-800 overflow-hidden transition-all duration-300 z-50">
-      <div class="container mx-auto px-6 py-8">
-        <ul class="flex flex-col space-y-6 mb-8">
-          <li><a href="#about" class="text-lg block hover:text-blue-400 transition-colors" data-translate="nav.about">Hakkımda</a></li>
-          <li><a href="#skills" class="text-lg block hover:text-blue-400 transition-colors" data-translate="nav.skills">Yetenekler</a></li>
-          <li><a href="#projects" class="text-lg block hover:text-blue-400 transition-colors" data-translate="nav.projects">Projeler</a></li>
-          <li><a href="#contact" class="text-lg block hover:text-blue-400 transition-colors" data-translate="nav.contact">İletişim</a></li>
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="#experience" data-i18n="nav.experience">Experience</a></li>
+          <li><a class="nav-link" href="#lab" data-i18n="nav.lab">Lab</a></li>
+          <li><a class="nav-link" href="#work" data-i18n="nav.work">Work</a></li>
+          <li><a class="nav-link" href="#about" data-i18n="nav.about">About</a></li>
+          <li><a class="nav-link" href="#contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
+      </nav>
 
-        <!-- Mobile Language and Dark Mode Toggle -->
-        <div class="space-y-4">
-          <!-- Mobile Language Toggle -->
-          <div class="flex items-center">
-            <div class="language-toggle relative" onclick="toggleLanguage()">
-              <div class="language-flag cursor-pointer w-8 h-8 rounded-full overflow-hidden border-2 border-white/20 hover:border-orange-400 transition-all duration-300">
-                <div id="current-flag-mobile" class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
-              </div>
-            </div>
-            <span class="ml-3" id="mobile-language-text">Türkçe</span>
-          </div>
-          
-          <!-- Mobile Dark Mode Toggle -->
-          <div class="flex items-center">
-            <div class="dark-mode-toggle" onclick="toggleDarkMode()"></div>
-            <span class="ml-3" id="mobile-theme-text">Koyu/Açık Mod</span>
-          </div>
-        </div>
-
-        <!-- Mobile Social Links -->
-        <div class="flex mt-8 space-x-4">
-          <a href="https://github.com/username" target="_blank" class="social-link">
-            <i class="ri-github-fill"></i>
-          </a>
-          <a href="https://linkedin.com/in/username" target="_blank" class="social-link">
-            <i class="ri-linkedin-fill"></i>
-          </a>
-          <a href="https://twitter.com/username" target="_blank" class="social-link">
-            <i class="ri-twitter-fill"></i>
-          </a>
-        </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="lang-toggle" type="button" lang="tr" aria-label="Türkçe’ye geç">TR</button>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch colour theme">
+          <svg class="theme-icon-dark" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="theme-icon-light" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-i18n-attr="aria-label:a11y.menu" aria-label="Menu">
+          <svg aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
       </div>
     </div>
   </header>
-  <!-- Hero -->
-  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 hero-gradient relative overflow-hidden" id="hero">
-    <div class="hero-bg-circle absolute"></div>
-    <div class="hero-bg-circle2 absolute"></div>
 
-    <div class="container mx-auto max-w-4xl relative z-10">
-      <div class="mb-6 inline-block p-2 bg-orange-500 bg-opacity-20 rounded-lg anim-element">
-        <span class="text-orange-400 font-medium" data-translate="hero.title">Flutter Geliştirici & UI Tasarımcı</span>
-      </div>
-
-      <h1 class="text-5xl sm:text-6xl font-bold mb-6 anim-element" data-parallax-element>
-        <span data-translate="hero.greeting">Merhaba, Ben Yusuf. Yazılım Geliştiricisiyim</span>
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-pink-500">Yusuf Değerli</span>
-      </h1>
-
-      <div class="flex flex-wrap justify-center gap-4 mb-12 anim-element delay-300">
-        <a href="#projects" class="btn-primary">
-          <span data-translate="hero.view_projects">Projelere Göz At</span>
-          <i class="ri-arrow-right-line ml-2"></i>
-        </a>
-        <a href="#contact" class="border border-slate-600 text-slate-300 hover:border-orange-400 hover:text-orange-400 py-2.5 px-5 rounded-md transition-all">
-          <span data-translate="hero.contact">İletişime Geç</span>
-        </a>
-      </div>
-
-      <!-- Quick Contact -->
-      <div class="quick-contact mt-12 p-5 bg-slate-800 bg-opacity-50 backdrop-filter backdrop-blur-md rounded-xl max-w-md mx-auto anim-element delay-400">
-        <h3 class="text-lg font-semibold mb-4" data-translate="hero.quick_contact">Hızlı İletişim</h3>
-        <form class="quick-contact-form" onsubmit="submitQuickContact(event)">
-          <div class="grid md:grid-cols-2 gap-4 mb-4">
-            <input type="text" name="name" data-translate-placeholder="form.name" placeholder="Adınız" class="form-input py-2 px-3 text-sm" required>
-            <input type="tel" name="phone" data-translate-placeholder="form.phone" placeholder="Telefon Numaranız" class="form-input py-2 px-3 text-sm" required>
-          </div>
-          <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md transition-all text-sm">
-            <i class="ri-phone-line mr-2"></i> <span data-translate="hero.call_me">Beni Ara</span>
-          </button>
-        </form>
-      </div>
-
-      <div class="mt-16 animate-float">
-        <i class="ri-arrow-down-line text-3xl text-orange-400 animate-pulse"></i>
-      </div>
-    </div>
-
-    <!-- Floating Elements -->
-    <div class="floating-element floating-element-1"></div>
-    <div class="floating-element floating-element-2"></div>
-    <div class="floating-element floating-element-3"></div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="py-24 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4" data-translate="about.section_title">Hakkımda</span>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          <span data-translate="about.title">Profesyonel bir</span> <span class="text-orange-400" data-translate="about.subtitle">Flutter Geliştiricisiyim</span>
-        </h2>
-        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
-      </div>      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="anim-element">
-          <img src="unnamed.png"
-               alt="Developer Photo"
-               class="rounded-xl shadow-2xl w-full max-w-md mx-auto transform hover:scale-105 transition-all duration-300"
-               loading="lazy" />
-        </div>
-
-<div class="space-y-6">
-  <!-- Intro -->
-  <p class="text-lg text-slate-300 leading-relaxed anim-element" data-translate="about.intro">
-    Merhaba! Ben <span class="font-semibold text-white">Yusuf Değerli</span>, İstanbul'da yaşayan tutkulu bir 
-    <span class="text-cyan-400">Flutter geliştiricisiyim</span>. 
-    <span class="font-semibold">Clean Architecture</span>, <span class="font-semibold">SOLID prensipleri</span> 
-    ve performanslı Flutter uygulamaları geliştirmeye odaklanıyorum.
-  </p>
-
-  <!-- Journey -->
-  <p class="text-lg text-slate-300 leading-relaxed anim-element delay-100" data-translate="about.description2">
-    Mobil geliştirme yolculuğuma 3 yıl önce başladım. Bu süreçte Flutter'ın güçlü ekosistemi sayesinde kullanıcı dostu 
-    ve yüksek performanslı uygulamalar geliştirdim. UI/UX tasarım prensiplerini yakından takip ederek her zaman 
-    kullanıcı deneyimini ön planda tuttum.
-  </p>
-
-  <!-- Projects / Skills Grid -->
-  <div class="grid md:grid-cols-2 gap-4 anim-element delay-200">
-    <!-- API -->
-    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
-      <i data-lucide="server" class="w-10 h-10 text-cyan-400"></i>
-      <p class="text-slate-300 text-base leading-relaxed" data-translate="about.skill1">
-        <span class="font-semibold text-white">.NET 8 & EF Core</span> ile RESTful API geliştirme
-      </p>
-    </div>
-
-    <!-- Database -->
-    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
-      <i data-lucide="database" class="w-12 h-12 text-emerald-400"></i>
-      <p class="text-slate-300 text-base leading-relaxed" data-translate="about.skill2">
-        <span class="font-semibold text-white">SQLite & SQL Server</span> üzerinde veri tabanı tasarımı
-      </p>
-    </div>
-
-    <!-- ASP.NET -->
-    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
-      <i data-lucide="file-cog" class="w-12 h-12 text-purple-400"></i>
-      <p class="text-slate-300 text-base leading-relaxed" data-translate="about.skill3">
-        <span class="font-semibold text-white">ASP.NET Core</span> ile sipariş ve bilet yönetim sistemleri
-      </p>
-    </div>
-
-    <!-- WebSocket -->
-    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
-      <i data-lucide="wifi" class="w-12 h-12 text-pink-400"></i>
-      <p class="text-slate-300 text-base leading-relaxed" data-translate="about.skill4">
-        <span class="font-semibold text-white">WebSocket entegrasyonu</span> ile gerçek zamanlı bildirimler
-      </p>
-    </div>
-
-    <!-- POS -->
-    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
-      <i data-lucide="credit-card" class="w-12 h-12 text-yellow-400"></i> 
-      <p class="text-slate-300 text-base leading-relaxed" data-translate="about.skill5">
-        <span class="font-semibold text-white">POS benzeri ödeme ekranları</span> ve otomasyon çözümleri
-      </p>
-    </div>
-
-    <!-- Unity -->
-    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-800/40 shadow-sm">
-      <i data-lucide="gamepad-2" class="w-12 h-12 text-red-400"></i>
-      <p class="text-slate-300 text-base leading-relaxed" data-translate="about.skill6">
-        <span class="font-semibold text-white">Unity</span>, gömülü yazılım ve veri bilimi alanlarında deneyim
-      </p>
-    </div>
-  </div>
-
-  <!-- Closing -->
-  <p class="text-lg text-slate-300 leading-relaxed anim-element delay-300" data-translate="about.summary">
-    Kısacası, yazılım geliştirmeye hem teknik altyapı hem de kullanıcı deneyimi açısından 
-    <span class="font-semibold text-white">bütünsel bir bakış açısıyla</span> yaklaşıyorum 🚀
-  </p>
-</div>
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
-  lucide.createIcons();
-</script>
-
-
-          <div class="grid grid-cols-2 gap-4 mb-8 anim-element delay-200">
-            <div>
-              <h3 class="text-xl font-bold mb-2">3+</h3>
-              <p class="text-slate-400" data-translate="about.experience">Yıl Deneyim</p>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold mb-2">10+</h3>
-              <p class="text-slate-400" data-translate="about.projects">Tamamlanan Proje</p>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold mb-2">10+</h3>
-              <p class="text-slate-400" data-translate="about.contributions">Açık Kaynak Katkısı</p>
-            </div>
-          </div>
-
-          <a href="yusuf_degerli.pdf" class="btn-primary anim-element delay-300">
-            <span data-translate="about.download_cv">CV'mi İndir</span> <i class="ri-download-line ml-2"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Skills -->
-  <section id="skills" class="py-24 px-6 bg-slate-800 relative overflow-hidden">
-    <div class="skill-bg-circle absolute"></div>
-    <div class="max-w-5xl mx-auto relative z-10">
-      <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4" data-translate="skills.section_title">Yeteneklerim</span>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          <span data-translate="skills.subtitle">Uzman Olduğum</span> <span class="text-orange-400">Teknolojiler</span>
-        </h2>
-        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-12">
-        <div>
-          <h3 class="text-2xl font-bold mb-6" data-translate="skills.technical">Teknik Yetenekler</h3>
-
-          <div class="space-y-6">
-            <div class="anim-element">
-              <div class="flex justify-between mb-2">
-                <span class="font-medium">Flutter</span>
-                <span>95%</span>
-              </div>
-              <div class="w-full bg-slate-700 rounded-full h-2">
-                <div class="bg-orange-500 h-2 rounded-full skill-progress" style="width: 95%"></div>
-              </div>
-            </div>
-
-            <div class="anim-element delay-100">
-              <div class="flex justify-between mb-2">
-                <span class="font-medium">Dart</span>
-                <span>90%</span>
-              </div>
-              <div class="w-full bg-slate-700 rounded-full h-2">
-                <div class="bg-blue-500 h-2 rounded-full skill-progress" style="width: 90%"></div>
-              </div>
-            </div>
-
-            <div class="anim-element delay-200">
-              <div class="flex justify-between mb-2">
-                <span class="font-medium">Firebase</span>
-                <span>85%</span>
-              </div>
-              <div class="w-full bg-slate-700 rounded-full h-2">
-                <div class="bg-blue-500 h-2 rounded-full skill-progress" style="width: 85%"></div>
-              </div>
-            </div>
-
-            <div class="anim-element">
-              <div class="flex justify-between mb-2">
-                <span class="font-medium">.NET</span>
-                <span>75%</span>
-              </div>
-              <div class="w-full bg-slate-700 rounded-full h-2">
-                <div class="bg-orange-500 h-2 rounded-full skill-progress" style="width: 95%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="text-2xl font-bold mb-6" data-translate="skills.other">Diğer Yetenekler</h3>
-
-          <div class="flex flex-wrap gap-3">
-            <span class="skill-badge anim-element">Clean Architecture</span>
-            <span class="skill-badge anim-element delay-100">SOLID</span>
-            <span class="skill-badge anim-element delay-200">BLoC Pattern</span>
-            <span class="skill-badge anim-element delay-300">Provider</span>
-            <span class="skill-badge anim-element">GetX</span>
-            <span class="skill-badge anim-element delay-100">Riverpod</span>
-            <span class="skill-badge anim-element delay-200">REST API</span>
-            <span class="skill-badge anim-element delay-300">GraphQL</span>
-            <span class="skill-badge anim-element">Git</span>
-            <span class="skill-badge anim-element delay-100">CI/CD</span>
-            <span class="skill-badge anim-element delay-200">UI/UX Design</span>
-            <span class="skill-badge anim-element delay-300">Responsive Design</span>
-            <span class="skill-badge anim-element">Animation</span>
-            <span class="skill-badge anim-element delay-100">Firebase Auth</span>
-            <span class="skill-badge anim-element delay-200">Firestore</span>
-            <span class="skill-badge anim-element delay-300">SQLite</span>
-
-            <span class="skill-badge anim-element delay-100">Python</span>
-            <span class="skill-badge anim-element delay-200">Hive</span>
-            <span class="skill-badge anim-element delay-300">.NET</span>
-
-            <span class="skill-badge anim-element">ASP.NET</span>
-            <span class="skill-badge anim-element delay-100">Godot</span>
-            <span class="skill-badge anim-element delay-200">GDScript</span>
-            <span class="skill-badge anim-element delay-300">Unity</span>
-            <span class="skill-badge anim-element">C,C#</span>
-            <span class="skill-badge anim-element delay-100">Python</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Work Process -->
-  <section id="process" class="py-24 px-6 relative overflow-hidden">
-    <div class="process-bg-circle absolute"></div>
-    <div class="max-w-6xl mx-auto relative z-10">
-      <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4" data-translate="process.section_title">Çalışma Sürecim</span>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          <span data-translate="process.subtitle">Nasıl</span> <span class="text-orange-400">Çalışıyorum</span>
-        </h2>
-        <div class="w-16 h-1 bg-orange-500 mx-auto mb-8"></div>
-        <p class="text-slate-300 max-w-2xl mx-auto" data-translate="process.description">
-          Her projeyi sistematik bir süreç içerisinde geliştiriyorum. Bu yaklaşım, kaliteli sonuçlar elde etmemi ve müşteri memnuniyetini en üst seviyede tutmamı sağlıyor.
+  <main id="main">
+    <!-- ================================================================ Hero -->
+    <section class="wrap grid-12 hero" id="top" aria-labelledby="hero-name">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Software Engineer · Istanbul</span></p>
+        <h1 class="hero-name" id="hero-name"><span>Yusuf</span><span>Değerli</span></h1>
+        <p class="hero-lede" data-i18n="hero.lede">
+          I build <strong>complex web interfaces</strong> and <strong>real-time graphics</strong>, and stress-test how
+          <strong>frontier models write code</strong> at xAI. Trained in C and C++ systems programming at 42&nbsp;Istanbul.
         </p>
-      </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 process-steps">
-        <!-- Step 1 -->
-        <div class="bg-slate-800 rounded-xl p-8 relative process-step">
-          <div class="process-step-number">01</div>
-          <div class="text-orange-400 text-4xl mb-6">
-            <i class="ri-discuss-line"></i>
+        <dl class="facts">
+          <div>
+            <dt data-i18n="hero.fact_now">Now</dt>
+            <dd data-i18n="hero.fact_now_v">AI &amp; Code Systems, xAI</dd>
           </div>
-          <h3 class="text-xl font-bold mb-4" data-translate="process.step1_title">Görüşme & Analiz</h3>
-          <p class="text-slate-300" data-translate="process.step1_description">
-            Detaylı görüşmeler yaparak ihtiyaçlarınızı ve beklentilerinizi tam olarak anlıyorum. Proje kapsamını belirliyor ve teknik gereksinimleri analiz ediyorum.
-          </p>
-        </div>
+          <div>
+            <dt data-i18n="hero.fact_build">Building</dt>
+            <dd data-i18n="hero.fact_build_v">Web apps, booking engines, Canvas</dd>
+          </div>
+          <div>
+            <dt data-i18n="hero.fact_root">Foundation</dt>
+            <dd data-i18n="hero.fact_root_v">C / C++ at 42 Istanbul</dd>
+          </div>
+        </dl>
 
-        <!-- Step 2 -->
-        <div class="bg-slate-800 rounded-xl p-8 relative process-step">
-          <div class="process-step-number">02</div>
-          <div class="text-orange-400 text-4xl mb-6">
-            <i class="ri-layout-masonry-line"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-4" data-translate="process.step2_title">UI/UX Tasarımı</h3>
-          <p class="text-slate-300" data-translate="process.step2_description">
-            Kullanıcı deneyimini ön planda tutarak, etkileyici ve kullanımı kolay arayüzler tasarlıyorum. Figma üzerinde prototip geliştirip onay alıyorum.
-          </p>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="bg-slate-800 rounded-xl p-8 relative process-step">
-          <div class="process-step-number">03</div>
-          <div class="text-orange-400 text-4xl mb-6">
-            <i class="ri-code-box-line"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-4" data-translate="process.step3_title">Geliştirme</h3>
-          <p class="text-slate-300" data-translate="process.step3_description">
-            Clean Architecture prensiplerine bağlı kalarak, sürdürülebilir ve kaliteli kod yazıyorum. Düzenli geri bildirim alarak geliştirme yapıyorum.
-          </p>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="bg-slate-800 rounded-xl p-8 relative process-step">
-          <div class="process-step-number">04</div>
-          <div class="text-orange-400 text-4xl mb-6">
-            <i class="ri-rocket-line"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-4" data-translate="process.step4_title">Test & Yayınlama</h3>
-          <p class="text-slate-300" data-translate="process.step4_description">
-            Kapsamlı testler yaparak uygulamanın kalitesini garanti ediyorum. Uygulama mağazalarına yayınlama ve sonrasında bakım hizmetleri sunuyorum.
-          </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#work"><span data-i18n="hero.cta_work">Selected work</span> <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn" href="yusuf_degerli.pdf" download><span data-i18n="hero.cta_cv">Download CV</span> <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-quiet" href="https://github.com/yusufdegerli" rel="noopener">GitHub <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Portfolio Showcase -->
-  <section id="showcase" class="portfolio-showcase py-24 px-6">
-    <div class="showcase-bg"></div>
-    <div class="max-w-6xl mx-auto relative z-10">
-      <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4" data-translate="projects.section_title">Göz Atın</span>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 split-text" data-translate="projects.subtitle">
-          En İyi Çalışmalarım
-        </h2>
-        <div class="w-16 h-1 bg-orange-500 mx-auto mb-8"></div>
-        <p class="text-slate-300 max-w-2xl mx-auto" data-translate="projects.description">
-          En çok ses getiren ve kullanıcı deneyimi odaklı projelerim. Tam ekran görmek için projelere tıklayabilirsiniz.
-        </p>
+      <figure class="hero-figure panel" data-demo="liquid">
+        <div class="panel-bar">
+          <span class="panel-title">fig.01 — liquid.ca</span>
+          <span class="panel-stat" data-stat aria-live="off"></span>
+          <button class="panel-btn" type="button" data-action="mode" data-i18n-attr="title:demo.tool_title" title="Change tool">Water</button>
+          <button class="panel-btn" type="button" data-action="reset" data-i18n="demo.reset">Reset</button>
+          <button class="panel-btn" type="button" data-action="toggle">Pause</button>
+        </div>
+        <div class="hero-canvas-wrap">
+          <canvas width="160" height="120" role="img" data-i18n-attr="aria-label:demo.liquid_label"
+                  aria-label="Interactive liquid simulation: water pours over ledges into a basin. Drag to pour more water."></canvas>
+          <span class="demo-hint" data-i18n="demo.liquid_hint">drag to pour</span>
+        </div>
+        <figcaption class="figure-caption">
+          <span data-i18n="demo.liquid_caption">Cellular-automata liquid · 160×120 grid</span>
+          <span class="hide-on-touch" data-i18n="demo.liquid_controls">Shift-drag builds walls · Alt erases</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ========================================================== Experience -->
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <div class="wrap grid-12">
+        <header class="section-head">
+          <p class="section-index">01</p>
+          <h2 class="section-title" id="experience-title" data-i18n="exp.title">Experience</h2>
+          <p class="section-note" data-i18n="exp.note">Most recent first. What changed because I was there, then the stack.</p>
+        </header>
+
+        <div class="section-body">
+          <ol class="timeline">
+            <li data-reveal>
+              <div class="role-meta">
+                <time datetime="2025-12">Dec 2025 — <span data-i18n="exp.present">Present</span></time>
+                <span data-i18n="exp.remote">Remote</span>
+                <span class="role-current"><span class="live-dot" aria-hidden="true"></span><span data-i18n="exp.current">Current</span></span>
+              </div>
+              <div class="role-body">
+                <div class="role-head">
+                  <h3 class="role-title" data-i18n="exp.xai.title">Software Engineer, AI &amp; Code Systems</h3>
+                  <span class="role-org">xAI (Grok)</span>
+                </div>
+                <p class="role-type" data-i18n="exp.contractor">Independent contractor</p>
+                <ul class="role-points">
+                  <li data-i18n="exp.xai.p1">Evaluate, debug and optimise <strong>frontier LLMs on complex software-engineering tasks</strong>: algorithmic efficiency, system design and UI/UX code synthesis.</li>
+                  <li data-i18n="exp.xai.p2">Architect <strong>multi-constraint coding prompts and benchmark suites</strong> in JavaScript, Python and C++ that stress-test model reasoning and surface critical edge-case failures.</li>
+                  <li data-i18n="exp.xai.p3">Refactor AI-generated codebases to Clean Code, <strong>optimal time/space complexity</strong> and zero-dependency execution standards across production pipelines.</li>
+                </ul>
+                <ul class="tags" aria-label="Stack">
+                  <li class="tag">LLM evaluation</li>
+                  <li class="tag">Benchmark design</li>
+                  <li class="tag">C++</li>
+                  <li class="tag">Python</li>
+                  <li class="tag">JavaScript</li>
+                </ul>
+              </div>
+            </li>
+
+            <!-- TODO(yusuf): confirm dates, exact title, stack and an impact metric for Erbahar Research Lab. -->
+            <li data-reveal>
+              <div class="role-meta">
+                <span data-i18n="exp.erbahar.when">Research collaboration</span>
+              </div>
+              <div class="role-body">
+                <div class="role-head">
+                  <h3 class="role-title" data-i18n="exp.erbahar.title">Frontend Engineering, JWST Data Platform</h3>
+                  <span class="role-org">Erbahar Research Lab</span>
+                </div>
+                <ul class="role-points">
+                  <li data-i18n="exp.erbahar.p1">Built the <strong>data-visualization frontend</strong> for the lab’s James Webb Space Telescope research platform.</li>
+                </ul>
+                <ul class="tags" aria-label="Stack">
+                  <li class="tag">Data visualization</li>
+                  <li class="tag">Frontend architecture</li>
+                </ul>
+              </div>
+            </li>
+
+            <li data-reveal>
+              <div class="role-meta">
+                <time datetime="2024-01">Jan 2024 — <span data-i18n="exp.present">Present</span></time>
+                <span>Istanbul</span>
+              </div>
+              <div class="role-body">
+                <div class="role-head">
+                  <h3 class="role-title" data-i18n="exp.indie.title">Full-Stack &amp; Mobile Software Developer</h3>
+                  <span class="role-org" data-i18n="exp.indie.org">Independent consultancy</span>
+                </div>
+                <ul class="role-points">
+                  <li data-i18n="exp.indie.p1">Engineered an <strong>online hotel booking engine and channel manager</strong> on Next.js and Supabase, integrated with the Beds24 and Channex APIs for automated real-time availability sync.</li>
+                  <li data-i18n="exp.indie.p2">Built real-time features on <strong>SignalR and WebSockets</strong>, cutting response times by <strong>60%</strong> versus REST polling across 8+ integrated third-party services.</li>
+                  <li data-i18n="exp.indie.p3">Architected and shipped <strong>4+ cross-platform and full-stack apps</strong> on Next.js, .NET Core and Flutter, with 95% shared code and a 4.8/5 user rating.</li>
+                </ul>
+                <ul class="tags" aria-label="Stack">
+                  <li class="tag">Next.js</li>
+                  <li class="tag">TypeScript</li>
+                  <li class="tag">Supabase</li>
+                  <li class="tag">.NET Core</li>
+                  <li class="tag">SignalR</li>
+                  <li class="tag">Flutter</li>
+                </ul>
+              </div>
+            </li>
+
+            <li data-reveal>
+              <div class="role-meta">
+                <time datetime="2024-08">Aug — Sep 2024</time>
+                <span data-i18n="exp.remote">Remote</span>
+              </div>
+              <div class="role-body">
+                <div class="role-head">
+                  <h3 class="role-title" data-i18n="exp.intern.title">Android Software Developer Intern</h3>
+                  <span class="role-org">Yazilim.xyz</span>
+                </div>
+                <ul class="role-points">
+                  <li data-i18n="exp.intern.p1">Built a feature-complete <strong>Google Calendar clone</strong> in Kotlin and Jetpack Compose, using dependency injection across 15+ core modules over three Agile sprints.</li>
+                </ul>
+                <ul class="tags" aria-label="Stack">
+                  <li class="tag">Kotlin</li>
+                  <li class="tag">Jetpack Compose</li>
+                  <li class="tag">DI</li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
+    </section>
 
-      <!-- 3D Carousel -->
-      <div class="carousel-container">
-        <div class="carousel-wrapper">
-          <!-- Carousel Item 1 -->
-          <div class="carousel-item" data-index="0">
-            <img src="restaurant_app.png" alt="Restaurant App" />
-            <div class="carousel-item-content">
-              <h3>Restaurant Order Program </h3>
-              <p>Mobil sipariş uygulaması tasarımı ve geliştirmesi</p>
+    <!-- ================================================================= Lab -->
+    <section class="section" id="lab" aria-labelledby="lab-title">
+      <div class="wrap grid-12">
+        <header class="section-head">
+          <p class="section-index">02</p>
+          <h2 class="section-title" id="lab-title" data-i18n="lab.title">Lab</h2>
+          <p class="section-note" data-i18n="lab.note">Small, dependency-free simulations written for this page. They run live and pause when off-screen.</p>
+        </header>
+
+        <div class="section-body lab-grid">
+          <article class="panel demo-wide" data-demo="raycaster" data-reveal aria-labelledby="ray-title">
+            <div class="panel-bar">
+              <span class="panel-title">fig.02 — raycaster.js</span>
+              <span class="panel-stat" data-stat></span>
+              <button class="panel-btn" type="button" data-action="toggle">Pause</button>
             </div>
-          </div>
-
-          <!-- Carousel Item 2 -->
-          <div class="carousel-item" data-index="1">
-            <img src="taboo-like.png" alt="Taboo-Like Game" />
-            <div class="carousel-item-content">
-              <h3>Taboo-Like Game</h3>
-              <p>Kartlı oyun için geliştirdiğim UI kiti. Animasyon ve etkileşimli prototipler içerir.</p>
+            <div class="demo-canvas-wrap">
+              <canvas tabindex="0" role="application" data-i18n-attr="aria-label:demo.ray_label"
+                      aria-label="First-person raycasting demo. Focus, then use W A S D or arrow keys to move; drag to look around."></canvas>
+              <span class="demo-hint" data-i18n="demo.ray_hint">click, then W A S D · drag to look</span>
             </div>
-          </div>
-
-          <!-- Carousel Item 3 -->
-          <div class="carousel-item" data-index="2">
-            <img src="card_game.png" alt="Card Game"/>
-            <div class="carousel-item-content">
-              <h3>Card Game (Godot)</h3>
-              <p>Card Game (Godot) ile geliştirilen kart oyunu. Stratejik ve eğlenceli bir oyun.</p>
+            <div class="demo-body">
+              <h3 class="demo-title" id="ray-title" data-i18n="lab.ray.title">Raycasting engine</h3>
+              <p class="demo-text" data-i18n="lab.ray.text">One ray per screen column, stepped through the grid with DDA. The perpendicular hit distance removes the fisheye effect and sets wall height; the minimap draws the actual rays being cast. My original engine, cub3D, is written in C with hand-managed memory. This is the same algorithm, re-written for the browser.</p>
+              <div class="demo-foot">
+                <p class="demo-text mono" data-i18n="lab.ray.controls"><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> move · <kbd>←</kbd> <kbd>→</kbd> turn · idle → autopilot</p>
+                <a class="text-link" href="https://github.com/yusufdegerli/cub3d" rel="noopener"><span data-i18n="lab.ray.link">C source (cub3D)</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+              </div>
             </div>
-          </div>
+          </article>
 
-          <!-- Carousel Item 4 -->
-          <div class="carousel-item" data-index="3">
-            <img src="coffe_program.png" alt="Restaurant Order App" />
-            <div class="carousel-item-content">
-              <h3>Coffe Order Program (.NET)</h3>
-              <p>Restorant Sipariş programı</p>
+          <article class="panel" data-demo="physics" data-reveal aria-labelledby="phys-title">
+            <div class="panel-bar">
+              <span class="panel-title">fig.03 — verlet.js</span>
+              <span class="panel-stat" data-stat></span>
+              <button class="panel-btn" type="button" data-action="reset" data-i18n="demo.reset">Reset</button>
+              <button class="panel-btn" type="button" data-action="toggle">Pause</button>
             </div>
-          </div>
-        </div>
-
-        <!-- Carousel Navigation -->
-        <div class="carousel-nav">
-          <button class="carousel-nav-btn active" data-index="0"></button>
-          <button class="carousel-nav-btn" data-index="1"></button>
-          <button class="carousel-nav-btn" data-index="2"></button>
-          <button class="carousel-nav-btn" data-index="3"></button>
-        </div>
-
-        <!-- Carousel Arrows -->
-        <div class="carousel-arrows">
-          <div class="carousel-arrow prev">
-            <i class="ri-arrow-left-s-line"></i>
-          </div>
-          <div class="carousel-arrow next">
-            <i class="ri-arrow-right-s-line"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Magnetic Button -->
-      <div class="text-center mt-12">
-        <a href="#projects" class="magnetic-btn">
-          <span class="btn-text" data-translate="projects.view_all">Tüm Projeleri Gör</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects" class="py-24 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4" data-translate="portfolio.section_title">Portföy</span>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          <span data-translate="portfolio.subtitle">Son</span> <span class="text-orange-400">Projelerim</span>
-        </h2>
-        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
-      </div>
-
-      <!-- Project Filters -->
-      <div class="flex flex-wrap justify-center gap-4 mb-12">
-        <button class="filter-btn active bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition"
-                data-filter="all"
-                onclick="filterProjects('all')">
-          <span data-translate="portfolio.filter_all">Tümü</span>
-        </button>
-        <button class="filter-btn bg-slate-700 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition"
-                data-filter="mobile"
-                onclick="filterProjects('mobile')">
-          <span data-translate="portfolio.filter_mobile">Mobil Uygulamalar</span>
-        </button>
-        <button class="filter-btn bg-slate-700 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition"
-                data-filter="ui"
-                onclick="filterProjects('ui')">
-          <span data-translate="portfolio.filter_ui">UI Tasarımlar</span>
-        </button>
-        <button class="filter-btn bg-slate-700 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition"
-                data-filter="web"
-                onclick="filterProjects('web')">
-          <span data-translate="portfolio.filter_web">Web Projeleri</span>
-        </button>
-      </div>
-
-      <!-- Project Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Proje 1 -->
-        <div class="project-card bg-slate-700 rounded-xl overflow-hidden shadow-lg" data-category="mobile">
-          <img src="card_game.png"
-               alt="Card Game"
-               class="project-img w-full">
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xl font-bold">Card Game</h3>
-              <span class="bg-orange-500 text-xs text-white px-2 py-1 rounded-full">Mobil</span>
+            <div class="demo-canvas-wrap">
+              <canvas role="img" data-i18n-attr="aria-label:demo.phys_label"
+                      aria-label="2D physics demo with falling circles and a hanging chain. Drag a body to throw it; click empty space to add one."></canvas>
+              <span class="demo-hint" data-i18n="demo.phys_hint">drag to throw · click to add</span>
             </div>
-            <p class="text-slate-300 mb-6">Godot ile geliştirdiğim kapsamlı bir stratejik kart oyunu.</p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="text-xs bg-slate-600 px-2 py-1 rounded">Godot</span>
-              <span class="text-xs bg-slate-600 px-2 py-1 rounded">GDScript</span>
-              <span class="text-xs bg-slate-600 px-2 py-1 rounded">PixelDraw</span>
+            <div class="demo-body">
+              <h3 class="demo-title" id="phys-title" data-i18n="lab.phys.title">2D physics</h3>
+              <p class="demo-text" data-i18n="lab.phys.text">Verlet integration on a fixed 120&nbsp;Hz step, decoupled from the display. Collisions and the chain’s distance constraints are relaxed iteratively, weighted by mass. Velocity is implicit (position minus previous position), so drag-and-throw needs no extra code. The tick on each body <em>is</em> that velocity.</p>
             </div>
-            <div class="flex gap-4">
-              <a href="https://github.com/yusufdegerli/cardgameGodot/blob/main/README.md" target="_blank" class="text-orange-400 hover:text-orange-300 transition">
-                <i class="ri-github-fill text-lg"></i> Kod
-              </a>
-              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
-                <i class="ri-external-link-line text-lg"></i> Demo
-              </a>
-            </div>
-          </div>
-        </div>
+          </article>
 
-        <!-- Proje 2 -->
-        <div class="project-card bg-slate-700 rounded-xl overflow-hidden shadow-lg" data-category="mobile">
-          <img src="taboo-like.png"
-               alt="Taboo-Like Game"
-               class="project-img w-full">
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xl font-bold">Taboo-Like App</h3>
-              <span class="bg-orange-500 text-xs text-white px-2 py-1 rounded-full">Mobil</span>
-            </div>
-            <p class="text-slate-300 mb-6">Taboo-Like game app.</p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="text-xs bg-slate-600 px-2 py-1 rounded">Flutter</span>
-              <span class="text-xs bg-slate-600 px-2 py-1 rounded">BLoC</span>
-              <span class="text-xs bg-slate-600 px-2 py-1 rounded">SQLite</span>
-            </div>
-            <div class="flex gap-4">
-              <a href="https://github.com/yusufdegerli/oobat/blob/main/README.md" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
-                <i class="ri-github-fill text-lg"></i> Kod
-              </a>
-              <a href="#" class="text-orange-400 hover:text-orange-300 transition">
-                <i class="ri-external-link-line text-lg"></i> Demo
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Proje 6 -->
-        <div class="project-card bg-slate-700 rounded-xl overflow-hidden shadow-lg" data-category="ui">
-  <img src="coffe_program.png"
-       alt="Mobile Banking"
-       class="project-img w-full">
-  <div class="p-6">
-    <div class="flex justify-between items-start mb-4">
-      <h3 class="text-xl font-bold">Restaurant Order App</h3>
-      <span class="bg-purple-500 text-xs text-white px-2 py-1 rounded-full">UI Design</span>
-    </div>
-    <p class="text-slate-300 mb-6">Flutter, Hive, .NET ve MSSQL kullanarak geliştirdiğim tam kapsamlı sipariş alma uygulaması. Kullanıcı dostu arayüz ve gelişmiş filtreleme özellikleri sunuyor.</p>
-    <div class="flex flex-wrap gap-2 mb-6">
-      <span class="text-xs bg-slate-600 px-2 py-1 rounded">Figma</span>
-      <span class="text-xs bg-slate-600 px-2 py-1 rounded">Flutter</span>
-      <span class="text-xs bg-slate-600 px-2 py-1 rounded">Hive</span>
-      <span class="text-xs bg-slate-600 px-2 py-1 rounded">.NET</span>
-      <span class="text-xs bg-slate-600 px-2 py-1 rounded">MSSQL</span>
-    </div>
-    <div class="flex gap-4">
-      <a href="https://github.com/yusufdegerli/restaurant-order-app" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
-        <i class="ri-github-fill text-lg"></i> Kod
-      </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center mt-12">
-        <a href="https://github.com/yusufdegerli" target="_blank" class="inline-block btn-primary">
-          Tüm Projeleri Gör <i class="ri-arrow-right-line ml-2"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Awards & Recognition -->
-  <section class="awards-section py-24 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Başarılar</span>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 split-text">
-          Ödüller & Takdir
-        </h2>
-        <div class="w-16 h-1 bg-orange-500 mx-auto mb-8"></div>
-        <p class="text-slate-300 max-w-2xl mx-auto">
-          Aldığım ödüller ve başarılar, kaliteli iş yapma konusundaki taahhüdümü yansıtır.
-        </p>
-      </div>
-
-      <div class="awards-grid">
-        <!-- Award 1 -->
-        <div class="award-item gsap-reveal">
-          <div class="award-bg-circle"></div>
-          <div class="award-icon">
-            <i class="ri-award-fill"></i>
-          </div>
-          <h3 class="award-title">En İyi Mobil Uygulama</h3>
-          <p class="award-organization">Mobile Excellence Awards</p>
-          <span class="award-year">2024</span>
-        </div>
-
-        <!-- Award 2 -->
-        <div class="award-item gsap-reveal">
-          <div class="award-bg-circle"></div>
-          <div class="award-icon">
-            <i class="ri-medal-fill"></i>
-          </div>
-          <h3 class="award-title">Flutter İnovasyon Ödülü</h3>
-          <p class="award-organization">Google Developer Days</p>
-          <span class="award-year">2023</span>
-        </div>
-
-        <!-- Award 3 -->
-        <div class="award-item gsap-reveal">
-          <div class="award-bg-circle"></div>
-          <div class="award-icon">
-            <i class="ri-trophy-fill"></i>
-          </div>
-          <h3 class="award-title">Kullanıcı Deneyimi Ödülü</h3>
-          <p class="award-organization">UX Design Awards</p>
-          <span class="award-year">2023</span>
-        </div>
-
-        <!-- Award 4 -->
-        <div class="award-item gsap-reveal">
-          <div class="award-bg-circle"></div>
-          <div class="award-icon">
-            <i class="ri-star-fill"></i>
-          </div>
-          <h3 class="award-title">Yılın Geliştiricisi</h3>
-          <p class="award-organization">Tech Innovators</p>
-          <span class="award-year">2022</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section class="py-24 px-6 bg-slate-800">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4">Referanslar</span>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Müşteri <span class="text-orange-400">Yorumları</span>
-        </h2>
-        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- Testimonial 1 -->
-        <div class="bg-slate-700 p-8 rounded-xl shadow-lg relative anim-element">
-          <div class="text-orange-400 text-5xl absolute -top-5 -left-2">"</div>          <p class="text-slate-300 mb-6 pt-4 relative z-10">
-            Yusuf ile çalışmak harika bir deneyimdi. Tüm gereksinimlerimizi ve daha fazlasını karşılayan bir mobil uygulama geliştirdi. Özellikle kullanıcı arayüzü tasarımındaki yeteneği bizi çok etkiledi.
-          </p>
-          <div class="flex items-center">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="w-12 h-12 rounded-full mr-4">
+          <div class="demo-note" data-reveal>
+            <p class="demo-note-index">fig.01 ↑</p>
             <div>
-              <h4 class="font-medium">Ahmet Yılmaz</h4>
-              <p class="text-sm text-slate-400">Teknoloji Direktörü, TechCo</p>
+              <h3 class="demo-title" data-i18n="lab.liquid.title">Cellular-automata liquid</h3>
+              <p class="demo-text" data-i18n="lab.liquid.text">The header runs 19,200 cells updated bottom-up every tick. The scan direction alternates to avoid drift, and each cell keeps a flow direction so water travels in sheets instead of jittering. Water falls, slides diagonally, then disperses sideways. Overflow drains off the right edge.</p>
+              <pre class="rules" aria-label="Update rule per water cell, evaluated bottom-up"><code><span>for</span> each water cell, bottom-up:
+  <span>if</span>   below empty    → fall
+  <span>elif</span> diagonal empty → slide
+  <span>else</span>                → spread ≤ 4
+  <span>if</span>   off-grid       → drain</code></pre>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Testimonial 2 -->
-        <div class="bg-slate-700 p-8 rounded-xl shadow-lg relative anim-element delay-200">
-          <div class="text-orange-400 text-5xl absolute -top-5 -left-2">"</div>          <p class="text-slate-300 mb-6 pt-4 relative z-10">
-            Projemiz için Flutter kullanarak geliştirdiği uygulama, hem iOS hem de Android'de kusursuz çalışıyor. Yusuf'nın zamanında teslimat ve kaliteli kod yazma becerisi kesinlikle takdire şayan.
-          </p>
-          <div class="flex items-center">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="w-12 h-12 rounded-full mr-4">
+    <!-- ================================================================ Work -->
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="wrap grid-12">
+        <header class="section-head">
+          <p class="section-index">03</p>
+          <h2 class="section-title" id="work-title" data-i18n="work.title">Selected work</h2>
+          <p class="section-note" data-i18n="work.note">Production apps, R&amp;D and systems projects, from Next.js front ends down to sockets and threads.</p>
+        </header>
+
+        <div class="section-body">
+          <div class="filters" role="group" data-i18n-attr="aria-label:work.filter_label" aria-label="Filter projects">
+            <button class="filter-btn" type="button" data-filter="all" aria-pressed="true"><span data-i18n="work.f_all">All</span></button>
+            <button class="filter-btn" type="button" data-filter="web" aria-pressed="false"><span data-i18n="work.f_web">Web</span></button>
+            <button class="filter-btn" type="button" data-filter="mobile" aria-pressed="false"><span data-i18n="work.f_mobile">Mobile</span></button>
+            <button class="filter-btn" type="button" data-filter="systems" aria-pressed="false"><span data-i18n="work.f_systems">Systems</span></button>
+          </div>
+
+          <div class="projects">
+            <!-- Featured -->
+            <article class="panel project project-featured spotlight" data-cat="web">
+              <div class="project-media">
+                <img src="assets/img/solis-hotel.jpg" width="1200" height="750" loading="lazy" decoding="async"
+                     alt="Solis Hotels website home page: dark layout with gold accents and booking buttons">
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.solis.kicker">Client · Hospitality · Booking engine</p>
+                <h3 class="project-title" data-i18n="work.solis.title">Solis Hotels: booking engine &amp; channel manager</h3>
+                <p class="project-text" data-i18n="work.solis.text">Online reservation system for a boutique hotel group in Istanbul. A Next.js front end on Supabase, integrated with the Beds24 and Channex hospitality APIs so availability and bookings stay in sync across sales channels automatically.</p>
+                <ul class="tags">
+                  <li class="tag">Next.js</li>
+                  <li class="tag">TypeScript</li>
+                  <li class="tag">Supabase</li>
+                  <li class="tag">Beds24 API</li>
+                  <li class="tag">Channex API</li>
+                </ul>
+                <div class="project-links">
+                  <a class="text-link" href="https://solis-boutique-hotel-website.vercel.app" rel="noopener"><span data-i18n="work.live">Live site</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                  <a class="text-link" href="https://github.com/yusufdegerli/solis-boutique-hotel-website" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel project spotlight" data-cat="mobile web">
+              <div class="project-spec" aria-hidden="true">
+                <span class="spec-path">restaurant/<b>realtime</b>/orders.ws</span>
+                <dl class="spec-metrics">
+                  <div><dt>concurrent</dt><dd>100+</dd></div>
+                  <div><dt>tx / day</dt><dd>500+</dd></div>
+                  <div><dt>manual work</dt><dd>−45%</dd></div>
+                </dl>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.resto.kicker">2025 · Real-time systems</p>
+                <h3 class="project-title" data-i18n="work.resto.title">Restaurant order &amp; POS automation</h3>
+                <p class="project-text" data-i18n="work.resto.text">Multi-user order processing and inventory system. Flutter clients and a .NET Core POS share one backend over WebSockets, so orders and stock update on every terminal in real time. Supports 100+ concurrent connections and 500+ transactions a day, and cut manual order processing by 45%.</p>
+                <ul class="tags">
+                  <li class="tag">Flutter</li>
+                  <li class="tag">.NET Core</li>
+                  <li class="tag">WebSockets</li>
+                  <li class="tag">MSSQL</li>
+                </ul>
+                <div class="project-links">
+                  <a class="text-link" href="https://github.com/yusufdegerli/restaurant_app" rel="noopener"><span data-i18n="work.resto.app">Flutter app</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                  <a class="text-link" href="https://github.com/yusufdegerli/kafe_otomasyonu" rel="noopener"><span data-i18n="work.resto.pos">.NET POS</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel project spotlight" data-cat="web">
+              <div class="project-spec" aria-hidden="true">
+                <span class="spec-path">nano-space/<b>telemetry</b> → composition</span>
+                <dl class="spec-metrics">
+                  <div><dt>input</dt><dd>Orbital data</dd></div>
+                </dl>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.nano.kicker">2025 · R&amp;D · Architecture</p>
+                <h3 class="project-title" data-i18n="work.nano.title">Nano Space: orbital data analysis platform</h3>
+                <p class="project-text" data-i18n="work.nano.text">Designed the software architecture and relational schema for a web platform that interprets satellite telemetry and orbital datasets to determine material composition.</p>
+                <ul class="tags">
+                  <li class="tag">System design</li>
+                  <li class="tag">Relational modelling</li>
+                  <li class="tag">Web architecture</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="panel project spotlight" data-cat="systems">
+              <div class="project-spec" aria-hidden="true">
+                <span class="spec-path">cub3d/src/<b>raycast</b>.c</span>
+                <dl class="spec-metrics">
+                  <div><dt>language</dt><dd>C</dd></div>
+                  <div><dt>traversal</dt><dd>DDA</dd></div>
+                </dl>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.cub.kicker">2026 · Graphics · 42 Istanbul</p>
+                <h3 class="project-title" data-i18n="work.cub.title">cub3D: 3D raycasting engine</h3>
+                <p class="project-text" data-i18n="work.cub.text">A first-person renderer built from scratch in C. It projects a 2D grid map into a navigable 3D scene in real time, with textured walls and explicit memory management. A live browser port runs in the Lab above.</p>
+                <ul class="tags">
+                  <li class="tag">C</li>
+                  <li class="tag">Raycasting</li>
+                  <li class="tag">Graphics</li>
+                </ul>
+                <div class="project-links">
+                  <a class="text-link" href="https://github.com/yusufdegerli/cub3d" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel project spotlight" data-cat="systems">
+              <div class="project-spec" aria-hidden="true">
+                <span class="spec-path">ft_irc/<b>server</b>.cpp</span>
+                <dl class="spec-metrics">
+                  <div><dt>language</dt><dd>C++</dd></div>
+                  <div><dt>I/O</dt><dd>Non-blocking</dd></div>
+                </dl>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.irc.kicker">Networking · 42 Istanbul</p>
+                <h3 class="project-title" data-i18n="work.irc.title">ft_irc: IRC server</h3>
+                <p class="project-text" data-i18n="work.irc.text">An IRC server in C++ that serves many simultaneous clients from a single multiplexed event loop over non-blocking sockets, and works with standard IRC clients.</p>
+                <ul class="tags">
+                  <li class="tag">C++</li>
+                  <li class="tag">Sockets</li>
+                  <li class="tag">Event loop</li>
+                </ul>
+                <div class="project-links">
+                  <a class="text-link" href="https://github.com/yusufdegerli/ft_irc" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel project spotlight" data-cat="systems">
+              <div class="project-spec" aria-hidden="true">
+                <span class="spec-path">minishell/<b>parser</b>.c</span>
+                <dl class="spec-metrics">
+                  <div><dt>language</dt><dd>C</dd></div>
+                  <div><dt>model</dt><dd>fork / exec</dd></div>
+                </dl>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.shell.kicker">Unix · 42 Istanbul</p>
+                <h3 class="project-title" data-i18n="work.shell.title">minishell: a Bash-like shell</h3>
+                <p class="project-text" data-i18n="work.shell.text">Tokenizer and parser, pipes, redirections, heredocs, environment expansion and signal handling, written in C on top of Unix process primitives.</p>
+                <ul class="tags">
+                  <li class="tag">C</li>
+                  <li class="tag">Processes</li>
+                  <li class="tag">Parsing</li>
+                </ul>
+                <div class="project-links">
+                  <a class="text-link" href="https://github.com/yusufdegerli/minishell" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel project spotlight" data-cat="systems">
+              <div class="project-spec" aria-hidden="true">
+                <span class="spec-path">philo/<b>threads</b>.c</span>
+                <dl class="spec-metrics">
+                  <div><dt>language</dt><dd>C</dd></div>
+                  <div><dt>sync</dt><dd>mutex</dd></div>
+                </dl>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.philo.kicker">Concurrency · 42 Istanbul</p>
+                <h3 class="project-title" data-i18n="work.philo.title">philo: dining philosophers</h3>
+                <p class="project-text" data-i18n="work.philo.text">The classic concurrency problem with POSIX threads and mutexes: no deadlocks, no data races, and millisecond-accurate starvation detection.</p>
+                <ul class="tags">
+                  <li class="tag">C</li>
+                  <li class="tag">pthreads</li>
+                  <li class="tag">Multithreading</li>
+                </ul>
+                <div class="project-links">
+                  <a class="text-link" href="https://github.com/yusufdegerli/philo" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel project spotlight" data-cat="systems">
+              <div class="project-spec" aria-hidden="true">
+                <span class="spec-path">n-puzzle/<b>astar</b>.cpp</span>
+                <dl class="spec-metrics">
+                  <div><dt>language</dt><dd>C++</dd></div>
+                  <div><dt>search</dt><dd>A*</dd></div>
+                </dl>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.npuzzle.kicker">2026 · Algorithms</p>
+                <h3 class="project-title" data-i18n="work.npuzzle.title">n-puzzle: A* solver</h3>
+                <p class="project-text" data-i18n="work.npuzzle.text">Solves N×N sliding puzzles with A* search, interchangeable heuristics and solvability checks before searching.</p>
+                <ul class="tags">
+                  <li class="tag">C++</li>
+                  <li class="tag">A* search</li>
+                  <li class="tag">Heuristics</li>
+                </ul>
+                <div class="project-links">
+                  <a class="text-link" href="https://github.com/yusufdegerli/n-puzzle" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel project spotlight" data-cat="mobile">
+              <div class="project-spec" aria-hidden="true">
+                <span class="spec-path">ok_or_notok/lib/<b>main</b>.dart</span>
+                <dl class="spec-metrics">
+                  <div><dt>framework</dt><dd>Flutter</dd></div>
+                </dl>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker" data-i18n="work.ok.kicker">2025 · Mobile</p>
+                <h3 class="project-title" data-i18n="work.ok.title">OK or Not OK: film social app</h3>
+                <p class="project-text" data-i18n="work.ok.text">A Flutter social platform where users sign in and get a read on the films they’re curious about.</p>
+                <ul class="tags">
+                  <li class="tag">Flutter</li>
+                  <li class="tag">Dart</li>
+                  <li class="tag">Auth</li>
+                </ul>
+                <div class="project-links">
+                  <a class="text-link" href="https://github.com/yusufdegerli/ok-or-notok" rel="noopener"><span data-i18n="work.source">Source</span> <span class="arrow arrow-ne" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="subhead">
+            <h3 data-i18n="work.sites.title">Shipped websites</h3>
+            <p data-i18n="work.sites.note">Live deployments for businesses</p>
+          </div>
+          <ul class="clients">
+            <li>
+              <a class="client" href="https://beyazkartalinsaat.vercel.app" rel="noopener">
+                <span class="client-thumb"><img src="assets/img/client-beyaz-kartal.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Beyaz Kartal İnşaat website"></span>
+                <span class="client-name">Beyaz Kartal İnşaat <span class="arrow arrow-ne" aria-hidden="true">↗</span></span>
+                <span class="client-kind" data-i18n="work.sites.construction">Construction</span>
+              </a>
+            </li>
+            <li>
+              <a class="client" href="https://dds-reklam.vercel.app" rel="noopener">
+                <span class="client-thumb"><img src="assets/img/client-dds-reklam.jpg" width="800" height="500" loading="lazy" decoding="async" alt="DDS Reklam website"></span>
+                <span class="client-name">DDS Reklam <span class="arrow arrow-ne" aria-hidden="true">↗</span></span>
+                <span class="client-kind" data-i18n="work.sites.agency">Advertising agency</span>
+              </a>
+            </li>
+            <li>
+              <a class="client" href="https://sst-music.vercel.app" rel="noopener">
+                <span class="client-thumb"><img src="assets/img/client-sst-audio.jpg" width="800" height="500" loading="lazy" decoding="async" alt="SST Audio website"></span>
+                <span class="client-name">SST Audio <span class="arrow arrow-ne" aria-hidden="true">↗</span></span>
+                <span class="client-kind" data-i18n="work.sites.music">Music studio</span>
+              </a>
+            </li>
+            <li>
+              <a class="client" href="https://nora-one-sooty.vercel.app" rel="noopener">
+                <span class="client-thumb"><img src="assets/img/client-vita-saglik.jpg" width="800" height="500" loading="lazy" decoding="async" alt="VitaSağlık appointment website"></span>
+                <span class="client-name">VitaSağlık <span class="arrow arrow-ne" aria-hidden="true">↗</span></span>
+                <span class="client-kind" data-i18n="work.sites.health">Clinic appointments</span>
+              </a>
+            </li>
+          </ul>
+
+          <div class="subhead">
+            <h3 data-i18n="work.archive.title">Archive</h3>
+            <p data-i18n="work.archive.note">Earlier projects</p>
+          </div>
+          <ul class="archive">
+            <li><a href="https://github.com/yusufdegerli/api_web_cs" rel="noopener"><span class="archive-name">api_web_cs <span class="archive-desc" data-i18n="work.archive.api">— product &amp; ticket management REST API with Swagger</span></span><span class="archive-stack">ASP.NET Core</span></a></li>
+            <li><a href="https://github.com/yusufdegerli/ft_transcendence" rel="noopener"><span class="archive-name">ft_transcendence <span class="archive-desc" data-i18n="work.archive.trans">— multiplayer web app (42 Istanbul)</span></span><span class="archive-stack">Django · JS</span></a></li>
+            <li><a href="https://github.com/yusufdegerli/oobat" rel="noopener"><span class="archive-name">oobat <span class="archive-desc" data-i18n="work.archive.oobat">— word-guessing party game</span></span><span class="archive-stack">Flutter · BLoC · SQLite</span></a></li>
+            <li><a href="https://github.com/yusufdegerli/cardgameGodot" rel="noopener"><span class="archive-name">cardgameGodot <span class="archive-desc" data-i18n="work.archive.card">— strategy card game</span></span><span class="archive-stack">Godot · GDScript</span></a></li>
+            <li><a href="https://github.com/yusufdegerli/push_swap" rel="noopener"><span class="archive-name">push_swap <span class="archive-desc" data-i18n="work.archive.push">— stack-sorting with a minimal operation count</span></span><span class="archive-stack">C</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= Recognition -->
+    <section class="section" id="recognition" aria-labelledby="rec-title">
+      <div class="wrap grid-12">
+        <header class="section-head">
+          <p class="section-index">04</p>
+          <h2 class="section-title" id="rec-title" data-i18n="rec.title">Recognition</h2>
+        </header>
+
+        <div class="section-body">
+          <ol class="awards">
+            <li data-reveal>
+              <p class="award-rank">3<sup data-i18n="rec.rd">rd</sup></p>
+              <div class="award-main">
+                <h3 class="award-title" data-i18n="rec.hack.title">Bilişim Vadisi Web Technologies Hackathon · Team captain</h3>
+                <p class="award-text" data-i18n="rec.hack.text">Led a four-person team to third place among 50+ teams (~200 developers) with an IoT fleet-tracking platform.</p>
+              </div>
+              <time class="award-year" datetime="2025-12">Dec 2025</time>
+            </li>
+            <li data-reveal>
+              <p class="award-rank-label" data-i18n="rec.mentor">Mentor</p>
+              <div class="award-main">
+                <h3 class="award-title">NASA Space Apps Challenge</h3>
+                <p class="award-text" data-i18n="rec.nasa.text">Technical mentor for competing teams.</p>
+              </div>
+              <time class="award-year" datetime="2025">2025</time>
+            </li>
+            <li data-reveal>
+              <p class="award-rank-label" data-i18n="rec.mentor">Mentor</p>
+              <div class="award-main">
+                <h3 class="award-title">42 Istanbul</h3>
+                <p class="award-text" data-i18n="rec.42.text">Systems-programming mentor for peers working in C and C++.</p>
+              </div>
+              <time class="award-year" datetime="2024">2024</time>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================== About -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap grid-12">
+        <header class="section-head">
+          <p class="section-index">05</p>
+          <h2 class="section-title" id="about-title" data-i18n="about.title">About</h2>
+        </header>
+
+        <div class="section-body">
+          <div class="about-grid">
+            <figure class="portrait" data-reveal>
+              <img src="assets/img/portrait.jpg" width="720" height="720" loading="lazy" decoding="async" alt="Portrait of Yusuf Değerli at the 42 Istanbul campus">
+              <figcaption data-i18n="about.caption">42 Istanbul campus</figcaption>
+            </figure>
+
             <div>
-              <h4 class="font-medium">Zeynep Kaya</h4>
-              <p class="text-sm text-slate-400">Kurucu, AppStartup</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+              <div class="prose" data-reveal>
+                <p class="prose-lead" data-i18n="about.p1">I learned to program at 42 Istanbul: no lectures and no frameworks, just C, C++, a Unix shell and relentless peer review.</p>
+                <p data-i18n="about.p2">Writing shells, IRC servers and concurrent simulations taught me to care about memory, latency and failure modes. I bring that to the browser: <strong>interfaces that stay responsive under real data</strong>, <strong>Canvas graphics that hold their frame rate</strong>, and real-time features that degrade gracefully.</p>
+                <p data-i18n="about.p3">Today I split my time between evaluating frontier models on hard software-engineering tasks at xAI, designing the prompts and benchmarks that expose their edge-case failures, and building production software, from hotel booking engines to restaurant POS systems.</p>
+              </div>
 
-  <!-- Contact -->
-  <section id="contact" class="py-24 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-16">
-        <span class="inline-block text-orange-400 text-sm font-medium tracking-wider uppercase mb-4" data-translate="contact.section_title">İletişim</span>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          <span data-translate="contact.subtitle">Benimle</span> <span class="text-orange-400">İletişime Geç</span>
-        </h2>
-        <div class="w-16 h-1 bg-orange-500 mx-auto"></div>
-        <p class="text-slate-300 mt-6 max-w-xl mx-auto" data-translate="contact.description">
-          Bir projeniz mi var? Hemen iletişime geçin ve nasıl yardımcı olabileceğimi konuşalım.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-12">
-        <!-- Contact Info -->
-        <div>
-          <div class="mb-8 anim-element">
-            <h3 class="text-xl font-bold mb-4" data-translate="contact.info">İletişim Bilgileri</h3>
-            <p class="text-slate-300 mb-6" data-translate="contact.info_description">
-              Aşağıdaki kanallardan bana doğrudan ulaşabilir veya iletişim formunu doldurabilirsiniz.
-            </p>
-
-            <div class="space-y-4">
-              <div class="flex items-start">
-                <div class="bg-slate-700 p-3 rounded-lg mr-4">
-                  <i class="ri-map-pin-line text-orange-400 text-xl"></i>
+              <dl class="skills" data-reveal>
+                <div>
+                  <dt data-i18n="about.sk_lang">Languages</dt>
+                  <dd>TypeScript, JavaScript, C, C++, C#, Python, Dart, Kotlin, SQL</dd>
                 </div>
                 <div>
-                  <h4 class="font-medium mb-1" data-translate="contact.location_label">Konum</h4>
-                  <p class="text-slate-400" data-translate="contact.location">İstanbul, Türkiye</p>
+                  <dt data-i18n="about.sk_front">Frontend &amp; graphics</dt>
+                  <dd>React, Next.js, Svelte, Tailwind CSS, HTML5 Canvas, raycasting, Flutter, React Native, Jetpack Compose</dd>
                 </div>
-              </div>
+                <div>
+                  <dt data-i18n="about.sk_ai">AI evaluation</dt>
+                  <dd data-i18n="about.sk_ai_v">LLM code evaluation, prompt architecture, algorithmic benchmarking, edge-case verification</dd>
+                </div>
+                <div>
+                  <dt data-i18n="about.sk_back">Backend &amp; data</dt>
+                  <dd>.NET Core, SignalR / WebSockets, REST, PostgreSQL, MSSQL, Supabase, SQLite, Firebase</dd>
+                </div>
+                <div>
+                  <dt data-i18n="about.sk_sys">Systems &amp; infra</dt>
+                  <dd data-i18n="about.sk_sys_v">Linux, multithreading, Docker, Kubernetes (k3s), Git</dd>
+                </div>
+                <div>
+                  <dt data-i18n="about.sk_arch">Architecture</dt>
+                  <dd>Clean Architecture, microservices, MVVM, MVC, OOP</dd>
+                </div>
+              </dl>
 
-              <div class="flex items-start">
-                <div class="bg-slate-700 p-3 rounded-lg mr-4">
-                  <i class="ri-mail-line text-orange-400 text-xl"></i>
-                </div>                <div>
-                  <h4 class="font-medium mb-1" data-translate="contact.email_label">Email</h4>
-                  <p class="text-slate-400" data-translate="contact.email">yusufdgrl72@gmail.com</p>
-                </div>
-              </div>
+              <ul class="edu" data-reveal>
+                <li><span><b>42 Istanbul</b> · <span data-i18n="about.edu_42">Software engineering &amp; systems programming (C/C++)</span></span><time>2022 — 2024</time></li>
+                <li><span><b data-i18n="about.edu_anadolu">Anadolu University</b> · <span data-i18n="about.edu_mis">B.S. Management Information Systems</span></span><time>2024 — 2026</time></li>
+                <li><span><b data-i18n="about.edu_esenyurt">Istanbul Esenyurt University</b> · <span data-i18n="about.edu_cp">A.S. Computer Programming</span></span><time>2020 — 2025</time></li>
+                <li><span><b data-i18n="about.languages">Languages</b> · <span data-i18n="about.languages_v">Turkish (native), English (professional working proficiency)</span></span></li>
+              </ul>
             </div>
           </div>
-
-          <div class="anim-element delay-200">
-            <h3 class="text-xl font-bold mb-4" data-translate="contact.social_media">Sosyal Medya</h3>
-            <div class="flex space-x-4">
-              <a href="https://github.com/yusufdegerli" target="_blank" class="social-link">
-                <i class="ri-github-fill"></i>
-              </a>
-              <a href="https://www.linkedin.com/in/yusuf-değerli-63209a1b9" target="_blank" class="social-link">
-                <i class="ri-linkedin-fill"></i>
-              </a>
-              </a>
-              <a href="https://medium.com/@yusufdgrl72" target="_blank" class="social-link">
-                <i class="ri-medium-fill"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact Form -->
-        <div class="bg-slate-800 p-8 rounded-xl shadow-lg anim-element delay-300">
-          <h3 class="text-xl font-bold mb-6" data-translate="contact.send_message">Mesaj Gönder</h3>
-
-          <form id="contact-form" onsubmit="submitContactForm(event)">
-            <div class="mb-6">
-              <label for="name" class="block text-sm font-medium text-slate-300 mb-2" data-translate="form.name">İsim</label>
-              <input type="text" id="name" class="form-input" data-translate-placeholder="form.name" placeholder="Adınız">
-            </div>
-
-            <div class="mb-6">
-              <label for="email" class="block text-sm font-medium text-slate-300 mb-2" data-translate="form.email">Email</label>
-              <input type="email" id="email" class="form-input" data-translate-placeholder="form.email" placeholder="email@ornek.com">
-            </div>
-
-            <div class="mb-6">
-              <label for="message" class="block text-sm font-medium text-slate-300 mb-2" data-translate="form.message">Mesaj</label>
-              <textarea id="message" rows="5" class="form-input resize-none" data-translate-placeholder="form.message" placeholder="Mesajınız..."></textarea>
-            </div>
-
-            <button type="submit" class="btn-primary w-full submit-btn">
-              <span data-translate="form.send">Gönder</span> <i class="ri-send-plane-fill ml-2"></i>
-            </button>
-          </form>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="bg-slate-800 text-center py-8 text-slate-400 text-sm border-t border-slate-700">
-    <div class="container mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-4 md:mb-0">          <div class="flex items-center justify-center md:justify-start">
-            <img src="https://img.icons8.com/fluency/48/000000/flutter.png" alt="Logo" class="w-6 h-6 mr-2">
-            <span class="font-bold text-slate-300">Yusuf Değerli</span>
+    <!-- ============================================================= Contact -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="wrap grid-12">
+        <header class="section-head">
+          <p class="section-index">06</p>
+          <h2 class="section-title" id="contact-title" data-i18n="contact.title">Contact</h2>
+        </header>
+
+        <div class="section-body">
+          <p class="contact-statement" data-i18n="contact.statement">Building something hard? I’d like to hear about it.</p>
+
+          <div class="contact-grid">
+            <div>
+              <div class="email-row">
+                <a class="email-link" href="mailto:yusufdgrl72@gmail.com">yusufdgrl72@gmail.com</a>
+                <button class="icon-btn copy-btn" type="button" data-copy="yusufdgrl72@gmail.com">
+                  <span data-copy-label data-i18n="contact.copy">Copy</span>
+                </button>
+              </div>
+              <p class="contact-meta" data-i18n="contact.meta">Istanbul, Türkiye · UTC+3. Email is the fastest way to reach me.</p>
+
+              <nav class="contact-links" aria-label="Profiles">
+                <a href="https://github.com/yusufdegerli" rel="noopener">GitHub <span class="mono">/yusufdegerli ↗</span></a>
+                <a href="https://www.linkedin.com/in/yusufdegerli" rel="noopener">LinkedIn <span class="mono">/in/yusufdegerli ↗</span></a>
+                <a href="https://medium.com/@yusufdgrl72" rel="noopener">Medium <span class="mono">@yusufdgrl72 ↗</span></a>
+                <a href="yusuf_degerli.pdf" download><span data-i18n="contact.cv">Résumé</span> <span class="mono">PDF ↓</span></a>
+              </nav>
+            </div>
+
+            <form class="panel form" id="contact-form" novalidate>
+              <div class="form-row">
+                <div class="field">
+                  <label for="cf-name" data-i18n="form.name">Name</label>
+                  <input id="cf-name" name="name" type="text" autocomplete="name" aria-describedby="cf-name-error" required>
+                  <p class="field-error" id="cf-name-error" aria-live="polite"></p>
+                </div>
+                <div class="field">
+                  <label for="cf-email" data-i18n="form.email">Email</label>
+                  <input id="cf-email" name="email" type="email" autocomplete="email" aria-describedby="cf-email-error" required>
+                  <p class="field-error" id="cf-email-error" aria-live="polite"></p>
+                </div>
+              </div>
+              <div class="field">
+                <label for="cf-message" data-i18n="form.message">Message</label>
+                <textarea id="cf-message" name="message" rows="5" aria-describedby="cf-message-error" required></textarea>
+                <p class="field-error" id="cf-message-error" aria-live="polite"></p>
+              </div>
+              <div class="hp-field" aria-hidden="true">
+                <label for="cf-company">Company</label>
+                <input id="cf-company" name="company" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <div class="form-foot">
+                <p class="form-status" role="status"></p>
+                <button class="btn btn-primary" type="submit"><span data-i18n="form.send">Send message</span> <span class="arrow" aria-hidden="true">→</span></button>
+              </div>
+            </form>
           </div>
-          <p class="mt-2">Flutter Geliştirici & UI Tasarımcı</p>
         </div>
-
-        <div class="mb-4 md:mb-0">
-          <nav>
-            <ul class="flex space-x-6">
-              <li><a href="#about" class="hover:text-orange-400 transition-colors">Hakkımda</a></li>
-              <li><a href="#skills" class="hover:text-orange-400 transition-colors">Yetenekler</a></li>
-              <li><a href="#projects" class="hover:text-orange-400 transition-colors">Projeler</a></li>
-              <li><a href="#contact" class="hover:text-orange-400 transition-colors">İletişim</a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>      <div class="mt-6 pt-6 border-t border-slate-700">
-        <p data-translate="footer.copyright">© 2025 Yusuf Değerli - Tüm Hakları Saklıdır.</p>
-        <p class="mt-2">
-          <a href="#" class="text-orange-400 hover:underline" data-translate="footer.privacy">Gizlilik Politikası</a> •
-          <a href="#" class="text-orange-400 hover:underline" data-translate="footer.terms">Kullanım Şartları</a>
-        </p>
       </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© 2026 Yusuf Değerli</span>
+      <span data-i18n="footer.built">Hand-built with HTML, CSS and vanilla JS. No framework, no build step.</span>
+      <a href="https://github.com/yusufdegerli/yusufdegerli.github.io" rel="noopener" data-i18n="footer.source">Source ↗</a>
     </div>
   </footer>
-
-  <!-- Back to Top Button -->
-  <a href="#" class="back-to-top fixed bottom-6 right-6 bg-orange-500 hover:bg-orange-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0">
-    <i class="ri-arrow-up-line text-xl"></i>
-  </a>
-
-  <!-- Cookie Consent -->
-  <div class="cookie-consent fixed bottom-0 left-0 w-full bg-slate-800 p-4 flex flex-col md:flex-row justify-between items-center z-50 border-t border-slate-700 transform translate-y-full transition-transform duration-500">
-    <p class="text-slate-300 mb-4 md:mb-0 md:mr-4" data-translate="cookie.message">
-      Bu site, daha iyi bir deneyim sunmak için çerezleri kullanmaktadır. Sitemizi kullanmaya devam ederek çerez politikamızı kabul etmiş olursunuz.
-    </p>
-    <div class="flex space-x-4">
-      <button class="text-slate-300 border border-slate-600 px-4 py-2 rounded hover:bg-slate-700 transition" data-translate="cookie.learn_more">
-        Daha Fazla Bilgi
-      </button>
-      <button class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition" onclick="acceptCookies()" data-translate="cookie.accept">
-        Kabul Et
-      </button>
-    </div>
-  </div>  <!-- External Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@barba/core"></script>
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scrollbar/8.8.1/smooth-scrollbar.min.js"></script>
-
-  <!-- Scripts -->
-  <script src="script.js"></script>
-  <script src="3d-effects.js"></script>
-  <script>
-    // Show Cookie Consent after 2 seconds
-    setTimeout(() => {
-      document.querySelector('.cookie-consent').classList.add('translate-y-0');
-    }, 2000);
-
-    // Accept Cookies
-    function acceptCookies() {
-      document.querySelector('.cookie-consent').classList.remove('translate-y-0');
-      document.querySelector('.cookie-consent').classList.add('translate-y-full');
-      localStorage.setItem('cookiesAccepted', 'true');
-    }
-
-    // Check if cookies were accepted before
-    if (localStorage.getItem('cookiesAccepted') === 'true') {
-      document.querySelector('.cookie-consent').classList.add('hidden');
-    }
-
-    // Show/Hide Back to Top button
-    window.addEventListener('scroll', () => {
-      const backToTopButton = document.querySelector('.back-to-top');
-      if (window.scrollY > 300) {
-        backToTopButton.classList.add('opacity-100');
-      } else {
-        backToTopButton.classList.remove('opacity-100');
-      }
-    });
-
-    // Smooth scroll to top
-    document.querySelector('.back-to-top').addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-  </script>
 </body>
 </html>
