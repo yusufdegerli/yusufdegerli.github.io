@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COLD COLUMN — The Istanbul Job</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="frame">
+    <canvas id="game" tabindex="0">Your browser does not support canvas.</canvas>
+    <div id="scanlines"></div>
+    <div id="vignette"></div>
+    <div id="grain"></div>
+
+    <div id="hud">
+      <div id="hud-left">
+        <div id="weapon-name">PISTOL</div>
+        <div id="weapon-ammo">12 / 12</div>
+      </div>
+      <div id="hud-right">
+        <div id="kill-count">0 KILLS</div>
+        <div id="track-name"></div>
+      </div>
+    </div>
+
+    <div id="combo" class="off" aria-hidden="true">
+      <div id="combo-mult">1x</div>
+      <div id="combo-word">COMBO!!</div>
+      <div id="combo-bar"><i id="combo-fill"></i></div>
+    </div>
+
+    <div id="talk" class="off">
+      <div id="talk-top"></div>
+      <div id="talk-bot">
+        <div id="talk-who"></div>
+        <div id="talk-line"></div>
+        <div id="talk-hint">SPACE / CLICK</div>
+      </div>
+    </div>
+
+    <div id="overlay" class="show menu">
+      <div class="overlay-inner">
+        <p class="eyebrow">ISTANBUL MINT — TONIGHT</p>
+        <h1>COLD<br />COLUMN</h1>
+        <p class="tagline">MASKS ON. ONE HIT. NO NAMES.</p>
+        <ul class="controls">
+          <li><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move</li>
+          <li><kbd>SHIFT</kbd> sprint &nbsp; <kbd>C</kbd> dodge</li>
+          <li><kbd>MOUSE</kbd> look</li>
+          <li><kbd>LMB</kbd> shoot / swing / break doors</li>
+          <li><kbd>RMB</kbd> throw weapon</li>
+          <li><kbd>SPACE</kbd> restart / skip talk</li>
+          <li><kbd>M</kbd> mute music</li>
+        </ul>
+        <button id="start-btn" type="button">START HEIST</button>
+        <p class="credit">Music: Nihilore — Creative Commons Attribution</p>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

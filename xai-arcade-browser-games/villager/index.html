@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Villager — Historical RTS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="root">
+    <canvas id="world"></canvas>
+    <canvas id="minimap" width="196" height="196"></canvas>
+
+    <div id="hud" class="hidden">
+      <header id="topbar">
+        <div class="brand">Villager</div>
+        <div id="resources"></div>
+        <div id="speed-bar">
+          <button type="button" data-speed="1" class="on">1x</button>
+          <button type="button" data-speed="2">2x</button>
+          <button type="button" data-speed="5">5x</button>
+        </div>
+        <div id="age-chip"></div>
+      </header>
+
+      <div id="hint" class="hidden"></div>
+      <div id="float-msgs"></div>
+
+      <aside id="command-panel">
+        <div id="sel-info"></div>
+        <div id="commands"></div>
+      </aside>
+
+      <footer id="bottom-bar">
+        <div id="orders-help">LMB select · RMB move / gather / attack · 1/2/5 speed · I idle · H hall · B house · F farm · N mill · L lumber · M mining</div>
+      </footer>
+    </div>
+
+    <div id="title-screen">
+      <div class="title-card">
+        <p class="kicker">A historical real-time strategy</p>
+        <h1>Villager</h1>
+        <p class="lede">
+          Raise a settlement from timber and earth. Gather wood, food, gold and stone.
+          Train soldiers. Advance an age. Outlast the red, yellow and green hosts — and raid the pale villages for tribute.
+        </p>
+        <button id="btn-play" type="button">Begin</button>
+        <ul class="howto">
+          <li><b>Left click</b> selects a unit or building. Drag to box-select.</li>
+          <li><b>Right click</b> empty ground to move, a resource to gather, an enemy to attack.</li>
+          <li>Houses raise population. A mill and farms keep food coming after the berries are gone.</li>
+          <li>Advance to the Iron Age for better farms, archers, and stronger towers.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="end-screen" class="hidden">
+      <div class="title-card">
+        <h1 id="end-title">Victory</h1>
+        <p id="end-text"></p>
+        <button id="btn-again" type="button">Play again</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/pathfinding.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

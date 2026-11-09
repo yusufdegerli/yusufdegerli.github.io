@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mayhem Cleaner</title>
+  <style>
+    /* -------------------------------------------------------------------------
+       Layout: fullscreen canvas, HUD overlays, start / pause screen
+       ------------------------------------------------------------------------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0d0d0d;
+      font-family: "Segoe UI", "Courier New", monospace;
+      color: #e8e0c8;
+      user-select: none;
+    }
+
+    canvas { display: block; }
+
+    /* Centered + crosshair */
+    #crosshair {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    #crosshair .h,
+    #crosshair .v {
+      position: absolute;
+      background: #f2f2f2;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55);
+    }
+
+    #crosshair .h {
+      left: 2px;
+      top: 8px;
+      width: 14px;
+      height: 2px;
+    }
+
+    #crosshair .v {
+      left: 8px;
+      top: 2px;
+      width: 2px;
+      height: 14px;
+    }
+
+    #crosshair.hot .h,
+    #crosshair.hot .v { background: #ffb000; }
+
+    /* Janitorial PDA-style HUD */
+    #hud {
+      position: fixed;
+      left: 16px;
+      top: 16px;
+      z-index: 15;
+      pointer-events: none;
+      min-width: 280px;
+      padding: 12px 14px 14px;
+      background: rgba(10, 10, 10, 0.72);
+      border: 1px solid #6a5a28;
+      border-left: 4px solid #d4a017;
+    }
+
+    #hud h1 {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: #d4a017;
+      margin-bottom: 8px;
+    }
+
+    #hud .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    #hud .label { color: #9a9078; }
+    #hud .ok { color: #7dce6a; }
+    #hud .warn { color: #e0b84a; }
+    #hud .bad { color: #e35a4f; }
+    #hud .info { color: #7eb6d6; }
+
+    #progress-wrap {
+      margin-top: 10px;
+    }
+
+    #progress-bar {
+      margin-top: 4px;
+      height: 8px;
+      background: #222;
+      border: 1px solid #555;
+    }
+
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #8a1f1f, #d4a017);
+      transition: width 0.2s ease;
+    }
+
+    #prompt {
+      position: fixed;
+      left: 50%;
+      bottom: 78px;
+      transform: translateX(-50%);
+      z-index: 15;
+      pointer-events: none;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      color: #fff4c8;
+      text-shadow: 0 1px 3px #000;
+      min-height: 1.2em;
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      top: 18%;
+      transform: translateX(-50%);
+      z-index: 16;
+      pointer-events: none;
+      font-size: 16px;
+      color: #fff;
+      text-shadow: 0 2px 6px #000;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      text-align: center;
+      max-width: 70vw;
+    }
+
+    #toast.show { opacity: 1; }
+
+    /* Start / pause overlay */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          #1a1408 0 14px,
+          #12100a 14px 28px
+        );
+    }
+
+    #overlay.hidden { display: none; }
+
+    #panel {
+      width: min(560px, 92vw);
+      padding: 32px 34px 28px;
+      background: #141414;
+      border: 2px solid #d4a017;
+      box-shadow: 0 0 0 6px #141414, 0 0 0 8px #6a5a28;
+    }
+
+    #panel h2 {
+      font-size: 28px;
+      letter-spacing: 0.16em;
+      color: #d4a017;
+      margin-bottom: 4px;
+    }
+
+    #panel .tag {
+      font-size: 12px;
+      color: #9a9078;
+      letter-spacing: 0.12em;
+      margin-bottom: 18px;
+    }
+
+    #panel p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #d8d0bc;
+      margin-bottom: 10px;
+    }
+
+    #panel ul {
+      margin: 12px 0 18px 18px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #c8c0a8;
+    }
+
+    #panel .go {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 8px 14px;
+      border: 1px solid #d4a017;
+      color: #d4a017;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+    }
+
+    #win {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 15;
+      pointer-events: none;
+      display: none;
+      padding: 10px 14px;
+      background: rgba(12, 28, 12, 0.85);
+      border: 1px solid #7dce6a;
+      color: #7dce6a;
+      letter-spacing: 0.1em;
+      font-size: 13px;
+    }
+  </style>
+
+  <!-- ES module CDN import map for Three.js + PointerLockControls -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="crosshair" aria-hidden="true">
+    <div class="h"></div>
+    <div class="v"></div>
+  </div>
+
+  <div id="hud">
+    <h1>MAYHEM CLEANER</h1>
+    <div class="row"><span class="label">Tool</span><span id="hud-tool">MOP</span></div>
+    <div class="row"><span class="label">Mop</span><span id="hud-mop">CLEAN 0/5</span></div>
+    <div class="row"><span class="label">Bucket</span><span id="hud-bucket">CLEAN WATER</span></div>
+    <div class="row"><span class="label">Hands</span><span id="hud-hands">EMPTY</span></div>
+    <div class="row"><span class="label">Bin</span><span id="hud-bin">NONE</span></div>
+    <div class="row"><span class="label">Shoes</span><span id="hud-shoes">CLEAN</span></div>
+    <div class="row"><span class="label">Radio</span><span id="hud-radio">OFF</span></div>
+    <div id="progress-wrap">
+      <div class="row"><span class="label">Clean progress</span><span id="hud-progress">0%</span></div>
+      <div id="progress-bar"><div id="progress-fill"></div></div>
+    </div>
+  </div>
+
+  <div id="prompt"></div>
+  <div id="toast"></div>
+  <div id="win">AREA CLEARED — NICE WORK, JANITOR</div>
+
+  <div id="overlay">
+    <div id="panel">
+      <h2>MAYHEM CLEANER</h2>
+      <div class="tag">JANITORIAL DIVISION  ·  SHIFT 07</div>
+      <p>
+        Somebody made a mess. You have a mop, a pair of hands, a water bucket,
+        a bin dispenser, and an incinerator. Do not clock out until the room is clean.
+      </p>
+      <ul>
+        <li><b>Click</b> — capture mouse / look around</li>
+        <li><b>WASD</b> — walk</li>
+        <li><b>1</b> — equip mop &nbsp; <b>2</b> — equip hands</li>
+        <li><b>Left click</b> — mop, pick up, rinse, place, or dump</li>
+        <li>Mop holds <b>5</b> wipes. A dirty mop smears. Rinse it in the blue bucket.</li>
+        <li>Hands can carry the bucket, trash, or a bin. Switching to the mop sets it down.</li>
+        <li>Click the gray dispenser to pop out a bin. Fill it, then empty it at the incinerator.</li>
+        <li>Walk through blood and your shoes track prints. Mop those too.</li>
+        <li>The table radio in the far corner plays a looping station. Click to toggle.</li>
+        <li><b>Esc</b> — release mouse</li>
+      </ul>
+      <div class="go">CLICK TO BEGIN SHIFT</div>
+    </div>
+  </div>
+
+  <script type="module">
+    /**
+     * Mayhem Cleaner
+     * A first-person janitorial cleanup game in the spirit of Viscera Cleanup Detail.
+     * Entirely procedural: no external models or image textures.
+     */
+    import * as THREE from "three";
+    import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
+
+    // =========================================================================
+    // Constants
+    // =========================================================================
+    const ROOM_SIZE = 40;
+    const WALL_H = 5.2;
+    const WALL_T = 0.45;
+    const PLAYER_HEIGHT = 1.62;
+    const PLAYER_RADIUS = 0.38;
+    const WALK_SPEED = 6.4;
+    const INTERACT_DIST = 3.6;
+    const MOP_CAPACITY = 5;
+    const STAIN_HITS = 3;          // wipes needed to erase one stain
+    const CLICK_COOLDOWN = 0.32;   // seconds between interactions
+    const MAX_STAINS = 80;         // stop dirty-mop / footprint spawning from exploding
+    const CONTAINER_CAP = 10;
+    const PARTICLE_LIFE = 0.5;
+    const STAIN_Y = 0.12;          // well above floor (0) / grid (0.03) / trim (0.08)
+    const FOOTPRINT_SPACING = 1.6;
+    const FOOTPRINTS_TO_CLEAN = 7;
+    const VEL_STOP = 0.05;         // snap leftover slide to a hard stop
+
+    // =========================================================================
+    // DOM
+    // =========================================================================
+    const overlay = document.getElementById("overlay");
+    const crosshair = document.getElementById("crosshair");
+    const promptEl = document.getElementById("prompt");
+    const toastEl = document.getElementById("toast");
+    const winEl = document.getElementById("win");
+    const hudTool = document.getElementById("hud-tool");
+    const hudMop = document.getElementById("hud-mop");
+    const hudBucket = document.getElementById("hud-bucket");
+    const hudHands = document.getElementById("hud-hands");
+    const hudBin = document.getElementById("hud-bin");
+    const hudShoes = document.getElementById("hud-shoes");
+    const hudRadio = document.getElementById("hud-radio");
+    const hudProgress = document.getElementById("hud-progress");
+    const progressFill = document.getElementById("progress-fill");
+
+    // =========================================================================
+    // Renderer / scene / camera
+    // =========================================================================
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    document.body.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1c1c1c);
+    scene.fog = new THREE.Fog(0x1c1c1c, 24, 58);
+
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.08,
+      80
+    );
+    camera.position.set(8, PLAYER_HEIGHT, 10);
+
+    // Pointer-lock look controls (mouse). Movement is applied separately with WASD.
+    const controls = new PointerLockControls(camera, document.body);
+    if (typeof controls.connect === "function") controls.connect();
+    scene.add(controls.object);
+
+    // Helmet flashlight — follows look direction with the camera
+    const flashlight = new THREE.SpotLight(0xfff3d2, 9.5, 26, Math.PI / 6.2, 0.38, 1.05);
+    flashlight.position.set(0.12, 0.1, 0.08);
+    const flashlightTarget = new THREE.Object3D();
+    flashlightTarget.position.set(0, -0.04, -1);
+    camera.add(flashlight);
+    camera.add(flashlightTarget);
+    flashlight.target = flashlightTarget;
+
+    // =========================================================================
+    // Lighting (all solid colors, no textures)
+    // =========================================================================
+    scene.add(new THREE.AmbientLight(0x7a7a7a, 0.7));
+
+    const hemi = new THREE.HemisphereLight(0xc8c8c8, 0x3a3a3a, 0.45);
+    scene.add(hemi);
+
+    const sun = new THREE.DirectionalLight(0xfff2d8, 0.7);
+    sun.position.set(8, 14, 6);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(1024, 1024);
+    sun.shadow.camera.near = 1;
+    sun.shadow.camera.far = 40;
+    sun.shadow.camera.left = -22;
+    sun.shadow.camera.right = 22;
+    sun.shadow.camera.top = 22;
+    sun.shadow.camera.bottom = -22;
+    scene.add(sun);
+
+    // =========================================================================
+    // Room: floor, ceiling, four walls
+    // =========================================================================
+    const floorMat = new THREE.MeshStandardMaterial({
+      color: 0x4a4a4a,
+      roughness: 0.92,
+      metalness: 0.04
+    });
+    const floor = new THREE.Mesh(
+      new THREE.PlaneGeometry(ROOM_SIZE, ROOM_SIZE),
+      floorMat
+    );
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = 0;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    // Subtle grid so the gray floor reads as tiles without image textures.
+    // Lifted off the floor plane so it cannot z-fight with the floor or stains.
+    const grid = new THREE.GridHelper(ROOM_SIZE, 20, 0x5a5a5a, 0x404040);
+    grid.position.y = 0.03;
+    grid.renderOrder = 1;
+    if (grid.material) {
+      grid.material.depthWrite = false;
+    }
+    scene.add(grid);
+
+    const ceilMat = new THREE.MeshStandardMaterial({
+      color: 0x2e2e2e,
+      roughness: 1
+    });
+    const ceiling = new THREE.Mesh(
+      new THREE.PlaneGeometry(ROOM_SIZE, ROOM_SIZE),
+      ceilMat
+    );
+    ceiling.rotation.x = Math.PI / 2;
+    ceiling.position.y = WALL_H;
+    scene.add(ceiling);
+
+    const wallMat = new THREE.MeshStandardMaterial({
+      color: 0x6b6b6b,
+      roughness: 0.88,
+      metalness: 0.02
+    });
+    const trimMat = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.7 });
+
+    const half = ROOM_SIZE / 2;
+    const walls = [
+      { x: 0, z: -half, w: ROOM_SIZE + WALL_T, d: WALL_T },
+      { x: 0, z: half, w: ROOM_SIZE + WALL_T, d: WALL_T },
+      { x: -half, z: 0, w: WALL_T, d: ROOM_SIZE + WALL_T },
+      { x: half, z: 0, w: WALL_T, d: ROOM_SIZE + WALL_T }
+    ];
+
+    for (const w of walls) {
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(w.w, WALL_H, w.d),
+        wallMat
+      );
+      mesh.position.set(w.x, WALL_H / 2, w.z);
+      mesh.receiveShadow = true;
+      mesh.castShadow = true;
+      scene.add(mesh);
+
+      // Dark baseboard along each wall
+      const trim = new THREE.Mesh(
+        new THREE.BoxGeometry(w.w, 0.14, w.d + 0.06),
+        trimMat
+      );
+      trim.position.set(w.x, 0.08, w.z);
+      scene.add(trim);
+    }
+
+    // Simple hanging lights (emissive boxes) for a warehouse feel
+    const lampMat = new THREE.MeshStandardMaterial({
+      color: 0xfff0c0,
+      emissive: 0xffe08a,
+      emissiveIntensity: 1.1
+    });
+    const lampPositions = [
+      [-10, 10], [10, 10], [-10, -10], [10, -10], [0, 0]
+    ];
+    for (const [lx, lz] of lampPositions) {
+      const lamp = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.12, 0.7), lampMat);
+      lamp.position.set(lx, WALL_H - 0.2, lz);
+      scene.add(lamp);
+
+      const bulb = new THREE.PointLight(0xfff1c8, 1.15, 16, 2);
+      bulb.position.set(lx, WALL_H - 0.55, lz);
+      scene.add(bulb);
+    }
+
+    // =========================================================================
+    // Props: incinerator (orange box) + water bucket (blue cylinder)
+    // =========================================================================
+    const incineratorGroup = new THREE.Group();
+    incineratorGroup.position.set(-16.2, 0, -16.2);
+
+    const incineratorMat = new THREE.MeshStandardMaterial({
+      color: 0xff6a00,
+      roughness: 0.42,
+      metalness: 0.22,
+      emissive: 0x4a1800,
+      emissiveIntensity: 0.35
+    });
+    const incinerator = new THREE.Mesh(
+      new THREE.BoxGeometry(2.4, 1.85, 2.4),
+      incineratorMat
+    );
+    incinerator.position.y = 0.925;
+    incinerator.castShadow = true;
+    incinerator.receiveShadow = true;
+    incinerator.userData.kind = "incinerator";
+    incineratorGroup.add(incinerator);
+
+    // Dark mouth on top so it reads as a hopper / dumpster opening
+    const mouth = new THREE.Mesh(
+      new THREE.BoxGeometry(1.7, 0.16, 1.7),
+      new THREE.MeshStandardMaterial({ color: 0x1a0c04, roughness: 0.9 })
+    );
+    mouth.position.y = 1.86;
+    incineratorGroup.add(mouth);
+
+    // Caution blocks around the incinerator (yellow / black primitives)
+    const yel = new THREE.MeshStandardMaterial({ color: 0xf0c400, roughness: 0.6 });
+    const blk = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.6 });
+    for (let i = 0; i < 10; i++) {
+      const stripe = new THREE.Mesh(
+        new THREE.BoxGeometry(0.28, 0.08, 0.28),
+        i % 2 === 0 ? yel : blk
+      );
+      const a = (i / 10) * Math.PI * 2;
+      stripe.position.set(Math.cos(a) * 1.55, 0.04, Math.sin(a) * 1.55);
+      incineratorGroup.add(stripe);
+    }
+    scene.add(incineratorGroup);
+
+    const bucketGroup = new THREE.Group();
+    bucketGroup.position.set(-12.4, 0, -16.4);
+
+    const bucketCleanColor = 0x1f6feb;
+    const bucketDirtyColor = 0x4a3a18;
+    const bucketMat = new THREE.MeshStandardMaterial({
+      color: bucketCleanColor,
+      roughness: 0.35,
+      metalness: 0.15
+    });
+    const bucket = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.38, 0.32, 0.55, 16),
+      bucketMat
+    );
+    bucket.position.y = 0.275;
+    bucket.castShadow = true;
+    bucket.receiveShadow = true;
+    bucket.userData.kind = "bucket";
+    bucketGroup.add(bucket);
+
+    const waterMat = new THREE.MeshStandardMaterial({
+      color: 0x3aa0ff,
+      roughness: 0.2,
+      metalness: 0.05
+    });
+    const water = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.32, 0.32, 0.04, 16),
+      waterMat
+    );
+    water.position.y = 0.5;
+    bucketGroup.add(water);
+
+    // Wire handle
+    const handleRing = new THREE.Mesh(
+      new THREE.TorusGeometry(0.3, 0.018, 8, 20, Math.PI),
+      new THREE.MeshStandardMaterial({ color: 0x8a8a8a, metalness: 0.6, roughness: 0.3 })
+    );
+    handleRing.rotation.z = Math.PI;
+    handleRing.position.y = 0.55;
+    bucketGroup.add(handleRing);
+    scene.add(bucketGroup);
+
+    // Container machine (dispenser) against the +X wall — click to pop out a bin
+    const machineGroup = new THREE.Group();
+    machineGroup.position.set(19.15, 0, -12);
+
+    const machineMat = new THREE.MeshStandardMaterial({
+      color: 0x5c6370,
+      metalness: 0.48,
+      roughness: 0.38
+    });
+    const machineBody = new THREE.Mesh(new THREE.BoxGeometry(0.95, 2.15, 1.85), machineMat);
+    machineBody.position.y = 1.075;
+    machineBody.castShadow = true;
+    machineBody.receiveShadow = true;
+    machineBody.userData.kind = "machine";
+    machineGroup.add(machineBody);
+
+    const machineSlot = new THREE.Mesh(
+      new THREE.BoxGeometry(0.14, 0.72, 0.88),
+      new THREE.MeshStandardMaterial({ color: 0x121212, roughness: 0.92 })
+    );
+    machineSlot.position.set(-0.5, 0.52, 0);
+    machineSlot.userData.kind = "machine";
+    machineGroup.add(machineSlot);
+
+    const machinePanel = new THREE.Mesh(
+      new THREE.BoxGeometry(0.05, 0.32, 0.38),
+      new THREE.MeshStandardMaterial({
+        color: 0xd4a017,
+        emissive: 0x3a2a00,
+        emissiveIntensity: 0.45
+      })
+    );
+    machinePanel.position.set(-0.5, 1.58, 0.48);
+    machinePanel.userData.kind = "machine";
+    machineGroup.add(machinePanel);
+
+    const machineLed = new THREE.Mesh(
+      new THREE.BoxGeometry(0.05, 0.05, 0.05),
+      new THREE.MeshStandardMaterial({
+        color: 0x33ff66,
+        emissive: 0x22ff55,
+        emissiveIntensity: 1.2
+      })
+    );
+    machineLed.position.set(-0.5, 1.78, -0.62);
+    machineGroup.add(machineLed);
+
+    const machineBeacon = new THREE.Mesh(
+      new THREE.BoxGeometry(0.28, 0.12, 0.28),
+      new THREE.MeshStandardMaterial({
+        color: 0xffcc33,
+        emissive: 0xffaa00,
+        emissiveIntensity: 0.9
+      })
+    );
+    machineBeacon.position.set(0, 2.22, 0);
+    machineGroup.add(machineBeacon);
+
+    // Yellow / black foot stripe so it reads as industrial equipment
+    for (let i = 0; i < 6; i++) {
+      const stripe = new THREE.Mesh(
+        new THREE.BoxGeometry(1.0, 0.06, 0.22),
+        i % 2 === 0 ? yel : blk
+      );
+      stripe.position.set(0, 0.03, -0.8 + i * 0.32);
+      machineGroup.add(stripe);
+    }
+    scene.add(machineGroup);
+
+    // Corner table + gray radio (click to toggle a looping station)
+    const radioGroup = new THREE.Group();
+    radioGroup.position.set(16.15, 0, 16.35);
+
+    const wood = new THREE.MeshStandardMaterial({ color: 0x6b4423, roughness: 0.75 });
+    const woodDark = new THREE.MeshStandardMaterial({ color: 0x3e2814, roughness: 0.8 });
+    const tableTop = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.06, 0.58), wood);
+    tableTop.position.y = 0.78;
+    tableTop.castShadow = true;
+    tableTop.receiveShadow = true;
+    radioGroup.add(tableTop);
+    const legGeo = new THREE.BoxGeometry(0.055, 0.75, 0.055);
+    for (const [lx, lz] of [[-0.4, -0.22], [0.4, -0.22], [-0.4, 0.22], [0.4, 0.22]]) {
+      const leg = new THREE.Mesh(legGeo, woodDark);
+      leg.position.set(lx, 0.375, lz);
+      leg.castShadow = true;
+      radioGroup.add(leg);
+    }
+
+    const radioBody = new THREE.Mesh(
+      new THREE.BoxGeometry(0.44, 0.22, 0.26),
+      new THREE.MeshStandardMaterial({ color: 0x6a6d72, metalness: 0.35, roughness: 0.45 })
+    );
+    radioBody.position.set(0, 0.93, 0);
+    radioBody.castShadow = true;
+    radioBody.userData.kind = "radio";
+    radioGroup.add(radioBody);
+
+    const radioFace = new THREE.Mesh(
+      new THREE.BoxGeometry(0.4, 0.16, 0.02),
+      new THREE.MeshStandardMaterial({ color: 0x2a2c30, roughness: 0.7 })
+    );
+    radioFace.position.set(0, 0.93, 0.14);
+    radioFace.userData.kind = "radio";
+    radioGroup.add(radioFace);
+
+    // Speaker grille — rows of dark slots
+    const grillMat = new THREE.MeshStandardMaterial({ color: 0x111214, roughness: 0.9 });
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 5; c++) {
+        const slot = new THREE.Mesh(new THREE.BoxGeometry(0.028, 0.012, 0.012), grillMat);
+        slot.position.set(-0.14 + c * 0.038, 0.97 - r * 0.028, 0.152);
+        slot.userData.kind = "radio";
+        radioGroup.add(slot);
+      }
+    }
+
+    const knobMat = new THREE.MeshStandardMaterial({ color: 0xc9a227, metalness: 0.5, roughness: 0.35 });
+    const knobA = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.03, 10), knobMat);
+    knobA.rotation.x = Math.PI / 2;
+    knobA.position.set(0.12, 0.9, 0.15);
+    knobA.userData.kind = "radio";
+    const knobB = knobA.clone();
+    knobB.position.set(0.17, 0.9, 0.15);
+    radioGroup.add(knobA, knobB);
+
+    const radioLedMat = new THREE.MeshStandardMaterial({
+      color: 0x441010,
+      emissive: 0x000000,
+      emissiveIntensity: 1
+    });
+    const radioLed = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.02, 0.012), radioLedMat);
+    radioLed.position.set(-0.16, 0.86, 0.152);
+    radioGroup.add(radioLed);
+
+    // Whip antenna
+    const antMat = new THREE.MeshStandardMaterial({ color: 0x9aa0a8, metalness: 0.7, roughness: 0.25 });
+    const antenna = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.01, 0.52, 6), antMat);
+    antenna.position.set(-0.16, 1.28, -0.04);
+    antenna.rotation.z = 0.28;
+    antenna.rotation.x = -0.12;
+    radioGroup.add(antenna);
+    const antBall = new THREE.Mesh(new THREE.SphereGeometry(0.018, 8, 8), antMat);
+    antBall.position.set(-0.23, 1.52, -0.07);
+    radioGroup.add(antBall);
+
+    // Frequency window
+    const windowGlass = new THREE.Mesh(
+      new THREE.BoxGeometry(0.16, 0.04, 0.01),
+      new THREE.MeshStandardMaterial({ color: 0x7ad0c8, emissive: 0x143830, emissiveIntensity: 0.35 })
+    );
+    windowGlass.position.set(0.02, 0.88, 0.152);
+    windowGlass.userData.kind = "radio";
+    radioGroup.add(windowGlass);
+
+    scene.add(radioGroup);
+
+    // Collision helpers for large props (bucket / bin AABBs update when moved)
+    const INCIN_AABB = { minX: -17.6, maxX: -14.8, minZ: -17.6, maxZ: -14.8 };
+    const MACHINE_AABB = { minX: 18.67, maxX: 19.63, minZ: -12.93, maxZ: -11.07 };
+    const RADIO_AABB = { minX: 15.6, maxX: 16.7, minZ: 15.95, maxZ: 16.75 };
+    const BUCKET_POS = new THREE.Vector3(-12.4, 0, -16.4);
+    const BUCKET_R = 0.55;
+    const CONTAINER_R = 0.48;
+
+    // =========================================================================
+    // Game state
+    // =========================================================================
+    const keys = { w: false, a: false, s: false, d: false };
+    const velocity = new THREE.Vector3();
+
+    let tool = "mop";            // "mop" | "hands"
+    let mopDirt = 0;             // 0..MOP_CAPACITY
+    let bucketDirty = false;
+    let heldTrash = null;        // trash mesh currently carried
+    let bucketHeld = false;
+    let containerHeld = false;
+    let worldContainer = null;   // the one portable bin, or null before dispense
+    let containerLoad = 0;
+    let containerAnim = null;    // { from, to, t, dur }
+    let lookTarget = null;       // current raycast hit payload
+    let clickCooldown = 0;
+    let bob = 0;
+    let swipeT = 0;              // mop swing timer
+    let toastTimer = 0;
+    let areaCleared = false;
+    let shoesBloody = false;
+    let footprintsLeft = 0;
+    let footCarry = 0;
+    let footSide = 1;
+    let radioOn = false;
+    let radioStep = 0;
+    let radioNextTime = 0;
+
+    // Work tracking for progress that can go backwards if the player smears
+    let completedWork = 0;
+
+    const stains = [];           // { mesh, hits, maxHits }
+    const trash = [];            // meshes still on the floor
+    const particles = [];        // short-lived burst pieces
+    const interactables = [
+      incinerator, bucket, machineBody, machineSlot, machinePanel,
+      radioBody, radioFace
+    ];
+
+    const clock = new THREE.Clock();
+    const raycaster = new THREE.Raycaster();
+    const ndcCenter = new THREE.Vector2(0, 0);
+    const tmp = new THREE.Vector3();
+
+    // =========================================================================
+    // Viewmodels (parented to the camera so they stick to first-person view)
+    // =========================================================================
+    const mopView = new THREE.Group();
+    const mopHeadMat = new THREE.MeshStandardMaterial({
+      color: 0xd8d8d8,
+      roughness: 0.85
+    });
+    {
+      // Handle + head built as one stick so the mop reads as a single tool
+      const stick = new THREE.Group();
+      const shaft = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.016, 0.02, 1.05, 8),
+        new THREE.MeshStandardMaterial({ color: 0x8a5a22, roughness: 0.7 })
+      );
+      const head = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.08, 0.14), mopHeadMat);
+      head.position.set(0, -0.56, 0);
+      const strings = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.1, 0.12), mopHeadMat);
+      strings.position.set(0, -0.64, 0);
+      stick.add(shaft, head, strings);
+      stick.rotation.set(0.85, 0.15, -0.55);
+      mopView.add(stick);
+      mopView.position.set(0.32, -0.28, -0.55);
+      mopView.traverse((c) => { c.castShadow = false; });
+      camera.add(mopView);
+    }
+
+    const handsView = new THREE.Group();
+    {
+      const skin = new THREE.MeshStandardMaterial({ color: 0xc4a07a, roughness: 0.7 });
+      const sleeve = new THREE.MeshStandardMaterial({ color: 0x2f4a6e, roughness: 0.8 });
+
+      function makeHand(side) {
+        const g = new THREE.Group();
+        const palm = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.04, 0.16), skin);
+        const arm = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.08, 0.22), sleeve);
+        arm.position.set(0, 0.02, 0.16);
+        g.add(palm, arm);
+        g.position.set(side * 0.22, -0.28, -0.42);
+        g.rotation.x = 0.15;
+        return g;
+      }
+
+      handsView.add(makeHand(-1), makeHand(1));
+      handsView.visible = false;
+      camera.add(handsView);
+    }
+
+    const holdAnchor = new THREE.Group();
+    holdAnchor.position.set(0.12, -0.18, -0.55);
+    holdAnchor.visible = false;
+    camera.add(holdAnchor);
+
+    function handsFull() {
+      return !!(heldTrash || bucketHeld || containerHeld);
+    }
+
+    function setTool(next) {
+      if (next === tool) return;
+      // Mop needs both hands — anything carried is set on the floor
+      if (next === "mop" && handsFull()) {
+        dropHeldItem();
+      }
+      tool = next;
+      mopView.visible = tool === "mop";
+      handsView.visible = tool === "hands";
+      holdAnchor.visible = tool === "hands";
+    }
+
+    setTool("mop");
+
+    // =========================================================================
+    // Spawning helpers
+    // =========================================================================
+    function tooCloseToProps(x, z) {
+      if (x < -13.5 && z < -13.5) return true;          // incinerator / starting bucket
+      if (x > 16.4 && z < -10.1 && z > -14.0) return true; // container machine
+      if (x > 14.6 && z > 14.6) return true;               // radio table
+      if (Math.hypot(x - 8, z - 10) < 1.6) return true; // spawn area
+      return false;
+    }
+
+    function randomFloorPoint() {
+      for (let i = 0; i < 40; i++) {
+        const x = (Math.random() - 0.5) * (ROOM_SIZE - 4);
+        const z = (Math.random() - 0.5) * (ROOM_SIZE - 4);
+        if (!tooCloseToProps(x, z)) return { x, z };
+      }
+      return { x: 4, z: 4 };
+    }
+
+    /**
+     * Blood / viscera: thin red planes slightly above the floor.
+     * hitsRemaining controls fade — several mops are required to erase one stain.
+     */
+    function createStain(x, z, opts = {}) {
+      if (stains.length >= MAX_STAINS) return null;
+
+      // Keep smears inside the room and off the props
+      const bound = ROOM_SIZE / 2 - 1.4;
+      x = THREE.MathUtils.clamp(x, -bound, bound);
+      z = THREE.MathUtils.clamp(z, -bound, bound);
+      if (tooCloseToProps(x, z) && !opts.force) {
+        const p = randomFloorPoint();
+        x = p.x;
+        z = p.z;
+      }
+
+      const w = opts.w || (0.55 + Math.random() * 1.35);
+      const h = opts.h || (0.4 + Math.random() * 1.05);
+      const color = opts.color || (Math.random() > 0.35 ? 0x8b1010 : 0x5a0606);
+      const geo = new THREE.PlaneGeometry(w, h);
+      const mat = new THREE.MeshStandardMaterial({
+        color,
+        roughness: 0.95,
+        metalness: 0,
+        transparent: true,
+        opacity: opts.opacity ?? (0.72 + Math.random() * 0.22),
+        depthWrite: false,
+        polygonOffset: true,
+        polygonOffsetFactor: -2,
+        polygonOffsetUnits: -2,
+        side: THREE.DoubleSide
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.rotation.z = opts.rot != null ? opts.rot : Math.random() * Math.PI;
+      mesh.position.set(x, STAIN_Y, z);
+      mesh.renderOrder = 2;
+      mesh.receiveShadow = true;
+      mesh.userData.kind = "stain";
+      scene.add(mesh);
+
+      const rec = {
+        mesh,
+        hits: opts.hits ?? STAIN_HITS,
+        maxHits: opts.hits ?? STAIN_HITS,
+        organ: !!opts.organ,
+        footprint: !!opts.footprint
+      };
+      mesh.userData.rec = rec;
+      stains.push(rec);
+      interactables.push(mesh);
+      return rec;
+    }
+
+    function createTrash(x, z) {
+      const sx = 0.08 + Math.random() * 0.16;
+      const sy = 0.05 + Math.random() * 0.12;
+      const sz = 0.08 + Math.random() * 0.2;
+      const greens = [0x3d8c40, 0x2f6b32, 0x5aa85e, 0x1f4d22];
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(sx, sy, sz),
+        new THREE.MeshStandardMaterial({
+          color: greens[(Math.random() * greens.length) | 0],
+          roughness: 0.7,
+          metalness: 0.08
+        })
+      );
+      mesh.position.set(x, sy / 2 + 0.01, z);
+      mesh.rotation.y = Math.random() * Math.PI * 2;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.userData.kind = "trash";
+      mesh.userData.homeY = mesh.position.y;
+      scene.add(mesh);
+      trash.push(mesh);
+      interactables.push(mesh);
+      return mesh;
+    }
+
+    // Scatter the crime scene
+    const STAIN_COUNT = 18;
+    const ORGAN_COUNT = 6;
+    const TRASH_COUNT = 14;
+
+    for (let i = 0; i < STAIN_COUNT; i++) {
+      const p = randomFloorPoint();
+      createStain(p.x, p.z);
+    }
+    for (let i = 0; i < ORGAN_COUNT; i++) {
+      const p = randomFloorPoint();
+      // Slightly thicker / darker "organ" planes — still mopped, not picked up
+      createStain(p.x, p.z, {
+        w: 0.35 + Math.random() * 0.4,
+        h: 0.25 + Math.random() * 0.3,
+        color: 0x6b0808,
+        organ: true
+      });
+      // Extra overlapping blotch so organs read as clumps
+      createStain(p.x + (Math.random() - 0.5) * 0.2, p.z + (Math.random() - 0.5) * 0.2, {
+        w: 0.25 + Math.random() * 0.25,
+        h: 0.2 + Math.random() * 0.2,
+        color: 0x4a0404,
+        organ: true
+      });
+    }
+    for (let i = 0; i < TRASH_COUNT; i++) {
+      const p = randomFloorPoint();
+      createTrash(p.x, p.z);
+    }
+
+    // Total remaining mop-hits + floor trash (+ carried item) drives the %.
+    function remainingWork() {
+      let hits = 0;
+      for (const s of stains) hits += s.hits;
+      return hits + trash.length + (heldTrash ? 1 : 0) + containerLoad;
+    }
+
+    function cleanPercent() {
+      const left = remainingWork();
+      const total = completedWork + left;
+      if (total <= 0) return 100;
+      return Math.max(0, Math.min(100, (completedWork / total) * 100));
+    }
+
+    // =========================================================================
+    // HUD / feedback
+    // =========================================================================
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      toastTimer = 1.6;
+    }
+
+    function updateHUD() {
+      hudTool.textContent = tool === "mop" ? "MOP" : "HANDS";
+      hudTool.className = tool === "mop" ? "info" : "ok";
+
+      if (mopDirt >= MOP_CAPACITY) {
+        hudMop.textContent = "DIRTY  " + mopDirt + "/" + MOP_CAPACITY;
+        hudMop.className = "bad";
+        mopHeadMat.color.setHex(0x7a1414);
+      } else if (mopDirt > 0) {
+        hudMop.textContent = "SOILED  " + mopDirt + "/" + MOP_CAPACITY;
+        hudMop.className = "warn";
+        const t = mopDirt / MOP_CAPACITY;
+        mopHeadMat.color.setRGB(0.85 - t * 0.4, 0.85 - t * 0.7, 0.85 - t * 0.7);
+      } else {
+        hudMop.textContent = "CLEAN  0/" + MOP_CAPACITY;
+        hudMop.className = "ok";
+        mopHeadMat.color.setHex(0xd8d8d8);
+      }
+
+      if (bucketDirty) {
+        hudBucket.textContent = "FILTHY WATER";
+        hudBucket.className = "bad";
+      } else {
+        hudBucket.textContent = "CLEAN WATER";
+        hudBucket.className = "ok";
+      }
+
+      if (heldTrash) {
+        hudHands.textContent = "HOLDING DEBRIS";
+        hudHands.className = "warn";
+      } else if (bucketHeld) {
+        hudHands.textContent = "HOLDING BUCKET";
+        hudHands.className = "info";
+      } else if (containerHeld) {
+        hudHands.textContent = "HOLDING BIN";
+        hudHands.className = "warn";
+      } else {
+        hudHands.textContent = "EMPTY";
+        hudHands.className = "";
+      }
+
+      if (!worldContainer) {
+        hudBin.textContent = "NONE";
+        hudBin.className = "";
+      } else {
+        const where = containerHeld ? "HELD" : "PLACED";
+        hudBin.textContent = containerLoad + "/" + CONTAINER_CAP + "  " + where;
+        hudBin.className = containerLoad >= CONTAINER_CAP ? "bad" : (containerLoad > 0 ? "warn" : "ok");
+      }
+
+      if (shoesBloody) {
+        hudShoes.textContent = "BLOODY  " + (FOOTPRINTS_TO_CLEAN - footprintsLeft) + "/" + FOOTPRINTS_TO_CLEAN;
+        hudShoes.className = "bad";
+      } else {
+        hudShoes.textContent = "CLEAN";
+        hudShoes.className = "ok";
+      }
+
+      hudRadio.textContent = radioOn ? "ON AIR" : "OFF";
+      hudRadio.className = radioOn ? "ok" : "";
+
+      const pct = Math.round(cleanPercent());
+      hudProgress.textContent = pct + "%";
+      progressFill.style.width = pct + "%";
+
+      if (pct >= 100 && !areaCleared) {
+        areaCleared = true;
+        winEl.style.display = "block";
+        toast("Area cleared. The supervisor will pretend to be impressed.");
+      } else if (pct < 100 && areaCleared) {
+        areaCleared = false;
+        winEl.style.display = "none";
+      }
+    }
+
+    function setPrompt(text) {
+      promptEl.textContent = text || "";
+    }
+
+    // =========================================================================
+    // Highlight currently targeted mesh
+    // =========================================================================
+    let highlighted = null;
+    let highlightedEmissive = 0;
+
+    function clearHighlight() {
+      if (highlighted && highlighted.material && highlighted.material.emissive) {
+        highlighted.material.emissive.setHex(highlightedEmissive);
+      }
+      highlighted = null;
+    }
+
+    function highlight(mesh) {
+      if (highlighted === mesh) return;
+      clearHighlight();
+      if (!mesh || !mesh.material || !mesh.material.emissive) return;
+      highlighted = mesh;
+      highlightedEmissive = mesh.material.emissive.getHex();
+      mesh.material.emissive.setHex(0x332200);
+    }
+
+    // =========================================================================
+    // Soft procedural sounds (no audio files)
+    // =========================================================================
+    let audioCtx = null;
+
+    function ensureAudio() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      if (!audioCtx) audioCtx = new AC();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+
+    /** Short bloop / sweep. freq slides to freqEnd over dur seconds. */
+    function playTone({ freq = 420, freqEnd = 220, dur = 0.11, type = "sine", vol = 0.055 }) {
+      const ctx = ensureAudio();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(40, freqEnd), ctx.currentTime + dur);
+      g.gain.setValueAtTime(vol, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+      osc.connect(g);
+      g.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + dur + 0.03);
+    }
+
+    function sfx(kind) {
+      if (kind === "mop") playTone({ freq: 360, freqEnd: 170, dur: 0.1, type: "triangle", vol: 0.05 });
+      else if (kind === "pickup") playTone({ freq: 520, freqEnd: 780, dur: 0.1, type: "sine", vol: 0.055 });
+      else if (kind === "drop") playTone({ freq: 280, freqEnd: 140, dur: 0.1, type: "sine", vol: 0.045 });
+      else if (kind === "rinse") playTone({ freq: 680, freqEnd: 260, dur: 0.16, type: "sine", vol: 0.05 });
+      else if (kind === "dump") playTone({ freq: 190, freqEnd: 80, dur: 0.2, type: "sawtooth", vol: 0.03 });
+      else if (kind === "machine") playTone({ freq: 160, freqEnd: 70, dur: 0.32, type: "square", vol: 0.028 });
+      else if (kind === "smear") playTone({ freq: 140, freqEnd: 70, dur: 0.16, type: "triangle", vol: 0.045 });
+      else if (kind === "radio") playTone({ freq: 240, freqEnd: 180, dur: 0.07, type: "square", vol: 0.03 });
+      else playTone({ freq: 440, freqEnd: 300, dur: 0.08, type: "sine", vol: 0.045 });
+    }
+
+    // =========================================================================
+    // Looping procedural radio (retro bass + melody, no audio files)
+    // =========================================================================
+    const RADIO_STEP = 0.2;
+    const RADIO_BASS = [98.0, 98.0, 87.3, 98.0, 130.8, 116.5, 87.3, 98.0, 98.0, 73.4, 87.3, 98.0, 130.8, 116.5, 110.0, 98.0];
+    const RADIO_LEAD = [196, 0, 233, 262, 0, 196, 175, 156, 196, 233, 0, 262, 233, 196, 175, 0];
+
+    function radioBeep(ctx, freq, t, dur, type, vol, freqEnd) {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(type === "square" ? 900 : 1800, t);
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, t);
+      if (freqEnd) osc.frequency.exponentialRampToValueAtTime(Math.max(40, freqEnd), t + dur);
+      g.gain.setValueAtTime(vol, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      osc.connect(filter);
+      filter.connect(g);
+      g.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + dur + 0.02);
+    }
+
+    function radioHat(ctx, t) {
+      const n = ctx.createBufferSource();
+      const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.04), ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+      n.buffer = buf;
+      const f = ctx.createBiquadFilter();
+      f.type = "highpass";
+      f.frequency.value = 4000;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.02, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.03);
+      n.connect(f);
+      f.connect(g);
+      g.connect(ctx.destination);
+      n.start(t);
+      n.stop(t + 0.04);
+    }
+
+    function setRadioLed(on) {
+      radioLedMat.color.setHex(on ? 0xff3030 : 0x441010);
+      radioLedMat.emissive.setHex(on ? 0xff2020 : 0x000000);
+      radioLedMat.emissiveIntensity = on ? 1.4 : 1;
+    }
+
+    function toggleRadio() {
+      const ctx = ensureAudio();
+      if (!ctx) {
+        toast("No audio on this browser.");
+        return;
+      }
+      radioOn = !radioOn;
+      sfx("radio");
+      setRadioLed(radioOn);
+      if (radioOn) {
+        radioStep = 0;
+        radioNextTime = ctx.currentTime + 0.05;
+        toast("Station locked. Click again to kill it.");
+      } else {
+        toast("Radio off.");
+      }
+    }
+
+    function updateRadio() {
+      if (!radioOn) return;
+      const ctx = ensureAudio();
+      if (!ctx) return;
+      const ahead = ctx.currentTime + 0.18;
+      while (radioNextTime < ahead) {
+        const t = radioNextTime;
+        const i = radioStep % 16;
+        radioBeep(ctx, RADIO_BASS[i], t, 0.16, "square", 0.042, RADIO_BASS[i] * 0.92);
+        if (RADIO_LEAD[i]) radioBeep(ctx, RADIO_LEAD[i], t, 0.12, "triangle", 0.03);
+        if (i % 4 === 0) radioBeep(ctx, 140, t, 0.09, "sine", 0.055, 48);
+        if (i % 2 === 1) radioHat(ctx, t);
+        radioStep += 1;
+        radioNextTime += RADIO_STEP;
+      }
+    }
+
+    // =========================================================================
+    // Burst particles — 6–7 cubes that fly out and fade in 0.5s
+    // =========================================================================
+    function spawnBurst(worldPos, color, count = 7) {
+      const origin = worldPos.clone();
+      origin.y += 0.1;
+      for (let i = 0; i < count; i++) {
+        const mesh = new THREE.Mesh(
+          new THREE.BoxGeometry(0.045, 0.045, 0.045),
+          new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 1 })
+        );
+        mesh.position.copy(origin);
+        scene.add(mesh);
+        particles.push({
+          mesh,
+          vel: new THREE.Vector3(
+            (Math.random() - 0.5) * 2.4,
+            1.1 + Math.random() * 1.8,
+            (Math.random() - 0.5) * 2.4
+          ),
+          life: PARTICLE_LIFE
+        });
+      }
+    }
+
+    function updateParticles(dt) {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.life -= dt;
+        p.vel.y -= 7 * dt;
+        p.mesh.position.addScaledVector(p.vel, dt);
+        p.mesh.rotation.x += dt * 8;
+        p.mesh.rotation.y += dt * 6;
+        p.mesh.material.opacity = Math.max(0, p.life / PARTICLE_LIFE);
+        if (p.life <= 0) {
+          scene.remove(p.mesh);
+          p.mesh.geometry.dispose();
+          p.mesh.material.dispose();
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    // =========================================================================
+    // Collision queries (walls + static/movable props)
+    // =========================================================================
+    const colliders = [];
+
+    function rebuildColliders() {
+      colliders.length = 0;
+      colliders.push({ type: "aabb", ...INCIN_AABB });
+      colliders.push({ type: "aabb", ...MACHINE_AABB });
+      colliders.push({ type: "aabb", ...RADIO_AABB });
+      if (!bucketHeld) {
+        colliders.push({ type: "cyl", x: BUCKET_POS.x, z: BUCKET_POS.z, r: BUCKET_R });
+      }
+      if (worldContainer && !containerHeld && !containerAnim) {
+        colliders.push({
+          type: "cyl",
+          x: worldContainer.position.x,
+          z: worldContainer.position.z,
+          r: CONTAINER_R
+        });
+      }
+    }
+
+    function blockedAt(x, z) {
+      const limit = half - WALL_T * 0.5 - PLAYER_RADIUS;
+      if (x < -limit || x > limit || z < -limit || z > limit) return true;
+      for (const c of colliders) {
+        if (c.type === "aabb") {
+          if (
+            x > c.minX - PLAYER_RADIUS &&
+            x < c.maxX + PLAYER_RADIUS &&
+            z > c.minZ - PLAYER_RADIUS &&
+            z < c.maxZ + PLAYER_RADIUS
+          ) return true;
+        } else if (Math.hypot(x - c.x, z - c.z) < c.r + PLAYER_RADIUS) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function insideProp(x, z, pad) {
+      const boxes = [INCIN_AABB, MACHINE_AABB, RADIO_AABB];
+      for (const b of boxes) {
+        if (x > b.minX - pad && x < b.maxX + pad && z > b.minZ - pad && z < b.maxZ + pad) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function validPlacePoint(x, z) {
+      const bound = half - 1.15;
+      x = THREE.MathUtils.clamp(x, -bound, bound);
+      z = THREE.MathUtils.clamp(z, -bound, bound);
+
+      const px = controls.object.position.x;
+      const pz = controls.object.position.z;
+      let dx = x - px;
+      let dz = z - pz;
+      let d = Math.hypot(dx, dz);
+      if (d < 1.1) {
+        if (d < 1e-4) {
+          camera.getWorldDirection(tmp);
+          tmp.y = 0;
+          if (tmp.lengthSq() < 1e-6) tmp.set(0, 0, -1);
+          tmp.normalize();
+          dx = tmp.x;
+          dz = tmp.z;
+          d = 1;
+        }
+        x = px + (dx / d) * 1.1;
+        z = pz + (dz / d) * 1.1;
+      }
+
+      if (insideProp(x, z, 0.85)) {
+        camera.getWorldDirection(tmp);
+        tmp.y = 0;
+        if (tmp.lengthSq() < 1e-6) tmp.set(0, 0, -1);
+        tmp.normalize();
+        x = px + tmp.x * 1.15;
+        z = pz + tmp.z * 1.15;
+      }
+      return { x, z };
+    }
+
+    function dropPointInFront() {
+      camera.getWorldDirection(tmp);
+      tmp.y = 0;
+      if (tmp.lengthSq() < 1e-6) tmp.set(0, 0, -1);
+      tmp.normalize();
+      return validPlacePoint(
+        controls.object.position.x + tmp.x * 1.1,
+        controls.object.position.z + tmp.z * 1.1
+      );
+    }
+
+    rebuildColliders();
+
+    // =========================================================================
+    // Portable bin + movable bucket
+    // =========================================================================
+    function containerHitMesh() {
+      return worldContainer ? worldContainer.userData.crate : null;
+    }
+
+    function refreshContainerFill() {
+      if (!worldContainer) return;
+      const old = worldContainer.userData.fill || [];
+      for (const m of old) {
+        worldContainer.remove(m);
+        m.geometry.dispose();
+        m.material.dispose();
+      }
+      const fill = [];
+      const n = Math.min(containerLoad, 6);
+      for (let i = 0; i < n; i++) {
+        const bit = new THREE.Mesh(
+          new THREE.BoxGeometry(0.08, 0.06, 0.08),
+          new THREE.MeshStandardMaterial({ color: 0x3d8c40, roughness: 0.7 })
+        );
+        bit.position.set(
+          ((i % 3) - 1) * 0.12,
+          0.28 + Math.floor(i / 3) * 0.07,
+          (i % 2 === 0 ? -0.06 : 0.06)
+        );
+        worldContainer.add(bit);
+        fill.push(bit);
+      }
+      worldContainer.userData.fill = fill;
+    }
+
+    function makeContainer() {
+      const g = new THREE.Group();
+      const crateMat = new THREE.MeshStandardMaterial({
+        color: 0xc9a227,
+        roughness: 0.52,
+        metalness: 0.18
+      });
+      const crate = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.42, 0.52), crateMat);
+      crate.position.y = 0.21;
+      crate.castShadow = true;
+      crate.receiveShadow = true;
+      crate.userData.kind = "container";
+      const well = new THREE.Mesh(
+        new THREE.BoxGeometry(0.5, 0.26, 0.38),
+        new THREE.MeshStandardMaterial({ color: 0x3a2a08, roughness: 0.9 })
+      );
+      well.position.y = 0.3;
+      well.userData.kind = "container";
+      g.add(crate, well);
+      g.userData.crate = crate;
+      g.userData.fill = [];
+      return g;
+    }
+
+    function activateMachine() {
+      if (containerAnim) return;
+      if (worldContainer) {
+        toast("A bin is already out.");
+        return;
+      }
+      worldContainer = makeContainer();
+      const from = new THREE.Vector3(18.85, 0.08, -12);
+      const to = new THREE.Vector3(17.15, 0, -12);
+      worldContainer.position.copy(from);
+      scene.add(worldContainer);
+      containerAnim = { from, to, t: 0, dur: 0.85 };
+      sfx("machine");
+      toast("Bin incoming.");
+    }
+
+    function updateContainerAnim(dt) {
+      if (!containerAnim || !worldContainer) return;
+      containerAnim.t += dt;
+      const k = Math.min(1, containerAnim.t / containerAnim.dur);
+      const e = 1 - Math.pow(1 - k, 3);
+      worldContainer.position.lerpVectors(containerAnim.from, containerAnim.to, e);
+      worldContainer.position.y = Math.sin(k * Math.PI) * 0.22;
+      worldContainer.rotation.y = (1 - e) * 0.35;
+      if (k >= 1) {
+        worldContainer.position.copy(containerAnim.to);
+        worldContainer.position.y = 0;
+        worldContainer.rotation.y = 0;
+        interactables.push(worldContainer.userData.crate);
+        containerAnim = null;
+        rebuildColliders();
+        spawnBurst(worldContainer.position.clone().setY(0.25), 0xd4a017, 7);
+        sfx("drop");
+      }
+    }
+
+    function attachToHands(obj, scale) {
+      scene.remove(obj);
+      obj.scale.setScalar(scale);
+      obj.position.set(0, -0.08, 0);
+      obj.rotation.set(0.15, 0.45, 0.08);
+      holdAnchor.add(obj);
+    }
+
+    function pickUpBucket() {
+      if (bucketHeld) return;
+      if (handsFull()) {
+        toast("Your hands are full.");
+        return;
+      }
+      if (highlighted === bucket) clearHighlight();
+      removeFromInteractables(bucket);
+      attachToHands(bucketGroup, 0.52);
+      bucketHeld = true;
+      rebuildColliders();
+      sfx("pickup");
+      spawnBurst(BUCKET_POS.clone().setY(0.3), 0x1f6feb, 6);
+      toast("Bucket picked up. Click the floor to set it down.");
+    }
+
+    function placeBucketAt(x, z) {
+      holdAnchor.remove(bucketGroup);
+      bucketGroup.scale.setScalar(1);
+      bucketGroup.rotation.set(0, 0, 0);
+      bucketGroup.position.set(x, 0, z);
+      scene.add(bucketGroup);
+      interactables.push(bucket);
+      BUCKET_POS.set(x, 0, z);
+      bucketHeld = false;
+      rebuildColliders();
+      sfx("drop");
+      spawnBurst(new THREE.Vector3(x, 0.25, z), 0x1f6feb, 6);
+    }
+
+    function pickUpContainer() {
+      if (!worldContainer || containerHeld || containerAnim) return;
+      if (handsFull()) {
+        toast("Your hands are full.");
+        return;
+      }
+      const crate = containerHitMesh();
+      if (highlighted === crate) clearHighlight();
+      removeFromInteractables(crate);
+      const p = worldContainer.position.clone();
+      attachToHands(worldContainer, 0.48);
+      containerHeld = true;
+      rebuildColliders();
+      sfx("pickup");
+      spawnBurst(p.setY(0.25), 0xd4a017, 6);
+      toast("Bin in hand. Click trash to fill it, or the floor to place it.");
+    }
+
+    function placeContainerAt(x, z) {
+      if (!worldContainer) return;
+      holdAnchor.remove(worldContainer);
+      worldContainer.scale.setScalar(1);
+      worldContainer.rotation.set(0, 0, 0);
+      worldContainer.position.set(x, 0, z);
+      scene.add(worldContainer);
+      interactables.push(worldContainer.userData.crate);
+      containerHeld = false;
+      rebuildColliders();
+      sfx("drop");
+      spawnBurst(new THREE.Vector3(x, 0.25, z), 0xd4a017, 6);
+    }
+
+    function restoreTrashToFloor(mesh, x, z) {
+      holdAnchor.remove(mesh);
+      mesh.scale.setScalar(1);
+      mesh.rotation.set(0, Math.random() * Math.PI, 0);
+      mesh.position.set(x, mesh.userData.homeY || 0.08, z);
+      scene.add(mesh);
+      trash.push(mesh);
+      interactables.push(mesh);
+      heldTrash = null;
+    }
+
+    /** Called when switching to the mop, or when the player clicks the floor. */
+    function dropHeldItem(point) {
+      const p = point || dropPointInFront();
+      if (heldTrash) {
+        restoreTrashToFloor(heldTrash, p.x, p.z);
+        sfx("drop");
+        spawnBurst(new THREE.Vector3(p.x, 0.15, p.z), 0x4caf50, 6);
+        toast("Debris set down.");
+        return;
+      }
+      if (bucketHeld) {
+        placeBucketAt(p.x, p.z);
+        toast("Bucket set down.");
+        return;
+      }
+      if (containerHeld) {
+        placeContainerAt(p.x, p.z);
+        toast("Bin set down.");
+      }
+    }
+
+    function consumeTrashMesh(mesh) {
+      if (highlighted === mesh) clearHighlight();
+      const idx = trash.indexOf(mesh);
+      if (idx >= 0) trash.splice(idx, 1);
+      removeFromInteractables(mesh);
+      if (mesh.parent) mesh.parent.remove(mesh);
+      else scene.remove(mesh);
+      mesh.geometry.dispose();
+      mesh.material.dispose();
+    }
+
+    function addTrashToContainer(mesh) {
+      if (containerLoad >= CONTAINER_CAP) {
+        toast("Bin is full. Empty it at the incinerator.");
+        return false;
+      }
+      const p = new THREE.Vector3();
+      mesh.getWorldPosition(p);
+      if (mesh === heldTrash) heldTrash = null;
+      consumeTrashMesh(mesh);
+      containerLoad += 1;
+      refreshContainerFill();
+      sfx("pickup");
+      spawnBurst(p, 0x4caf50, 7);
+      toast("Into the bin (" + containerLoad + "/" + CONTAINER_CAP + ").");
+      return true;
+    }
+
+    // =========================================================================
+    // Interaction
+    // =========================================================================
+    function removeFromInteractables(mesh) {
+      const i = interactables.indexOf(mesh);
+      if (i >= 0) interactables.splice(i, 1);
+    }
+
+    function applyStainVisual(rec) {
+      const k = rec.hits / rec.maxHits;
+      rec.mesh.material.opacity = 0.22 + k * 0.7;
+    }
+
+    function removeStain(rec) {
+      if (highlighted === rec.mesh) clearHighlight();
+      scene.remove(rec.mesh);
+      rec.mesh.geometry.dispose();
+      rec.mesh.material.dispose();
+      removeFromInteractables(rec.mesh);
+      const i = stains.indexOf(rec);
+      if (i >= 0) stains.splice(i, 1);
+    }
+
+    function smearWorse(rec) {
+      rec.hits = Math.min(rec.hits + 1, 6);
+      rec.maxHits = Math.max(rec.maxHits, rec.hits);
+      rec.mesh.scale.x *= 1.12;
+      rec.mesh.scale.y *= 1.12;
+      applyStainVisual(rec);
+
+      // Extra blotch nearby — the dirty mop spreads the mess
+      if (stains.length < MAX_STAINS && Math.random() < 0.75) {
+        const p = rec.mesh.position;
+        createStain(
+          p.x + (Math.random() - 0.5) * 1.4,
+          p.z + (Math.random() - 0.5) * 1.4,
+          { opacity: 0.7, hits: STAIN_HITS }
+        );
+      }
+    }
+
+    function mopStain(rec) {
+      const pos = new THREE.Vector3();
+      rec.mesh.getWorldPosition(pos);
+
+      if (mopDirt >= MOP_CAPACITY) {
+        smearWorse(rec);
+        swipeT = 0.22;
+        sfx("smear");
+        spawnBurst(pos, 0x6b0808, 7);
+        toast("The mop is filthy. You just smeared it.");
+        return;
+      }
+
+      rec.hits -= 1;
+      mopDirt += 1;
+      completedWork += 1;
+      swipeT = 0.22;
+      applyStainVisual(rec);
+      sfx("mop");
+      spawnBurst(pos, 0xb01a1a, 7);
+
+      if (rec.hits <= 0) {
+        removeStain(rec);
+        toast(mopDirt >= MOP_CAPACITY ? "Stain gone. Mop is spent — rinse it." : "Stain scrubbed away.");
+      } else if (mopDirt >= MOP_CAPACITY) {
+        toast("Fading. Mop is now saturated.");
+      }
+    }
+
+    function rinseMop() {
+      if (bucketHeld) {
+        toast("Set the bucket down first.");
+        return;
+      }
+      if (mopDirt <= 0) {
+        toast("Mop is already clean.");
+        return;
+      }
+      mopDirt = 0;
+      bucketDirty = true;
+      bucketMat.color.setHex(bucketDirtyColor);
+      waterMat.color.setHex(0x5a4a22);
+      swipeT = 0.18;
+      sfx("rinse");
+      spawnBurst(BUCKET_POS.clone().setY(0.35), 0x5a4a22, 6);
+      toast("Mop rinsed. The bucket water is disgusting now.");
+    }
+
+    function pickUpTrash(mesh) {
+      if (containerHeld) {
+        addTrashToContainer(mesh);
+        return;
+      }
+      if (handsFull()) {
+        toast("Your hands are full.");
+        return;
+      }
+      if (highlighted === mesh) clearHighlight();
+      const idx = trash.indexOf(mesh);
+      if (idx >= 0) trash.splice(idx, 1);
+      removeFromInteractables(mesh);
+
+      const p = new THREE.Vector3();
+      mesh.getWorldPosition(p);
+      scene.remove(mesh);
+
+      mesh.position.set(0, 0, 0);
+      mesh.rotation.set(0.3, 0.4, 0.1);
+      holdAnchor.add(mesh);
+      heldTrash = mesh;
+      sfx("pickup");
+      spawnBurst(p, 0x4caf50, 7);
+      toast("Picked up debris.");
+    }
+
+    function dumpAtIncinerator() {
+      const mouth = new THREE.Vector3(-16.2, 1.6, -16.2);
+      if (heldTrash) {
+        holdAnchor.remove(heldTrash);
+        heldTrash.geometry.dispose();
+        heldTrash.material.dispose();
+        heldTrash = null;
+        completedWork += 1;
+        sfx("dump");
+        spawnBurst(mouth, 0xff6a00, 7);
+        toast("Incinerated.");
+        return;
+      }
+      if (containerHeld) {
+        if (containerLoad <= 0) {
+          toast("Bin is empty.");
+          return;
+        }
+        completedWork += containerLoad;
+        containerLoad = 0;
+        refreshContainerFill();
+        sfx("dump");
+        spawnBurst(mouth, 0xff6a00, 7);
+        toast("Bin emptied into the incinerator.");
+        return;
+      }
+      if (bucketHeld) {
+        toast("Do not put the bucket in there.");
+        return;
+      }
+      toast("Carry trash or a filled bin over here.");
+    }
+
+    function dirtyMopOnFloor(point) {
+      if (stains.length >= MAX_STAINS) {
+        toast("There is already blood everywhere.");
+        return;
+      }
+      createStain(point.x, point.z, { opacity: 0.65, hits: STAIN_HITS });
+      swipeT = 0.22;
+      sfx("smear");
+      spawnBurst(point, 0x6b0808, 7);
+      toast("Nice. Now there is a new stain.");
+    }
+
+    function interact() {
+      if (!controls.isLocked || clickCooldown > 0) return;
+      clickCooldown = CLICK_COOLDOWN;
+
+      const hit = lookTarget;
+      const kind = hit && hit.kind;
+
+      if (kind === "machine") {
+        activateMachine();
+        return;
+      }
+      if (kind === "radio") {
+        toggleRadio();
+        return;
+      }
+
+      if (tool === "mop") {
+        if (kind === "stain") {
+          mopStain(hit.rec);
+          return;
+        }
+        if (kind === "bucket") {
+          rinseMop();
+          return;
+        }
+        if (kind === "trash") {
+          toast("Use your hands for trash. Key 2.");
+          return;
+        }
+        if (kind === "incinerator") {
+          toast("The incinerator is for trash, not the mop.");
+          return;
+        }
+        if (kind === "container") {
+          toast("Use your hands for the bin. Key 2.");
+          return;
+        }
+        if (mopDirt >= MOP_CAPACITY && kind === "floor" && hit.point) {
+          dirtyMopOnFloor(hit.point);
+          return;
+        }
+        return;
+      }
+
+      // Hands
+      if (kind === "trash") {
+        pickUpTrash(hit.mesh);
+        return;
+      }
+      if (kind === "container") {
+        if (heldTrash) {
+          addTrashToContainer(heldTrash);
+          return;
+        }
+        pickUpContainer();
+        return;
+      }
+      if (kind === "incinerator") {
+        dumpAtIncinerator();
+        return;
+      }
+      if (kind === "stain") {
+        toast("That needs the mop. Key 1.");
+        return;
+      }
+      if (kind === "bucket") {
+        pickUpBucket();
+        return;
+      }
+      if (kind === "floor" && handsFull() && hit.point) {
+        dropHeldItem(validPlacePoint(hit.point.x, hit.point.z));
+      }
+    }
+
+    function updateRaycast() {
+      raycaster.setFromCamera(ndcCenter, camera);
+      raycaster.far = INTERACT_DIST;
+
+      const hits = raycaster.intersectObjects(interactables, false);
+      if (hits.length > 0) {
+        const obj = hits[0].object;
+        const kind = obj.userData.kind;
+        lookTarget = { kind, mesh: obj, rec: obj.userData.rec, point: hits[0].point };
+        highlight(obj);
+        crosshair.classList.add("hot");
+
+        if (kind === "stain") {
+          setPrompt(tool === "mop"
+            ? (mopDirt >= MOP_CAPACITY ? "Dirty mop — click will smear this" : "Click to mop stain")
+            : "Equip mop (1) to clean this");
+        } else if (kind === "trash") {
+          if (tool !== "hands") setPrompt("Equip hands (2) to pick this up");
+          else if (containerHeld) setPrompt("Click to toss trash into your bin");
+          else setPrompt("Click to pick up trash");
+        } else if (kind === "bucket") {
+          setPrompt(tool === "mop"
+            ? "Click to rinse mop"
+            : (bucketHeld ? "" : "Click to pick up bucket"));
+        } else if (kind === "incinerator") {
+          if (tool !== "hands") setPrompt("Hands: dump trash or empty the bin");
+          else if (heldTrash) setPrompt("Click to incinerate trash");
+          else if (containerHeld) setPrompt("Click to empty bin");
+          else setPrompt("Dump trash or a filled bin here");
+        } else if (kind === "machine") {
+          setPrompt(worldContainer ? "Bin already dispensed" : "Click to dispense a bin");
+        } else if (kind === "container") {
+          if (tool !== "hands") setPrompt("Equip hands (2) for the bin");
+          else if (heldTrash) setPrompt("Click to put trash in the bin");
+          else setPrompt("Click to pick up bin");
+        } else if (kind === "radio") {
+          setPrompt(radioOn ? "Click to turn the radio off" : "Click to play the station");
+        } else {
+          setPrompt("");
+        }
+        return;
+      }
+
+      // Floor: place carried items, or smear with a filthy mop
+      raycaster.far = INTERACT_DIST;
+      const floorHits = raycaster.intersectObject(floor, false);
+      if (floorHits.length > 0) {
+        if (tool === "hands" && handsFull()) {
+          lookTarget = { kind: "floor", point: floorHits[0].point };
+          clearHighlight();
+          crosshair.classList.add("hot");
+          if (bucketHeld) setPrompt("Click to set the bucket down");
+          else if (containerHeld) setPrompt("Click to set the bin down");
+          else setPrompt("Click to set debris down");
+          return;
+        }
+        if (mopDirt >= MOP_CAPACITY && tool === "mop") {
+          lookTarget = { kind: "floor", point: floorHits[0].point };
+          clearHighlight();
+          crosshair.classList.add("hot");
+          setPrompt("Dirty mop — click floor to smear more blood");
+          return;
+        }
+      }
+
+      lookTarget = null;
+      clearHighlight();
+      crosshair.classList.remove("hot");
+      setPrompt("");
+    }
+
+    // =========================================================================
+    // Bloody shoes — stepping in a stain tracks mop-able footprints
+    // =========================================================================
+    function stainUnderfoot(x, z) {
+      for (const s of stains) {
+        if (s.footprint) continue;
+        const geo = s.mesh.geometry;
+        const hw = ((geo.parameters && geo.parameters.width) || 0.6) * s.mesh.scale.x * 0.5;
+        const hh = ((geo.parameters && geo.parameters.height) || 0.5) * s.mesh.scale.y * 0.5;
+        const rad = Math.max(hw, hh) * 0.7;
+        if (Math.hypot(s.mesh.position.x - x, s.mesh.position.z - z) < rad + 0.18) {
+          return s;
+        }
+      }
+      return null;
+    }
+
+    function dropFootprint(x, z, heading) {
+      if (stains.length >= MAX_STAINS) return;
+      if (tooCloseToProps(x, z) || insideProp(x, z, 0.4)) return;
+      const side = footSide;
+      footSide *= -1;
+      const px = x + Math.cos(heading) * 0.09 * side;
+      const pz = z + Math.sin(heading) * 0.09 * side;
+      createStain(px, pz, {
+        w: 0.15 + Math.random() * 0.05,
+        h: 0.09 + Math.random() * 0.03,
+        color: 0x7a1010,
+        opacity: 0.58,
+        hits: STAIN_HITS,
+        footprint: true,
+        force: true,
+        rot: heading
+      });
+    }
+
+    function updateShoes(px, pz, moved) {
+      const onBlood = !!stainUnderfoot(px, pz);
+      if (onBlood) {
+        if (!shoesBloody) toast("Blood on your shoes.");
+        shoesBloody = true;
+        footprintsLeft = FOOTPRINTS_TO_CLEAN;
+        footCarry = 0;
+        return;
+      }
+      if (!shoesBloody || moved < 1e-5) return;
+
+      footCarry += moved;
+      if (footCarry < FOOTPRINT_SPACING) return;
+      footCarry = 0;
+
+      const heading = Math.atan2(velocity.x, velocity.z);
+      dropFootprint(px, pz, heading);
+      footprintsLeft -= 1;
+      if (footprintsLeft <= 0) {
+        shoesBloody = false;
+        footprintsLeft = 0;
+        toast("Shoes walked themselves clean.");
+      }
+    }
+
+    // =========================================================================
+    // Movement + collisions  (world-space velocity, hard axis stops)
+    // =========================================================================
+    function updateMovement(dt) {
+      const damping = Math.exp(-10 * dt);
+      velocity.x *= damping;
+      velocity.z *= damping;
+
+      const pos = controls.object.position;
+      const startX = pos.x;
+      const startZ = pos.z;
+
+      if (controls.isLocked) {
+        const strafe = Number(keys.d) - Number(keys.a);
+        const walk = Number(keys.w) - Number(keys.s);
+
+        const cam = controls.object;
+        tmp.setFromMatrixColumn(cam.matrix, 0);
+        tmp.y = 0;
+        if (tmp.lengthSq() < 1e-8) tmp.set(1, 0, 0);
+        else tmp.normalize();
+        const rx = tmp.x;
+        const rz = tmp.z;
+        const fx = rz;
+        const fz = -rx;
+
+        let wishX = 0;
+        let wishZ = 0;
+        if (strafe || walk) {
+          const len = Math.hypot(strafe, walk);
+          wishX = (rx * strafe + fx * walk) / len;
+          wishZ = (rz * strafe + fz * walk) / len;
+          const accel = WALK_SPEED * 8;
+          velocity.x += wishX * accel * dt;
+          velocity.z += wishZ * accel * dt;
+        }
+
+        const laden = heldTrash || bucketHeld || containerHeld;
+        const max = WALK_SPEED * (laden ? 0.86 : 1);
+        const spd = Math.hypot(velocity.x, velocity.z);
+        if (spd > max) {
+          velocity.x = (velocity.x / spd) * max;
+          velocity.z = (velocity.z / spd) * max;
+        }
+
+        const dx = velocity.x * dt;
+        const dz = velocity.z * dt;
+
+        // Collision on X kills world velocity.x. Collision on Z kills world velocity.z.
+        if (Math.abs(dx) > 1e-8) {
+          if (!blockedAt(startX + dx, startZ)) pos.x = startX + dx;
+          else velocity.x = 0;
+        }
+        if (Math.abs(dz) > 1e-8) {
+          if (!blockedAt(pos.x, startZ + dz)) pos.z = startZ + dz;
+          else velocity.z = 0;
+        }
+      }
+
+      if (Math.hypot(velocity.x, velocity.z) < VEL_STOP) {
+        velocity.x = 0;
+        velocity.z = 0;
+      }
+
+      // No leftover bob while standing still or jammed into a wall
+      if (velocity.x === 0 && velocity.z === 0) {
+        bob = 0;
+      } else {
+        bob += dt * 11;
+      }
+
+      const moved = Math.hypot(pos.x - startX, pos.z - startZ);
+      updateShoes(pos.x, pos.z, moved);
+
+      pos.y = PLAYER_HEIGHT + Math.sin(bob) * 0.045;
+    }
+
+    function updateViewmodels(dt) {
+      if (swipeT > 0) swipeT = Math.max(0, swipeT - dt);
+      const swipe = Math.sin((swipeT / 0.22) * Math.PI) * 0.55;
+
+      mopView.rotation.x = swipe;
+      mopView.position.y = -0.22 + Math.sin(bob) * 0.02;
+      handsView.position.y = Math.sin(bob) * 0.015;
+      holdAnchor.rotation.z = Math.sin(bob * 0.5) * 0.04;
+    }
+
+    // =========================================================================
+    // Input
+    // =========================================================================
+    overlay.addEventListener("click", () => controls.lock());
+
+    controls.addEventListener("lock", () => {
+      overlay.classList.add("hidden");
+      ensureAudio();
+    });
+
+    controls.addEventListener("unlock", () => {
+      overlay.classList.remove("hidden");
+      document.querySelector("#panel .go").textContent = "CLICK TO RESUME";
+    });
+
+    document.addEventListener("mousedown", (e) => {
+      if (e.button === 0) interact();
+    });
+
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    document.addEventListener("keydown", (e) => {
+      const k = e.key.toLowerCase();
+      if (k === "w") keys.w = true;
+      if (k === "a") keys.a = true;
+      if (k === "s") keys.s = true;
+      if (k === "d") keys.d = true;
+      if (e.key === "1") setTool("mop");
+      if (e.key === "2") setTool("hands");
+      if (["space", " "].includes(k)) e.preventDefault();
+    });
+
+    document.addEventListener("keyup", (e) => {
+      const k = e.key.toLowerCase();
+      if (k === "w") keys.w = false;
+      if (k === "a") keys.a = false;
+      if (k === "s") keys.s = false;
+      if (k === "d") keys.d = false;
+    });
+
+    // Keep the world filling the window
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // =========================================================================
+    // Main loop
+    // =========================================================================
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const dt = Math.min(clock.getDelta(), 0.05);
+      if (clickCooldown > 0) clickCooldown -= dt;
+      if (toastTimer > 0) {
+        toastTimer -= dt;
+        if (toastTimer <= 0) toastEl.classList.remove("show");
+      }
+
+      updateMovement(dt);
+      updateViewmodels(dt);
+      updateContainerAnim(dt);
+      updateParticles(dt);
+      updateRadio();
+      updateRaycast();
+      updateHUD();
+
+      renderer.render(scene, camera);
+    }
+
+    updateHUD();
+    animate();
+  </script>
+</body>
+</html>

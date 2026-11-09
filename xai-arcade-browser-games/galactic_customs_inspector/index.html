@@ -1,0 +1,2953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galactic Customs Inspector — Outpost K-7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Share+Tech+Mono&family=Special+Elite&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --metal: #2a261f;
+      --metal-dark: #16140f;
+      --metal-light: #3d382e;
+      --desk: #5a3d2a;
+      --desk-dark: #3a2518;
+      --lamp: #f0c878;
+      --paper: #e7d9bc;
+      --paper-dark: #cbb896;
+      --ink: #1b1710;
+      --amber: #e8b44a;
+      --approve: #2f6b32;
+      --approve-ink: #1e4d22;
+      --deny: #8a2424;
+      --deny-ink: #5c1212;
+      --glass: #6d8a62;
+      --terminal: #c9a227;
+      --panel: #1c1a16;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      background: #080706;
+      color: #e8e0d0;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    button { font-family: inherit; cursor: pointer; border: none; }
+    button:disabled { cursor: default; opacity: 0.45; }
+
+    input, textarea {
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    #app {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* ========== SCREENS ========== */
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: none;
+      z-index: 40;
+    }
+    .screen.is-on { display: flex; }
+
+    .screen-fill {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 20%, #2a2418 0%, #0c0b09 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 3px);
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 12% 22%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 28% 68%, #ddd 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 66% 18%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 81% 44%, #bbb 50%, transparent 51%),
+        radial-gradient(1px 1px at 44% 82%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 91% 76%, #ccc 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 8% 88%, #fff 50%, transparent 51%);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      margin: auto;
+      width: min(560px, 92vw);
+      padding: 36px 40px 32px;
+      background: linear-gradient(180deg, #2c281f 0%, #1a1813 100%);
+      border: 1px solid #5a5038;
+      box-shadow:
+        0 0 0 4px #14120e,
+        0 24px 60px rgba(0,0,0,0.65),
+        inset 0 1px 0 rgba(255,220,140,0.12);
+      text-align: center;
+    }
+
+    .seal {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 14px;
+    }
+
+    .kicker {
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      letter-spacing: 0.28em;
+      font-size: 11px;
+      color: var(--amber);
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-family: "Special Elite", "Courier New", monospace;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.15;
+      color: #f3ead4;
+      margin: 10px 0 8px;
+    }
+
+    .sub {
+      font-size: 13px;
+      color: #b6aa90;
+      line-height: 1.55;
+      margin: 10px 0 22px;
+    }
+
+    .btn-main {
+      display: inline-block;
+      padding: 12px 28px;
+      background: linear-gradient(180deg, #c9a227, #8a6b12);
+      color: #1a1408;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 13px;
+      border: 1px solid #f0d978;
+      box-shadow: 0 4px 0 #4a3808, 0 8px 16px rgba(0,0,0,0.4);
+    }
+    .btn-main:hover { filter: brightness(1.08); }
+    .btn-main:active { transform: translateY(2px); box-shadow: 0 2px 0 #4a3808; }
+
+    .btn-ghost {
+      background: transparent;
+      color: #cfc3a6;
+      border: 1px solid #6a6048;
+      padding: 10px 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    .btn-ghost:hover { border-color: var(--amber); color: #fff; }
+
+    .ledger {
+      text-align: left;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 13px;
+      color: #d8cdb2;
+      background: #12100c;
+      border: 1px solid #3a3428;
+      padding: 14px 16px;
+      margin: 16px 0 20px;
+    }
+    .ledger row, .ledger .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px dashed #2c281f;
+    }
+    .ledger .row:last-child { border-bottom: none; font-weight: 700; color: var(--amber); }
+
+    .brief-list {
+      text-align: left;
+      margin: 16px 0 8px;
+      padding: 12px 14px;
+      background: #14120e;
+      border-left: 3px solid var(--amber);
+      font-size: 14px;
+      color: #efe6d2;
+    }
+    .brief-list li { margin: 6px 0 6px 16px; }
+
+    .news {
+      font-family: "Special Elite", "Courier New", monospace;
+      font-size: 13px;
+      color: #c4b694;
+      text-align: left;
+      margin: 10px 0 18px;
+      line-height: 1.5;
+    }
+
+    /* ========== BOOTH ========== */
+    #screen-booth {
+      flex-direction: column;
+      background: var(--metal-dark);
+    }
+
+    #topbar {
+      height: 34px;
+      flex: 0 0 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      background: linear-gradient(180deg, #2e2a22, #1a1814);
+      border-bottom: 1px solid #4a4334;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: #c9b88a;
+      z-index: 5;
+    }
+    #topbar .live { color: #8fef7a; }
+    #topbar .live::before {
+      content: "";
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #6fde58;
+      margin-right: 8px;
+      box-shadow: 0 0 8px #6fde58;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse { 50% { opacity: 0.35; } }
+
+    #booth {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    /* LEFT PANEL */
+    #panel {
+      width: 232px;
+      flex: 0 0 232px;
+      background:
+        linear-gradient(180deg, #242018 0%, #16140f 100%);
+      border-right: 2px solid #0c0b09;
+      box-shadow: inset -8px 0 16px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      padding: 14px 14px 12px;
+      z-index: 6;
+    }
+
+    .panel-head {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #3a3428;
+    }
+    .panel-head svg { width: 40px; height: 40px; flex: 0 0 40px; }
+    .panel-head .who { font-size: 10px; letter-spacing: 0.16em; color: var(--amber); text-transform: uppercase; }
+    .panel-head .post { font-size: 12px; color: #efe6d2; font-weight: 600; }
+
+    .stat {
+      background: #0e0d0a;
+      border: 1px solid #3a3428;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+    }
+    .stat label {
+      display: block;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: #8a8068;
+      text-transform: uppercase;
+    }
+    .stat .val {
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 22px;
+      color: var(--terminal);
+      margin-top: 2px;
+    }
+    .stat .val.credits { color: #f0d060; }
+    .stat .val.credits.is-down { color: #ef6a6a; }
+    .stat .val.credits.is-up { color: #7eef7a; }
+    .stat .tiny { font-size: 11px; color: #b6aa90; margin-top: 2px; }
+
+    #btn-rulebook, #btn-mute {
+      width: 100%;
+      padding: 10px 8px;
+      margin-top: 4px;
+      background: linear-gradient(180deg, #3a3428, #241f18);
+      color: #efe6d2;
+      border: 1px solid #6a5c3c;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    #btn-rulebook:hover, #btn-mute:hover { border-color: var(--amber); color: #fff; }
+
+    .bulletin {
+      margin-top: 12px;
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      background: #cfc09a;
+      color: #2a2214;
+      padding: 10px 10px 12px;
+      font-family: "Special Elite", "Courier New", monospace;
+      font-size: 11px;
+      line-height: 1.45;
+      box-shadow: inset 0 0 0 1px #8a7a52, 0 4px 0 #1a140c;
+    }
+    .bulletin h3 {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+      border-bottom: 1px solid #8a7a52;
+      padding-bottom: 4px;
+    }
+    .bulletin ul { padding-left: 14px; }
+    .bulletin li { margin: 4px 0; }
+
+    /* MAIN COLUMN */
+    #stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    /* VIEWPORT */
+    #viewport {
+      flex: 0 0 46%;
+      position: relative;
+      background: #0b0c09;
+      overflow: hidden;
+    }
+
+    .bezel {
+      position: absolute;
+      inset: 10px 16px 0;
+      border: 10px solid #2b2820;
+      border-bottom-width: 18px;
+      border-radius: 6px 6px 2px 2px;
+      box-shadow:
+        0 0 0 2px #0a0907,
+        inset 0 0 0 3px #4a4538,
+        inset 0 0 40px rgba(0,0,0,0.35);
+      overflow: hidden;
+      background: #12160f;
+    }
+
+    .rivet {
+      position: absolute;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #8a8270, #3a362c 70%);
+      z-index: 4;
+    }
+    .rivet.tl { top: 6px; left: 6px; }
+    .rivet.tr { top: 6px; right: 6px; }
+    .rivet.bl { bottom: 8px; left: 6px; }
+    .rivet.br { bottom: 8px; right: 6px; }
+
+    .plaque {
+      position: absolute;
+      top: 8px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      background: #2a261c;
+      color: #c9b88a;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      padding: 3px 10px;
+      border: 1px solid #5a5038;
+    }
+
+    .scene {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 38%, #4e5d3c 0%, #24301c 48%, #10150e 100%);
+    }
+    .scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0 18px, transparent 18px 52px),
+        linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45));
+      pointer-events: none;
+    }
+
+    .horizon {
+      position: absolute;
+      left: 0; right: 0; bottom: 22%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #7a8a5a 20%, #7a8a5a 80%, transparent);
+      opacity: 0.35;
+    }
+
+    .glass {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(160deg, rgba(180,210,170,0.08), transparent 40%, rgba(0,0,0,0.12)),
+        repeating-linear-gradient(180deg, transparent 0 3px, rgba(0,0,0,0.05) 4px);
+      pointer-events: none;
+      z-index: 3;
+    }
+    .glass::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.07), transparent 40%);
+    }
+
+    .counter {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 18%;
+      background: linear-gradient(180deg, #3a3228, #1c1814);
+      border-top: 4px solid #5a4a38;
+      z-index: 2;
+    }
+
+    #alien-stage {
+      position: absolute;
+      left: 50%;
+      bottom: 16%;
+      width: 180px;
+      height: 230px;
+      transform: translateX(140%);
+      transition: transform 0.85s cubic-bezier(.2,.75,.2,1), opacity 0.4s;
+      opacity: 0;
+      z-index: 1;
+    }
+    #alien-stage.is-in { transform: translateX(-50%); opacity: 1; }
+    #alien-stage.is-approve { transform: translateX(-180%); opacity: 0; }
+    #alien-stage.is-deny { transform: translateX(140%); opacity: 0; }
+    #alien-stage.is-quarantine {
+      transform: translateX(-50%) translateY(28%);
+      opacity: 0;
+      filter: sepia(0.8) saturate(2) hue-rotate(5deg);
+    }
+
+    /* CSS alien silhouettes */
+    .alien {
+      position: absolute;
+      inset: 0;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.7));
+      animation: sway 4.2s ease-in-out infinite;
+    }
+    .alien * { position: absolute; background: #0b0c09; }
+    @keyframes sway {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    @keyframes liveBreath {
+      0%, 100% { transform: scale(1, 1); }
+      50% { transform: scale(1.045, 1.07); }
+    }
+    .alien.grey .head,
+    .alien.grey .torso,
+    .alien.brute .head,
+    .alien.brute .torso,
+    .alien.blob .body,
+    .alien.stalk .head,
+    .alien.stalk .torso,
+    .alien.insect .head,
+    .alien.insect .thorax,
+    .alien.insect .abdomen,
+    .alien.ceph .head,
+    .alien.drone .head,
+    .alien.drone .torso,
+    .alien.rick .head,
+    .alien.rick .torso,
+    .alien.arthur .head,
+    .alien.arthur .torso {
+      animation: liveBreath 3.05s ease-in-out infinite;
+      transform-origin: 50% 85%;
+    }
+    .alien.grey .torso,
+    .alien.brute .torso,
+    .alien.stalk .torso,
+    .alien.insect .thorax,
+    .alien.drone .torso,
+    .alien.rick .torso,
+    .alien.arthur .torso { animation-delay: 0.18s; }
+
+    /* GREY */
+    .alien.grey .head {
+      width: 78px; height: 88px; left: 51px; top: 8px;
+      border-radius: 50% 50% 46% 46%;
+    }
+    .alien.grey .eye {
+      background: #0b0c09;
+      width: 18px; height: 26px; top: 38px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 5px #0b0c09, 0 0 0 1px #1a1c14;
+      background: #15180f;
+    }
+    .alien.grey .eye.l { left: 62px; transform: rotate(-8deg); }
+    .alien.grey .eye.r { left: 98px; transform: rotate(8deg); }
+    .alien.grey .neck { width: 18px; height: 22px; left: 81px; top: 90px; }
+    .alien.grey .torso {
+      width: 70px; height: 88px; left: 55px; top: 108px;
+      border-radius: 40% 40% 20% 20%;
+    }
+    .alien.grey .arm {
+      width: 16px; height: 70px; top: 118px; border-radius: 8px;
+    }
+    .alien.grey .arm.l { left: 40px; transform: rotate(12deg); }
+    .alien.grey .arm.r { left: 124px; transform: rotate(-12deg); }
+
+    /* BRUTE */
+    .alien.brute .head {
+      width: 86px; height: 64px; left: 47px; top: 28px;
+      border-radius: 40% 40% 30% 30%;
+    }
+    .alien.brute .horn {
+      width: 14px; height: 34px; top: 4px; border-radius: 6px 6px 0 0;
+    }
+    .alien.brute .horn.l { left: 52px; transform: rotate(-18deg); }
+    .alien.brute .horn.r { left: 114px; transform: rotate(18deg); }
+    .alien.brute .torso {
+      width: 110px; height: 100px; left: 35px; top: 86px;
+      border-radius: 20% 20% 10% 10%;
+    }
+    .alien.brute .arm {
+      width: 26px; height: 80px; top: 100px; border-radius: 10px;
+    }
+    .alien.brute .arm.l { left: 16px; transform: rotate(8deg); }
+    .alien.brute .arm.r { left: 138px; transform: rotate(-8deg); }
+
+    /* BLOB */
+    .alien.blob .body {
+      width: 130px; height: 150px; left: 25px; top: 50px;
+      border-radius: 50% 50% 46% 46%;
+    }
+    .alien.blob .eye {
+      width: 16px; height: 22px; top: 92px; border-radius: 50%;
+      background: #15180f;
+    }
+    .alien.blob .eye.l { left: 68px; }
+    .alien.blob .eye.r { left: 98px; }
+    .alien.blob .blobarm {
+      width: 28px; height: 40px; top: 140px; border-radius: 50%;
+    }
+    .alien.blob .blobarm.l { left: 18px; }
+    .alien.blob .blobarm.r { left: 134px; }
+
+    /* STALK */
+    .alien.stalk .head {
+      width: 40px; height: 48px; left: 70px; top: 0;
+      border-radius: 50%;
+    }
+    .alien.stalk .neck { width: 12px; height: 70px; left: 84px; top: 44px; }
+    .alien.stalk .torso {
+      width: 48px; height: 90px; left: 66px; top: 108px;
+      border-radius: 40%;
+    }
+    .alien.stalk .arm {
+      width: 8px; height: 90px; top: 110px; border-radius: 4px;
+    }
+    .alien.stalk .arm.l { left: 54px; transform: rotate(6deg); }
+    .alien.stalk .arm.r { left: 118px; transform: rotate(-6deg); }
+
+    /* INSECT */
+    .alien.insect .head {
+      width: 56px; height: 44px; left: 62px; top: 28px;
+      border-radius: 50% 50% 40% 40%;
+    }
+    .alien.insect .ant {
+      width: 4px; height: 36px; top: 0; border-radius: 2px;
+    }
+    .alien.insect .ant.l { left: 72px; transform: rotate(-28deg); }
+    .alien.insect .ant.r { left: 104px; transform: rotate(28deg); }
+    .alien.insect .thorax {
+      width: 64px; height: 50px; left: 58px; top: 70px;
+      border-radius: 40%;
+    }
+    .alien.insect .abdomen {
+      width: 50px; height: 80px; left: 65px; top: 112px;
+      border-radius: 50%;
+    }
+    .alien.insect .leg {
+      width: 6px; height: 54px; top: 120px; border-radius: 3px;
+    }
+    .alien.insect .leg.l1 { left: 48px; transform: rotate(22deg); }
+    .alien.insect .leg.l2 { left: 40px; transform: rotate(38deg); }
+    .alien.insect .leg.r1 { left: 126px; transform: rotate(-22deg); }
+    .alien.insect .leg.r2 { left: 134px; transform: rotate(-38deg); }
+
+    /* CEPH */
+    .alien.ceph .head {
+      width: 96px; height: 80px; left: 42px; top: 8px;
+      border-radius: 50% 50% 40% 40%;
+    }
+    .alien.ceph .eye {
+      width: 20px; height: 20px; top: 40px; border-radius: 50%;
+      background: #15180f;
+    }
+    .alien.ceph .eye.l { left: 64px; }
+    .alien.ceph .eye.r { left: 98px; }
+    .alien.ceph .tent {
+      width: 14px; height: 120px; top: 80px; border-radius: 8px;
+    }
+    .alien.ceph .tent.t1 { left: 48px; transform: rotate(8deg); }
+    .alien.ceph .tent.t2 { left: 68px; transform: rotate(2deg); }
+    .alien.ceph .tent.t3 { left: 90px; transform: rotate(-2deg); }
+    .alien.ceph .tent.t4 { left: 112px; transform: rotate(-8deg); }
+    .alien.ceph .tent.t5 { left: 34px; height: 90px; top: 100px; transform: rotate(18deg); }
+    .alien.ceph .tent.t6 { left: 128px; height: 90px; top: 100px; transform: rotate(-18deg); }
+
+    /* DRONE */
+    .alien.drone .head {
+      width: 70px; height: 36px; left: 55px; top: 20px;
+      border-radius: 4px;
+    }
+    .alien.drone .visor {
+      width: 50px; height: 10px; left: 65px; top: 32px;
+      background: #1a2014;
+      border-radius: 2px;
+    }
+    .alien.drone .torso {
+      width: 80px; height: 90px; left: 50px; top: 58px;
+      border-radius: 4px;
+    }
+    .alien.drone .arm {
+      width: 14px; height: 80px; top: 64px; border-radius: 2px;
+    }
+    .alien.drone .arm.l { left: 32px; }
+    .alien.drone .arm.r { left: 134px; }
+    .alien.drone .leg {
+      width: 18px; height: 70px; top: 146px; border-radius: 2px;
+    }
+    .alien.drone .leg.l { left: 62px; }
+    .alien.drone .leg.r { left: 100px; }
+
+    /* RICK */
+    .alien.rick .hair {
+      width: 10px; height: 22px; top: 0; border-radius: 3px;
+    }
+    .alien.rick .hair.h1 { left: 58px; transform: rotate(-28deg); }
+    .alien.rick .hair.h2 { left: 74px; height: 26px; }
+    .alien.rick .hair.h3 { left: 90px; transform: rotate(12deg); }
+    .alien.rick .hair.h4 { left: 108px; transform: rotate(30deg); }
+    .alien.rick .head {
+      width: 70px; height: 62px; left: 55px; top: 18px;
+      border-radius: 46% 46% 40% 40%;
+    }
+    .alien.rick .lab {
+      width: 88px; height: 96px; left: 46px; top: 86px;
+      border-radius: 8px 8px 4px 4px;
+    }
+    .alien.rick .torso {
+      width: 52px; height: 70px; left: 64px; top: 90px;
+      border-radius: 6px;
+    }
+    .alien.rick .arm {
+      width: 14px; height: 74px; top: 96px; border-radius: 6px;
+    }
+    .alien.rick .arm.l { left: 36px; transform: rotate(10deg); }
+    .alien.rick .arm.r { left: 130px; transform: rotate(-10deg); }
+
+    /* ARTHUR */
+    .alien.arthur .head {
+      width: 56px; height: 56px; left: 62px; top: 16px;
+      border-radius: 50%;
+    }
+    .alien.arthur .torso {
+      width: 64px; height: 78px; left: 58px; top: 78px;
+      border-radius: 12px 12px 6px 6px;
+    }
+    .alien.arthur .towel {
+      width: 70px; height: 18px; left: 55px; top: 148px;
+      border-radius: 3px;
+      transform: rotate(-8deg);
+    }
+    .alien.arthur .arm {
+      width: 13px; height: 68px; top: 88px; border-radius: 6px;
+    }
+    .alien.arthur .arm.l { left: 44px; transform: rotate(8deg); }
+    .alien.arthur .arm.r { left: 122px; transform: rotate(-8deg); }
+
+    #dialogue {
+      position: absolute;
+      left: 24px; right: 24px; bottom: 28px;
+      z-index: 6;
+      background: rgba(12, 12, 8, 0.88);
+      border: 1px solid #7a8a5a;
+      color: #dce8c8;
+      padding: 10px 14px 12px;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 15px;
+      min-height: 48px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    #dialogue.is-on { opacity: 1; transform: none; }
+    #dialogue .who {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: #9aab78;
+      margin-bottom: 4px;
+    }
+    #dialogue .cursor {
+      display: inline-block;
+      width: 8px; height: 14px;
+      background: #c8e0a0;
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 0.9s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* DESK */
+    #desk {
+      flex: 1;
+      position: relative;
+      background:
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 7px),
+        linear-gradient(180deg, #6a4730 0%, #4a3020 40%, #3a2418 100%);
+      box-shadow: inset 0 18px 28px rgba(0,0,0,0.35);
+      overflow: hidden;
+      touch-action: none;
+    }
+    #desk::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 55% 20%, rgba(240,200,120,0.18), transparent 60%);
+      pointer-events: none;
+    }
+    #desk::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 18%; right: 18%;
+      height: 10px;
+      background: linear-gradient(180deg, #1a1612, #3a3028);
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      pointer-events: none;
+    }
+
+    .slot-label {
+      position: absolute;
+      top: 16px; left: 50%;
+      transform: translateX(-50%);
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: rgba(255,230,180,0.28);
+      pointer-events: none;
+    }
+
+    #process-timer {
+      position: absolute;
+      left: 160px;
+      right: 200px;
+      top: 10px;
+      z-index: 45;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #process-timer .pt-label {
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: rgba(255,230,180,0.55);
+      flex: 0 0 auto;
+    }
+    #process-timer .pt-track {
+      flex: 1;
+      height: 10px;
+      background: #1a140e;
+      border: 1px solid #5a4a30;
+      overflow: hidden;
+    }
+    #pt-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #3d8a42, #c9a227);
+      transform-origin: left center;
+      transform: scaleX(1);
+    }
+    #pt-fill.is-low { background: linear-gradient(90deg, #c9a227, #a33232); }
+    #pt-fill.is-dead { background: #8a2424; }
+    #pt-secs {
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 14px;
+      color: #f0d060;
+      min-width: 28px;
+      text-align: right;
+    }
+    #pt-secs.is-low { color: #ef6a6a; }
+
+    .desk-item {
+      position: absolute;
+      touch-action: none;
+      cursor: grab;
+      will-change: left, top, transform;
+      -webkit-user-drag: none;
+    }
+    .desk-item.is-lifted {
+      cursor: grabbing;
+      z-index: 30 !important;
+      filter: drop-shadow(16px 22px 16px rgba(0,0,0,0.5));
+    }
+    .desk-item.is-spawning {
+      transition: left 0.62s cubic-bezier(.18,.82,.22,1), top 0.62s cubic-bezier(.18,.82,.22,1),
+                  transform 0.62s cubic-bezier(.18,.82,.22,1), opacity 0.35s;
+    }
+    .desk-item.is-leaving {
+      transition: left 0.55s ease-in, top 0.55s ease-in, opacity 0.45s ease-in, transform 0.55s;
+      pointer-events: none;
+    }
+
+    /* PASSPORT */
+    .passport {
+      width: 214px;
+      height: 318px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.07), transparent 28%),
+        var(--cover, #3a4a6a);
+      border: 1px solid rgba(0,0,0,0.45);
+      border-radius: 3px 10px 3px 3px;
+      box-shadow: 0 8px 0 rgba(0,0,0,0.25), 0 10px 18px rgba(0,0,0,0.28);
+      color: var(--paper);
+      padding: 12px 12px 10px;
+      font-family: "Special Elite", "Courier New", monospace;
+    }
+    .passport .mast {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-align: center;
+      opacity: 0.85;
+    }
+    .passport .ptype {
+      text-align: center;
+      font-size: 16px;
+      letter-spacing: 0.18em;
+      margin: 4px 0 10px;
+    }
+    .passport .row2 {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .passport .photo {
+      width: 62px; height: 78px;
+      background: linear-gradient(180deg, #4a5640, #1c2218);
+      border: 1px solid rgba(255,255,255,0.15);
+      position: relative;
+      overflow: hidden;
+      flex: 0 0 62px;
+    }
+    .mug {
+      position: absolute;
+      left: 50%;
+      bottom: 4px;
+      transform: translateX(-50%);
+      background: #0b0c09;
+    }
+    .mug::before, .mug::after {
+      content: "";
+      position: absolute;
+      background: #0b0c09;
+    }
+    .mug.grey { width: 22px; height: 34px; border-radius: 6px 6px 3px 3px; }
+    .mug.grey::before { width: 30px; height: 26px; left: -4px; top: -18px; border-radius: 50%; }
+    .mug.brute { width: 34px; height: 32px; border-radius: 4px; }
+    .mug.brute::before { width: 26px; height: 18px; left: 4px; top: -14px; border-radius: 40%; }
+    .mug.brute::after { width: 6px; height: 14px; left: 6px; top: -24px; border-radius: 2px; box-shadow: 16px 0 #0b0c09; }
+    .mug.blob { width: 36px; height: 40px; border-radius: 50% 50% 46% 46%; bottom: 6px; }
+    .mug.stalk { width: 16px; height: 40px; border-radius: 6px; }
+    .mug.stalk::before { width: 18px; height: 18px; left: -1px; top: -16px; border-radius: 50%; }
+    .mug.insect { width: 20px; height: 36px; border-radius: 8px; }
+    .mug.insect::before { width: 22px; height: 14px; left: -1px; top: -10px; border-radius: 50%; }
+    .mug.insect::after { width: 2px; height: 12px; left: 4px; top: -20px; box-shadow: 10px 0 #0b0c09; }
+    .mug.ceph { width: 32px; height: 22px; border-radius: 50% 50% 40% 40%; bottom: 22px; }
+    .mug.ceph::after {
+      width: 6px; height: 22px; left: 4px; top: 18px; border-radius: 3px;
+      box-shadow: 8px 2px #0b0c09, 16px 0 #0b0c09, 22px 3px #0b0c09;
+    }
+    .mug.drone { width: 26px; height: 30px; border-radius: 2px; }
+    .mug.drone::before { width: 22px; height: 12px; left: 2px; top: -10px; border-radius: 2px; }
+    .mug.rick { width: 24px; height: 32px; border-radius: 4px; }
+    .mug.rick::before { width: 28px; height: 20px; left: -2px; top: -14px; border-radius: 40%; }
+    .mug.arthur { width: 22px; height: 30px; border-radius: 5px; }
+    .mug.arthur::before { width: 22px; height: 20px; left: 0; top: -16px; border-radius: 50%; }
+    .mug.arthur::after { width: 26px; height: 6px; left: -2px; top: 28px; }
+    .passport .ids { flex: 1; font-size: 9px; line-height: 1.35; opacity: 0.85; }
+    .passport .field { margin-bottom: 5px; }
+    .passport .field label {
+      display: block;
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      opacity: 0.65;
+      margin-bottom: 2px;
+    }
+    .passport .field .data {
+      font-size: 14px;
+      color: #f4ead4;
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      padding-bottom: 2px;
+    }
+    .passport .alias-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      padding: 5px 6px;
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,220,140,0.28);
+    }
+    .passport .alias-row span {
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      opacity: 0.7;
+    }
+    .passport .alias-code {
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 16px !important;
+      letter-spacing: 0.28em !important;
+      color: #f0d060;
+      opacity: 1 !important;
+    }
+    .passport .serial {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+      margin-top: 5px;
+    }
+    .passport .bars {
+      margin-top: 8px;
+      height: 22px;
+      background: repeating-linear-gradient(90deg, #0e0e0c 0 2px, transparent 2px 3px, #0e0e0c 3px 4px, transparent 4px 7px);
+      opacity: 0.55;
+    }
+    .passport .stamp-mark {
+      position: absolute;
+      right: 12px;
+      bottom: 44px;
+      width: 92px;
+      height: 92px;
+      border: 6px solid currentColor;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      transform: rotate(-18deg);
+      opacity: 0.88;
+      pointer-events: none;
+    }
+    .passport .stamp-mark.is-on { display: flex; }
+    .passport .stamp-mark.ok { color: #7dff86; text-shadow: 0 0 8px rgba(80,255,100,0.4); }
+    .passport .stamp-mark.no { color: #ff6b6b; text-shadow: 0 0 8px rgba(255,80,80,0.4); }
+    .passport .stamp-mark.qx {
+      color: #f0d060;
+      border-style: dashed;
+      text-shadow: 0 0 8px rgba(240,200,60,0.5);
+      animation: qxPop 0.45s cubic-bezier(.2,1.4,.3,1) both;
+    }
+    @keyframes qxPop {
+      0% { transform: rotate(-8deg) scale(1.7); opacity: 0; }
+      55% { transform: rotate(-18deg) scale(0.94); opacity: 1; }
+      100% { transform: rotate(-16deg) scale(1); opacity: 0.92; }
+    }
+
+    /* RULEBOOK on desk */
+    #rulebook-book {
+      width: 118px;
+      height: 154px;
+      background:
+        linear-gradient(90deg, #1a2414 0 10px, #3a4a28 10px);
+      border: 1px solid #0e140c;
+      box-shadow: 4px 8px 0 rgba(0,0,0,0.25), 0 10px 16px rgba(0,0,0,0.3);
+      color: #d8e0b8;
+      padding: 16px 10px 10px 18px;
+      font-family: "Special Elite", "Courier New", monospace;
+    }
+    #rulebook-book .spine-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      position: absolute;
+      left: 0; top: 12px; bottom: 12px;
+      width: 12px;
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      color: #c8d090;
+    }
+    #rulebook-book .cover-title {
+      font-size: 12px;
+      line-height: 1.25;
+      margin-top: 20px;
+    }
+    #rulebook-book .cover-sub { font-size: 9px; opacity: 0.7; margin-top: 8px; }
+
+    /* STAMP TRAY */
+    #stamps {
+      position: absolute;
+      right: 18px;
+      top: 14px;
+      width: 168px;
+      padding: 12px 10px 14px;
+      background: linear-gradient(180deg, #3a3228, #241c16);
+      border: 2px solid #1a140e;
+      box-shadow: inset 0 2px 0 rgba(255,220,160,0.08), 0 10px 18px rgba(0,0,0,0.35);
+      z-index: 200;
+    }
+    #stamps h4 {
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: #b8aa88;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .stamp-btn {
+      display: block;
+      width: 100%;
+      height: 42px;
+      margin-bottom: 8px;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: #f4ead4;
+      border: 2px solid rgba(0,0,0,0.5);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.45), inset 0 2px 0 rgba(255,255,255,0.12);
+    }
+    .stamp-btn:last-child { margin-bottom: 0; }
+    .stamp-btn.approve { background: linear-gradient(180deg, #3d8a42, #245828); }
+    .stamp-btn.deny { background: linear-gradient(180deg, #a33232, #6a1818); }
+    .stamp-btn.quarantine {
+      background: linear-gradient(180deg, #d4b02a, #8a7010);
+      color: #1a1408;
+    }
+    .stamp-btn:hover:not(:disabled) { filter: brightness(1.08); }
+    .stamp-btn:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.45);
+    }
+
+    /* ALIAS TERMINAL */
+    #db-terminal {
+      position: absolute;
+      right: 18px;
+      left: auto;
+      bottom: 10px;
+      width: 168px;
+      z-index: 220;
+      background: linear-gradient(180deg, #1a1e16, #0b0d09);
+      border: 2px solid #2a3220;
+      box-shadow:
+        inset 0 0 0 1px #3a4a28,
+        0 8px 16px rgba(0,0,0,0.45);
+      padding: 8px 8px 9px;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      touch-action: auto;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    #db-terminal * { touch-action: manipulation; }
+    #db-terminal .term-head {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: #7a9a58;
+      margin-bottom: 6px;
+    }
+    #db-terminal .term-row {
+      display: flex;
+      gap: 6px;
+    }
+    #term-input {
+      flex: 1;
+      min-width: 0;
+      height: 30px;
+      background: #050604;
+      border: 1px solid #4a6a32;
+      color: #c8ef8a;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0 8px;
+      outline: none;
+      touch-action: auto;
+      user-select: text;
+      -webkit-user-select: text;
+      caret-color: #c8ef8a;
+    }
+    #term-input:focus { border-color: #9ad050; box-shadow: 0 0 0 1px #4a6a32; }
+    #term-input::placeholder { letter-spacing: 0.08em; color: #4a5a38; }
+    #term-search {
+      height: 30px;
+      padding: 0 10px;
+      background: #2a3a1c;
+      color: #d8efb0;
+      border: 1px solid #6a8a40;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+    }
+    #term-search:hover { background: #3a4e24; }
+    #term-output {
+      margin-top: 7px;
+      min-height: 32px;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: #8aaa68;
+      line-height: 1.35;
+    }
+    #term-output.is-clear { color: #7eef7a; }
+    #term-output.is-wanted { color: #ff6b6b; font-weight: 700; font-size: 10px; letter-spacing: 0; }
+    #term-output.is-miss { color: #d4b46a; }
+
+    /* RULEBOOK MODAL */
+    #rulebook-modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 80;
+    }
+    #rulebook-modal.is-on { display: flex; }
+    .book {
+      width: min(640px, 92vw);
+      min-height: 380px;
+      background:
+        linear-gradient(90deg, #d8cba8 0 50%, #eee4c8 50%);
+      color: #2a2214;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: 0 24px 50px rgba(0,0,0,0.6);
+      position: relative;
+      font-family: "Special Elite", "Courier New", monospace;
+    }
+    .book .page { padding: 28px 26px; }
+    .book .page + .page { border-left: 1px solid #c4b48a; }
+    .book h2 { font-size: 16px; margin-bottom: 6px; }
+    .book .muted { font-size: 11px; color: #6a5c40; margin-bottom: 14px; }
+    .book h3 { font-size: 12px; letter-spacing: 0.08em; margin: 12px 0 6px; }
+    .book li { margin: 6px 0 6px 16px; font-size: 13px; line-height: 1.4; }
+    .book .new { background: #f3e08a; padding: 1px 4px; }
+    .book-close {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 28px; height: 28px;
+      background: #2a2214;
+      color: #eee4c8;
+      font-size: 16px;
+    }
+
+    /* FX */
+    #flash {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 90;
+    }
+    #flash.red { background: rgba(180, 20, 20, 0.42); animation: fadeFlash 0.7s ease-out; }
+    #flash.green { background: rgba(40, 140, 50, 0.28); animation: fadeFlash 0.55s ease-out; }
+    #flash.yellow { background: rgba(210, 170, 20, 0.38); animation: fadeFlash 0.7s ease-out; }
+
+    #qx-slam {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 88;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    #qx-slam.is-on { display: flex; }
+    #qx-slam .qx-tape {
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 42px;
+      letter-spacing: 0.28em;
+      font-weight: 700;
+      color: #1a1408;
+      background: repeating-linear-gradient(
+        -18deg,
+        #f0d060 0 16px,
+        #1a1408 16px 28px
+      );
+      padding: 14px 48px;
+      transform: rotate(-8deg) scale(0.4);
+      opacity: 0;
+    }
+    #qx-slam.is-on .qx-tape { animation: qxBanner 0.85s ease-out forwards; }
+    @keyframes qxBanner {
+      0% { transform: rotate(-18deg) scale(1.4); opacity: 0; }
+      28% { transform: rotate(-8deg) scale(1); opacity: 1; }
+      70% { transform: rotate(-8deg) scale(1); opacity: 1; }
+      100% { transform: rotate(-6deg) scale(1.02); opacity: 0; }
+    }
+    @keyframes fadeFlash {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    #booth.is-shake { animation: shake 0.45s linear; }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    #citation {
+      position: absolute;
+      left: 50%;
+      top: 38%;
+      transform: translate(-50%, -40%) rotate(-4deg) scale(0.8);
+      width: 280px;
+      background: #f2e6c4;
+      color: #7a1212;
+      border: 4px double #7a1212;
+      padding: 14px 16px;
+      font-family: "Special Elite", "Courier New", monospace;
+      text-align: center;
+      z-index: 85;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    }
+    #citation.is-on {
+      animation: citeIn 1.6s ease-out forwards;
+    }
+    @keyframes citeIn {
+      0% { opacity: 0; transform: translate(-50%, -60%) rotate(-8deg) scale(0.7); }
+      18% { opacity: 1; transform: translate(-50%, -40%) rotate(-3deg) scale(1); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -36%) rotate(-2deg) scale(1); }
+    }
+    #citation .big { font-size: 22px; letter-spacing: 0.12em; }
+    #citation .why { font-size: 12px; color: #3a2214; margin-top: 8px; line-height: 1.35; }
+
+    #float-credit {
+      position: absolute;
+      left: 108px;
+      top: 226px;
+      font-family: "Share Tech Mono", ui-monospace, monospace;
+      font-size: 22px;
+      font-weight: 700;
+      pointer-events: none;
+      z-index: 70;
+      opacity: 0;
+    }
+    #float-credit.is-on { animation: floatUp 0.9s ease-out forwards; }
+    #float-credit.plus { color: #7eef7a; }
+    #float-credit.minus { color: #ef6a6a; }
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-28px); }
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #8a8068;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 900px) {
+      #panel { width: 180px; flex-basis: 180px; }
+      .passport { width: 190px; height: 290px; }
+      #db-terminal { width: 140px; right: 8px; }
+      #stamps { width: 140px; }
+      #stamps { width: 120px; right: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <section id="screen-title" class="screen is-on">
+      <div class="screen-fill"></div>
+      <div class="stars"></div>
+      <div class="card">
+        <svg class="seal" viewBox="0 0 72 72" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="none" stroke="#e8b44a" stroke-width="2"/>
+          <circle cx="36" cy="36" r="28" fill="none" stroke="#c9a227" stroke-width="1"/>
+          <circle cx="36" cy="36" r="8" fill="#e8b44a"/>
+          <path d="M36 8 L40 28 L36 24 L32 28 Z" fill="#e8b44a"/>
+          <path d="M36 64 L40 44 L36 48 L32 44 Z" fill="#e8b44a"/>
+          <path d="M8 36 L28 40 L24 36 L28 32 Z" fill="#e8b44a"/>
+          <path d="M64 36 L44 40 L48 36 L44 32 Z" fill="#e8b44a"/>
+        </svg>
+        <div class="kicker">Ministry of Interstellar Admission</div>
+        <h1 class="title">Galactic Customs Inspector</h1>
+        <p class="sub">
+          You have been posted to Outpost K-7 on the Orion Corridor.
+          Review each traveler’s papers. Enforce the day’s rules.
+          The Ministry does not pay for mistakes.
+        </p>
+        <button class="btn-main" id="btn-start" type="button">Begin Shift</button>
+        <p class="hint">Drag documents. Compare speech to profession. Query the alias. A / D / Q stamps — not while typing. 25 seconds each.</p>
+      </div>
+    </section>
+
+    <section id="screen-briefing" class="screen">
+      <div class="screen-fill"></div>
+      <div class="card" style="text-align:left;">
+        <div class="kicker" id="brief-kicker">Official Bulletin</div>
+        <h1 class="title" id="brief-title" style="font-size:28px; text-align:left;">Day 1</h1>
+        <p class="news" id="brief-news"></p>
+        <div class="brief-list">
+          <strong>TODAY’S PROTOCOL</strong>
+          <ul id="brief-rules"></ul>
+        </div>
+        <p class="sub" id="brief-note" style="margin-top:8px;"></p>
+        <div style="text-align:center;">
+          <button class="btn-main" id="btn-enter" type="button">Enter Booth</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-booth" class="screen">
+      <header id="topbar">
+        <span>M.I.A.  ·  OUTPOST K-7  ·  WINDOW 4</span>
+        <span id="clock">06:00</span>
+        <span class="live">SHIFT LIVE</span>
+      </header>
+      <div id="booth">
+        <aside id="panel">
+          <div class="panel-head">
+            <svg viewBox="0 0 72 72" aria-hidden="true">
+              <circle cx="36" cy="36" r="34" fill="none" stroke="#e8b44a" stroke-width="3"/>
+              <circle cx="36" cy="36" r="8" fill="#e8b44a"/>
+              <path d="M36 8 L40 28 L36 24 L32 28 Z" fill="#e8b44a"/>
+              <path d="M36 64 L40 44 L36 48 L32 44 Z" fill="#e8b44a"/>
+            </svg>
+            <div>
+              <div class="who">Inspector terminal</div>
+              <div class="post">Outpost K-7</div>
+            </div>
+          </div>
+          <div class="stat">
+            <label>Day</label>
+            <div class="val" id="ui-day">1</div>
+            <div class="tiny" id="ui-date">23 NOV 2286</div>
+          </div>
+          <div class="stat">
+            <label>Credits</label>
+            <div class="val credits" id="ui-credits">10</div>
+          </div>
+          <div class="stat">
+            <label>Travelers</label>
+            <div class="val" id="ui-queue">0 / 5</div>
+            <div class="tiny" id="ui-cites">Citations: 0</div>
+          </div>
+          <button id="btn-rulebook" type="button">Rulebook</button>
+          <button id="btn-mute" type="button">Sound: On</button>
+          <div class="bulletin" id="ui-bulletin"></div>
+        </aside>
+
+        <div id="stage">
+          <div id="viewport">
+            <div class="bezel">
+              <span class="rivet tl"></span><span class="rivet tr"></span>
+              <span class="rivet bl"></span><span class="rivet br"></span>
+              <div class="plaque">INSPECTION WINDOW · K7-04</div>
+              <div class="scene">
+                <div class="horizon"></div>
+                <div id="alien-stage"></div>
+                <div class="counter"></div>
+              </div>
+              <div class="glass"></div>
+              <div id="dialogue">
+                <span class="who">ENTRANT</span>
+                <span id="dialogue-text"></span><span class="cursor"></span>
+              </div>
+            </div>
+          </div>
+
+          <div id="desk">
+            <div class="slot-label">DOCUMENT SLOT</div>
+            <div id="process-timer">
+              <span class="pt-label">PROCESSING TIMER</span>
+              <div class="pt-track"><div id="pt-fill"></div></div>
+              <span id="pt-secs">25</span>
+            </div>
+            <div id="rulebook-book" class="desk-item" style="left:28px; top:48px;">
+              <div class="spine-title">M.I.A.</div>
+              <div class="cover-title">Inspector’s<br/>Manual</div>
+              <div class="cover-sub">Vol. IV · Protocols</div>
+            </div>
+            <div id="stamps">
+              <h4>INK PADS</h4>
+              <button class="stamp-btn approve" id="btn-approve" type="button" disabled>APPROVE</button>
+              <button class="stamp-btn deny" id="btn-deny" type="button" disabled>DENY</button>
+              <button class="stamp-btn quarantine" id="btn-quarantine" type="button" disabled>QUARANTINE</button>
+            </div>
+            <div id="db-terminal">
+              <div class="term-head">M.I.A. ALIAS INDEX · K7</div>
+              <div class="term-row">
+                <input id="term-input" type="text" maxlength="4" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="CODE" />
+                <button id="term-search" type="button">SEARCH</button>
+              </div>
+              <div id="term-output">READY.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-dayend" class="screen">
+      <div class="screen-fill"></div>
+      <div class="card">
+        <div class="kicker">Shift complete</div>
+        <h1 class="title" id="dayend-title">Day Ended</h1>
+        <div class="ledger" id="dayend-ledger"></div>
+        <button class="btn-main" id="btn-nextday" type="button">Next Day</button>
+      </div>
+    </section>
+
+    <section id="screen-gameover" class="screen">
+      <div class="screen-fill"></div>
+      <div class="card">
+        <div class="kicker">Ministry of Interstellar Admission</div>
+        <h1 class="title">Game Over</h1>
+        <p class="sub" id="gameover-copy">
+          Your services are no longer required. Credits exhausted.
+          The booth will be reassigned at 0600.
+        </p>
+        <div class="ledger" id="gameover-ledger"></div>
+        <button class="btn-main" id="btn-retry" type="button">New Assignment</button>
+      </div>
+    </section>
+
+    <section id="screen-victory" class="screen">
+      <div class="screen-fill"></div>
+      <div class="card">
+        <div class="kicker">Commendation</div>
+        <h1 class="title">Tour Complete</h1>
+        <p class="sub">
+          Outpost K-7 remains secure. The Ministry notes your record
+          without comment, which is the highest praise it offers.
+        </p>
+        <div class="ledger" id="victory-ledger"></div>
+        <button class="btn-main" id="btn-again" type="button">Serve Again</button>
+      </div>
+    </section>
+
+    <div id="rulebook-modal">
+      <div class="book">
+        <button class="book-close" id="btn-close-book" type="button" aria-label="Close">×</button>
+        <div class="page">
+          <h2>Inspector’s Manual</h2>
+          <div class="muted">Ministry of Interstellar Admission · Outpost K-7</div>
+          <h3>Standing orders</h3>
+          <ul id="book-standing"></ul>
+        </div>
+        <div class="page">
+          <h3>Today’s additions</h3>
+          <ul id="book-today"></ul>
+          <h3 id="book-wanted-h">Wanted persons</h3>
+          <ul id="book-wanted"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="qx-slam"><div class="qx-tape">QUARANTINE</div></div>
+    <div id="flash"></div>
+    <div id="citation">
+      <div class="big">CITATION</div>
+      <div class="why" id="citation-why"></div>
+    </div>
+    <div id="float-credit"></div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const TRAVELERS_PER_DAY = 5;
+      const START_CREDITS = 10;
+      const PAY = 5;
+      const FINE = 5;
+      const VIOLATION_RATE = 0.4;
+      const SMUGGLER_RATE = 0.25;
+      const DB_WANTED_RATE = 0.3;
+      const SPECIAL_RATE = 0.1;
+      const PROCESS_SECONDS = 25;
+      const EXPIRE_FINE = 10;
+      const START_DATE = { y: 2286, m: 11, d: 23 };
+
+      const ORIGINS = [
+        { id: "earth", name: "Earth", hue: 210, cover: "#2d4a72" },
+        { id: "mars", name: "Mars", hue: 12, cover: "#7a2e22" },
+        { id: "venus", name: "Venus", hue: 38, cover: "#8a6a22" },
+        { id: "titan", name: "Titan", hue: 28, cover: "#8a4a1c" },
+        { id: "europa", name: "Europa", hue: 190, cover: "#2a5a62" },
+        { id: "io", name: "Io", hue: 48, cover: "#7a6a28" },
+        { id: "pluto", name: "Pluto", hue: 270, cover: "#3a2a52" },
+        { id: "kepler", name: "Kepler-442b", hue: 140, cover: "#2a5a38" },
+        { id: "proxima", name: "Proxima b", hue: 310, cover: "#5a2a4a" },
+        { id: "ganymede", name: "Ganymede", hue: 200, cover: "#2a3a4a" },
+        { id: "c137", name: "Dimension C-137", hue: 140, cover: "#1e6a3a" }
+      ];
+
+      const LABOR_WORLDS = ["Earth", "Titan", "Europa"];
+      const SPECIES = ["grey", "brute", "blob", "stalk", "insect", "ceph", "drone"];
+
+      const CIVIL_NAMES = [
+        "Vessa Rynn", "Ilyra Venn", "Jorik Hale", "Mira Solen", "Sera Quill",
+        "Oren Voss", "Nyx Tal", "Kael Drinn", "Luma Pesh", "Tovik Renn",
+        "Ashra Kel", "Bram Yost", "Qira Dunn", "Hesh Varn", "Pella Nox",
+        "Rook Iven", "Yana Crest", "Thea Voss", "Kest Arin", "Drex Kal",
+        "Zyx'thara", "Nohl Ive", "Sama Quor", "Evin Dask",
+        "Anton Silvio", "Kris Molten", "Pauli Gualt", "Draven Mal",
+        "Rube Hagg", "Polar Alem", "Mematt Bas", "Cakir Voss"
+      ];
+
+      const WANTED_POOL = ["Koth Maluun", "Grix Mol", "Vohl Tann"];
+
+      const PROFESSIONS = [
+        {
+          id: "waste",
+          title: "Waste Consultant",
+          labor: true,
+          lines: [
+            "I am returning to cheating my wife. Then the waste union sit-down.",
+            "Waste management. I got a sit-down with the union."
+          ]
+        },
+        {
+          id: "associate",
+          title: "Family Associate",
+          labor: true,
+          lines: [
+            "I'm here to pick up a package for my uncle. Don't ask.",
+            "I got a thing. A movie thing. Very legitimate."
+          ]
+        },
+        {
+          id: "capo",
+          title: "Crew Captain",
+          labor: true,
+          lines: [
+            "Family business. That's all you need to know.",
+            "I'm collecting for the crew. You didn't hear that."
+          ]
+        },
+        {
+          id: "diplomat",
+          title: "Diplomat",
+          labor: false,
+          lines: [
+            "I am on a diplomatic mission.",
+            "I travel under a sealed letter from the Consulate."
+          ]
+        },
+        {
+          id: "gamekeeper",
+          title: "Gamekeeper",
+          labor: true,
+          lines: [
+            "I'm here to check on a creature in the hold. Big one. Gentle, though.",
+            "Just here for the beasts. Don't mind the feathers."
+          ]
+        },
+        {
+          id: "heir",
+          title: "Academy Heir",
+          labor: false,
+          lines: [
+            "My father arranged my transfer to the academy. You will let me through.",
+            "I am not a common laborer. This is a courtesy visit."
+          ]
+        },
+        {
+          id: "scholar",
+          title: "Dark Scholar",
+          labor: false,
+          lines: [
+            "I require access to the restricted archives. Blood status is in order.",
+            "I have come to reclaim what was taken from me."
+          ]
+        },
+        {
+          id: "agent",
+          title: "State Agent",
+          labor: false,
+          lines: [
+            "I'm here on a classified state matter. No more questions.",
+            "This booth is already in my report. Stamp the paper."
+          ]
+        },
+        {
+          id: "bodyguard",
+          title: "Bodyguard",
+          labor: true,
+          lines: [
+            "I accompany my principal. He is already inside.",
+            "I don't talk. I stand where he tells me."
+          ]
+        },
+        {
+          id: "magnate",
+          title: "Export Magnate",
+          labor: false,
+          lines: [
+            "I have a meeting with the livestock exporters.",
+            "Business of the old neighborhood. Sheep, steel, and silence."
+          ]
+        },
+        {
+          id: "merchant",
+          title: "Dock Merchant",
+          labor: true,
+          lines: [
+            "I am here to sell spare coils on the lower quay.",
+            "Just a merchant. Manifest is clean. Mostly."
+          ]
+        },
+        {
+          id: "miner",
+          title: "Ore Miner",
+          labor: true,
+          lines: [
+            "I am here for work in the ore shafts.",
+            "Contract miner. Next rotation starts at dawn."
+          ]
+        },
+        {
+          id: "scientist",
+          title: "Scientist",
+          labor: false,
+          lines: [
+            "Wubba lubba dub dub, just stamp the papers, I need to save Jerry. You know how it works!"
+          ]
+        },
+        {
+          id: "hitchhiker",
+          title: "Hitchhiker",
+          labor: false,
+          lines: [
+            "Don't panic. I have my towel."
+          ]
+        }
+      ];
+
+      const SPECIALS = [
+        {
+          id: "rick",
+          name: "Rick Sanchez",
+          origin: "Dimension C-137",
+          originId: "c137",
+          cover: "#1e6a3a",
+          profession: "Scientist",
+          jobId: "scientist",
+          labor: false,
+          line: "Wubba lubba dub dub, just stamp the papers, I need to save Jerry. You know how it works!",
+          species: "rick"
+        },
+        {
+          id: "arthur",
+          name: "Arthur Dent",
+          origin: "Earth",
+          originId: "earth",
+          cover: "#2d4a72",
+          profession: "Hitchhiker",
+          jobId: "hitchhiker",
+          labor: false,
+          line: "Don't panic. I have my towel.",
+          species: "arthur"
+        }
+      ];
+
+      const DAYS = [
+        {
+          title: "First Shift",
+          news: "The Kepler incident is contained. Borders reopen at dawn. Compare spoken purpose to the listed profession — smugglers lie. Query every alias at the desk terminal.",
+          note: "A correct judgment pays 5 credits. A citation docks 5. WANTED aliases require the yellow QUARANTINE stamp (Q). You have 25 seconds per entrant.",
+          banned: [],
+          wanted: [],
+          forwardValid: false,
+          labor: false
+        },
+        {
+          title: "Red Quarantine",
+          news: "Red Plague confirmed in the Hellas basin. Mars is closed. No Martian origin is to be admitted, expired or otherwise.",
+          note: "Previous standing orders remain in force.",
+          banned: ["Mars"],
+          wanted: [],
+          forwardValid: false,
+          labor: false
+        },
+        {
+          title: "Fugitives",
+          news: "Three inmates walked out of Titan Penitentiary during the dust storm. Check every name against the wanted bulletin.",
+          note: "Wanted persons must be denied even if their papers appear current.",
+          banned: ["Mars"],
+          wanted: ["Koth Maluun", "Grix Mol"],
+          forwardValid: false,
+          labor: false
+        },
+        {
+          title: "Ice Secession",
+          news: "Pluto has declared the Compact void. Plutonian passports are no longer recognized at Union booths.",
+          note: "Mars remains closed. The Titan fugitives are still at large.",
+          banned: ["Mars", "Pluto"],
+          wanted: ["Koth Maluun", "Grix Mol", "Vohl Tann"],
+          forwardValid: false,
+          labor: false
+        },
+        {
+          title: "Forward Validity",
+          news: "A forgery ring is issuing passports that expire before the next cycle. Documents must remain valid through next year.",
+          note: "Expiration in 2286 is no longer sufficient — deny same-year expiry.",
+          banned: ["Mars", "Pluto"],
+          wanted: ["Koth Maluun", "Grix Mol", "Vohl Tann"],
+          forwardValid: true,
+          labor: false
+        },
+        {
+          title: "Labor Decree",
+          news: "Unlicensed crews have been flooding the docks. Labor professions may enter only from Earth, Titan, or Europa.",
+          note: "All prior protocols still apply. Finish the week and the Ministry will close your file.",
+          banned: ["Mars", "Pluto"],
+          wanted: ["Koth Maluun", "Grix Mol", "Vohl Tann"],
+          forwardValid: true,
+          labor: true
+        }
+      ];
+
+      const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+      const state = {
+        day: 1,
+        credits: START_CREDITS,
+        travelerIndex: 0,
+        citations: 0,
+        correct: 0,
+        incorrect: 0,
+        dayCorrect: 0,
+        dayIncorrect: 0,
+        busy: false,
+        muted: false,
+        traveler: null,
+        passportEl: null,
+        drag: null
+      };
+
+      const $ = (id) => document.getElementById(id);
+
+      const els = {};
+      function cacheEls() {
+        [
+          "screen-title","screen-briefing","screen-booth","screen-dayend",
+          "screen-gameover","screen-victory","btn-start","btn-enter","btn-nextday",
+          "btn-retry","btn-again","btn-rulebook","btn-mute","btn-approve","btn-deny",
+          "btn-quarantine","btn-close-book","rulebook-modal","rulebook-book","desk","alien-stage",
+          "dialogue","dialogue-text","ui-day","ui-date","ui-credits","ui-queue",
+          "ui-cites","ui-bulletin","brief-kicker","brief-title","brief-news",
+          "brief-rules","brief-note","dayend-title","dayend-ledger","gameover-copy",
+          "gameover-ledger","victory-ledger","flash","citation","citation-why",
+          "float-credit","clock","booth","book-standing","book-today","book-wanted",
+          "book-wanted-h","db-terminal","term-input","term-search","term-output",
+          "process-timer","pt-fill","pt-secs","qx-slam"
+        ].forEach((id) => { els[id] = $(id); });
+      }
+
+      function showScreen(id) {
+        document.querySelectorAll(".screen").forEach((s) => s.classList.remove("is-on"));
+        $(id).classList.add("is-on");
+        els.flash.className = "";
+        els.citation.classList.remove("is-on");
+        if (els["qx-slam"]) els["qx-slam"].classList.remove("is-on");
+      }
+
+      function todayFor(dayNum) {
+        const d = new Date(START_DATE.y, START_DATE.m - 1, START_DATE.d + (dayNum - 1));
+        return { y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() };
+      }
+
+      function fmtDate(dt) {
+        return dt.d + " " + MONTHS[dt.m - 1] + " " + dt.y;
+      }
+
+      function dateNum(dt) {
+        return dt.y * 10000 + dt.m * 100 + dt.d;
+      }
+
+      function addDays(dt, n) {
+        const d = new Date(dt.y, dt.m - 1, dt.d + n);
+        return { y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() };
+      }
+
+      function rand(a, b) {
+        return a + Math.floor(Math.random() * (b - a + 1));
+      }
+
+      function pick(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      function originByName(name) {
+        return ORIGINS.find((o) => o.name === name) || ORIGINS[0];
+      }
+
+      function dayConfig() {
+        return DAYS[state.day - 1];
+      }
+
+      function rulesFor(dayNum) {
+        const cfg = DAYS[dayNum - 1];
+        const today = todayFor(dayNum);
+        const rules = [
+          {
+            id: "expired",
+            standing: true,
+            text: "All passports must not be expired.",
+            detail: "Expiration date must be on or after " + fmtDate(today) + ".",
+            violates: (t) => dateNum(t.exp) < dateNum(today)
+          },
+          {
+            id: "smuggler",
+            standing: true,
+            text: "Spoken reason must match the passport profession.",
+            detail: "A mismatch means the entrant is smuggling. Deny.",
+            violates: (t) => !!t.smuggler
+          },
+          {
+            id: "alias_wanted",
+            standing: true,
+            text: "Query every alias. WANTED codes must be quarantined.",
+            detail: "Type the 4-character alias into the desk terminal. WANTED requires the yellow Quarantine stamp — do not merely deny.",
+            violates: (t) => !!t.dbWanted
+          }
+        ];
+        if (cfg.banned.includes("Mars")) {
+          rules.push({
+            id: "mars",
+            standing: dayNum > 2,
+            text: "Origin must not be Mars.",
+            detail: "Martian passports are refused under the Red Quarantine.",
+            violates: (t) => t.origin === "Mars"
+          });
+        }
+        if (cfg.wanted.length) {
+          rules.push({
+            id: "wanted",
+            standing: dayNum > 3,
+            text: "Wanted persons must be denied entry.",
+            detail: "Names on the bulletin are to be turned away.",
+            violates: (t) => cfg.wanted.indexOf(t.name) !== -1
+          });
+        }
+        if (cfg.banned.includes("Pluto")) {
+          rules.push({
+            id: "pluto",
+            standing: dayNum > 4,
+            text: "Origin must not be Pluto.",
+            detail: "Plutonian papers are no longer recognized.",
+            violates: (t) => t.origin === "Pluto"
+          });
+        }
+        if (cfg.forwardValid) {
+          rules.push({
+            id: "forward",
+            standing: dayNum > 5,
+            text: "Passports must remain valid through next year.",
+            detail: "Expiration year must be 2287 or later.",
+            violates: (t) => t.exp.y < today.y + 1
+          });
+        }
+        if (cfg.labor) {
+          rules.push({
+            id: "labor",
+            standing: false,
+            text: "Labor professions must originate from Earth, Titan, or Europa.",
+            detail: "Waste, crew, mining, merchant, gamekeeper, and bodyguard work only from labor worlds.",
+            violates: (t) => !!t.labor && LABOR_WORLDS.indexOf(t.origin) === -1
+          });
+        }
+        return rules;
+      }
+
+      function violationsOf(traveler, rules) {
+        return rules.filter((r) => r.violates(traveler));
+      }
+
+      function generateTraveler() {
+        const cfg = dayConfig();
+        const today = todayFor(state.day);
+        let t = Math.random() < SPECIAL_RATE ? makeSpecial(cfg, today) : makeValid(cfg, today);
+        let docRules = rulesFor(state.day).filter((r) =>
+          r.id !== "smuggler" && r.id !== "alias_wanted"
+        );
+        if (t.special) {
+          docRules = docRules.filter((r) => r.id === "expired" || r.id === "forward");
+        }
+        if (Math.random() < VIOLATION_RATE && docRules.length) {
+          applyViolation(t, pick(docRules), cfg, today);
+        }
+        if (!t.special) {
+          assignSpeech(t);
+          t.species = pick(SPECIES);
+        }
+        t.serial = "GX-" + today.y + "-" + String(rand(10000, 99999));
+        t.alias = makeAlias();
+        t.dbWanted = Math.random() < DB_WANTED_RATE;
+        return t;
+      }
+
+      function makeSpecial(cfg, today) {
+        const spec = pick(SPECIALS);
+        let exp;
+        if (cfg.forwardValid) exp = addDays(today, rand(380, 900));
+        else exp = addDays(today, rand(5, 720));
+        return {
+          name: spec.name,
+          origin: spec.origin,
+          originId: spec.originId,
+          cover: spec.cover,
+          jobId: spec.jobId,
+          profession: spec.profession,
+          labor: spec.labor,
+          exp: exp,
+          line: spec.line,
+          smuggler: false,
+          spokenJob: spec.profession,
+          species: spec.species,
+          special: spec.id
+        };
+      }
+
+      function makeAlias() {
+        const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        let s = "";
+        for (let i = 0; i < 4; i++) s += chars.charAt(rand(0, chars.length - 1));
+        return s;
+      }
+
+      function assignSpeech(t) {
+        let job = PROFESSIONS.find((p) => p.id === t.jobId) || pick(PROFESSIONS);
+        t.smuggler = Math.random() < SMUGGLER_RATE;
+        if (t.smuggler) {
+          const other = pick(PROFESSIONS.filter((p) => p.id !== job.id));
+          t.line = pick(other.lines);
+          t.spokenJob = other.title;
+        } else {
+          t.line = pick(job.lines);
+          t.spokenJob = job.title;
+        }
+      }
+
+      function applyJob(t, job) {
+        t.jobId = job.id;
+        t.profession = job.title;
+        t.labor = job.labor;
+      }
+
+      function makeValid(cfg, today) {
+        const banned = cfg.banned;
+        const wanted = cfg.wanted;
+        let origin = pick(ORIGINS.filter((o) => banned.indexOf(o.name) === -1));
+        const job = pick(PROFESSIONS);
+        if (cfg.labor && job.labor) {
+          origin = originByName(pick(LABOR_WORLDS));
+        }
+        let name = pick(CIVIL_NAMES.filter((n) => wanted.indexOf(n) === -1));
+        let exp;
+        if (cfg.forwardValid) {
+          exp = addDays(today, rand(380, 900));
+        } else {
+          exp = addDays(today, rand(5, 720));
+        }
+        return {
+          name: name,
+          origin: origin.name,
+          originId: origin.id,
+          cover: origin.cover,
+          jobId: job.id,
+          profession: job.title,
+          labor: job.labor,
+          exp: exp
+        };
+      }
+
+      function applyViolation(t, rule, cfg, today) {
+        if (rule.id === "expired") {
+          t.exp = addDays(today, rand(-520, -1));
+          return;
+        }
+        if (rule.id === "mars") {
+          t.origin = "Mars";
+          t.originId = "mars";
+          t.cover = originByName("Mars").cover;
+          return;
+        }
+        if (rule.id === "pluto") {
+          t.origin = "Pluto";
+          t.originId = "pluto";
+          t.cover = originByName("Pluto").cover;
+          return;
+        }
+        if (rule.id === "wanted") {
+          t.name = pick(cfg.wanted);
+          return;
+        }
+        if (rule.id === "forward") {
+          const endOfYear = { y: today.y, m: 12, d: 28 };
+          const min = dateNum(today);
+          let candidate = addDays(today, rand(0, 40));
+          if (dateNum(candidate) < min) candidate = today;
+          if (candidate.y !== today.y) candidate = endOfYear;
+          t.exp = candidate;
+          return;
+        }
+        if (rule.id === "labor") {
+          applyJob(t, pick(PROFESSIONS.filter((p) => p.labor)));
+          const opts = ORIGINS.filter((o) =>
+            LABOR_WORLDS.indexOf(o.name) === -1 && cfg.banned.indexOf(o.name) === -1
+          );
+          const o = pick(opts);
+          t.origin = o.name;
+          t.originId = o.id;
+          t.cover = o.cover;
+        }
+      }
+
+      /* ---------- audio ---------- */
+      let audioCtx = null;
+      function ctx() {
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) audioCtx = new AC();
+        }
+        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+        return audioCtx;
+      }
+
+      function tone(freq, dur, type, gain, at) {
+        if (state.muted) return;
+        const c = ctx();
+        if (!c) return;
+        const t0 = c.currentTime + (at || 0);
+        const osc = c.createOscillator();
+        const g = c.createGain();
+        osc.type = type || "square";
+        osc.frequency.setValueAtTime(freq, t0);
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(gain || 0.05, t0 + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        osc.connect(g);
+        g.connect(c.destination);
+        osc.start(t0);
+        osc.stop(t0 + dur + 0.02);
+      }
+
+      function noise(dur, gain) {
+        if (state.muted) return;
+        const c = ctx();
+        if (!c) return;
+        const n = c.createBuffer(1, c.sampleRate * dur, c.sampleRate);
+        const d = n.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+        const src = c.createBufferSource();
+        src.buffer = n;
+        const f = c.createBiquadFilter();
+        f.type = "lowpass";
+        f.frequency.value = 1400;
+        const g = c.createGain();
+        const t0 = c.currentTime;
+        g.gain.setValueAtTime(gain || 0.04, t0);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        src.connect(f);
+        f.connect(g);
+        g.connect(c.destination);
+        src.start();
+      }
+
+      function sfx(kind) {
+        if (kind === "stamp") {
+          noise(0.12, 0.08);
+          tone(90, 0.14, "sine", 0.08);
+        } else if (kind === "paper") {
+          noise(0.18, 0.045);
+        } else if (kind === "ok") {
+          tone(520, 0.1, "square", 0.04);
+          tone(720, 0.14, "square", 0.035, 0.08);
+        } else if (kind === "bad") {
+          tone(140, 0.22, "sawtooth", 0.06);
+          tone(90, 0.3, "square", 0.04, 0.05);
+        } else if (kind === "click") {
+          tone(380, 0.04, "square", 0.03);
+        } else if (kind === "arrive") {
+          tone(220, 0.08, "sine", 0.03);
+        } else if (kind === "term") {
+          tone(640, 0.05, "square", 0.03);
+        } else if (kind === "wanted") {
+          tone(180, 0.16, "sawtooth", 0.05);
+          tone(120, 0.2, "square", 0.04, 0.06);
+        }
+      }
+
+      /* ---------- UI ---------- */
+      function setCreditsDisplay() {
+        els["ui-credits"].textContent = String(state.credits);
+      }
+
+      function flashCredits(dir) {
+        const el = els["ui-credits"];
+        el.classList.remove("is-up", "is-down");
+        void el.offsetWidth;
+        el.classList.add(dir === 1 ? "is-up" : "is-down");
+        setTimeout(() => el.classList.remove("is-up", "is-down"), 700);
+      }
+
+      function floatDelta(n) {
+        const el = els["float-credit"];
+        el.textContent = (n > 0 ? "+" : "") + n + " cr";
+        el.className = n > 0 ? "plus is-on" : "minus is-on";
+        setTimeout(() => { el.className = ""; }, 900);
+      }
+
+      function updatePanel() {
+        const today = todayFor(state.day);
+        els["ui-day"].textContent = String(state.day);
+        els["ui-date"].textContent = fmtDate(today);
+        setCreditsDisplay();
+        const shown = Math.min(TRAVELERS_PER_DAY, state.travelerIndex + (state.traveler ? 1 : 0));
+        els["ui-queue"].textContent = shown + " / " + TRAVELERS_PER_DAY;
+        els["ui-cites"].textContent = "Citations: " + state.citations;
+        renderBulletin();
+      }
+
+      function renderBulletin() {
+        const cfg = dayConfig();
+        const rules = rulesFor(state.day);
+        let html = "<h3>Daily bulletin</h3>";
+        html += "<div>" + cfg.news + "</div>";
+        html += "<h3 style='margin-top:8px'>Enforce</h3><ul>";
+        rules.forEach((r) => { html += "<li>" + r.text + "</li>"; });
+        html += "</ul>";
+        if (cfg.wanted.length) {
+          html += "<h3 style='margin-top:8px'>Wanted</h3><ul>";
+          cfg.wanted.forEach((n) => { html += "<li>" + n + "</li>"; });
+          html += "</ul>";
+        }
+        els["ui-bulletin"].innerHTML = html;
+      }
+
+      function openRulebook() {
+        sfx("paper");
+        const rules = rulesFor(state.day);
+        const cfg = dayConfig();
+        const standing = rules.filter((r) => r.standing || rules.indexOf(r) === 0);
+        const added = rules.filter((r) => !r.standing && rules.indexOf(r) !== 0);
+        els["book-standing"].innerHTML = standing.map((r) =>
+          "<li>" + r.text + "<br/><span style='font-size:11px;color:#6a5c40'>" + r.detail + "</span></li>"
+        ).join("");
+        els["book-today"].innerHTML = added.length
+          ? added.map((r) => "<li><span class='new'>" + r.text + "</span><br/><span style='font-size:11px;color:#6a5c40'>" + r.detail + "</span></li>").join("")
+          : "<li>No new articles today. Standing orders only.</li>";
+        if (cfg.wanted.length) {
+          els["book-wanted-h"].style.display = "";
+          els["book-wanted"].innerHTML = cfg.wanted.map((n) => "<li>" + n + "</li>").join("");
+        } else {
+          els["book-wanted-h"].style.display = "none";
+          els["book-wanted"].innerHTML = "";
+        }
+        els["rulebook-modal"].classList.add("is-on");
+      }
+
+      function closeRulebook() {
+        els["rulebook-modal"].classList.remove("is-on");
+      }
+
+      function fillBriefing() {
+        const cfg = dayConfig();
+        const today = todayFor(state.day);
+        const rules = rulesFor(state.day);
+        els["brief-kicker"].textContent = "Official bulletin · " + fmtDate(today);
+        els["brief-title"].textContent = "Day " + state.day + " — " + cfg.title;
+        els["brief-news"].textContent = cfg.news;
+        els["brief-rules"].innerHTML = rules.map((r) => "<li>" + r.text + "</li>").join("");
+        els["brief-note"].textContent = cfg.note;
+      }
+
+      /* ---------- aliens / dialogue ---------- */
+      const ALIEN_HTML = {
+        grey: '<div class="alien grey"><div class="head"></div><div class="eye l"></div><div class="eye r"></div><div class="neck"></div><div class="torso"></div><div class="arm l"></div><div class="arm r"></div></div>',
+        brute: '<div class="alien brute"><div class="horn l"></div><div class="horn r"></div><div class="head"></div><div class="torso"></div><div class="arm l"></div><div class="arm r"></div></div>',
+        blob: '<div class="alien blob"><div class="body"></div><div class="eye l"></div><div class="eye r"></div><div class="blobarm l"></div><div class="blobarm r"></div></div>',
+        stalk: '<div class="alien stalk"><div class="head"></div><div class="neck"></div><div class="torso"></div><div class="arm l"></div><div class="arm r"></div></div>',
+        insect: '<div class="alien insect"><div class="ant l"></div><div class="ant r"></div><div class="head"></div><div class="thorax"></div><div class="abdomen"></div><div class="leg l1"></div><div class="leg l2"></div><div class="leg r1"></div><div class="leg r2"></div></div>',
+        ceph: '<div class="alien ceph"><div class="head"></div><div class="eye l"></div><div class="eye r"></div><div class="tent t1"></div><div class="tent t2"></div><div class="tent t3"></div><div class="tent t4"></div><div class="tent t5"></div><div class="tent t6"></div></div>',
+        drone: '<div class="alien drone"><div class="head"></div><div class="visor"></div><div class="torso"></div><div class="arm l"></div><div class="arm r"></div><div class="leg l"></div><div class="leg r"></div></div>',
+        rick: '<div class="alien rick"><div class="hair h1"></div><div class="hair h2"></div><div class="hair h3"></div><div class="hair h4"></div><div class="head"></div><div class="lab"></div><div class="torso"></div><div class="arm l"></div><div class="arm r"></div></div>',
+        arthur: '<div class="alien arthur"><div class="head"></div><div class="torso"></div><div class="towel"></div><div class="arm l"></div><div class="arm r"></div></div>'
+      };
+
+      function showAlien(species) {
+        const stage = els["alien-stage"];
+        stage.className = "";
+        stage.innerHTML = ALIEN_HTML[species] || ALIEN_HTML.grey;
+        void stage.offsetWidth;
+        stage.classList.add("is-in");
+      }
+
+      function hideAlien(action) {
+        const stage = els["alien-stage"];
+        stage.classList.remove("is-in");
+        if (action === "quarantine") stage.classList.add("is-quarantine");
+        else if (action === "approve") stage.classList.add("is-approve");
+        else stage.classList.add("is-deny");
+      }
+
+      let typeTimer = 0;
+      let talkNodes = [];
+      let talkStep = 2;
+
+      function talkBeep() {
+        if (state.muted) return;
+        const c = ctx();
+        if (!c) return;
+        const osc = c.createOscillator();
+        const g = c.createGain();
+        const freq = 240 + Math.random() * 520;
+        osc.type = Math.random() < 0.5 ? "square" : "triangle";
+        osc.frequency.setValueAtTime(freq, c.currentTime);
+        g.gain.setValueAtTime(0.0001, c.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.055, c.currentTime + 0.006);
+        g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 0.042);
+        osc.connect(g);
+        g.connect(c.destination);
+        osc.start();
+        osc.stop(c.currentTime + 0.05);
+        talkNodes.push(osc, g);
+        osc.onended = function () {
+          talkNodes = talkNodes.filter((n) => n !== osc && n !== g);
+        };
+      }
+
+      function stopTalk() {
+        talkNodes.forEach((n) => {
+          try { if (n.stop) n.stop(); } catch (err) { /* already stopped */ }
+          try { n.disconnect(); } catch (err) { /* ignore */ }
+        });
+        talkNodes = [];
+      }
+
+      function typeDialogue(text) {
+        const box = els["dialogue"];
+        const node = els["dialogue-text"];
+        box.classList.add("is-on");
+        node.textContent = "";
+        let i = 0;
+        talkStep = Math.random() < 0.5 ? 2 : 3;
+        clearInterval(typeTimer);
+        stopTalk();
+        typeTimer = setInterval(() => {
+          i += 1;
+          node.textContent = text.slice(0, i);
+          if (i % talkStep === 0 && text.charAt(i - 1) !== " ") {
+            talkBeep();
+            talkStep = Math.random() < 0.5 ? 2 : 3;
+          }
+          if (i >= text.length) {
+            clearInterval(typeTimer);
+            typeTimer = 0;
+            stopTalk();
+          }
+        }, 22);
+      }
+
+      function hideDialogue() {
+        clearInterval(typeTimer);
+        typeTimer = 0;
+        stopTalk();
+        els["dialogue"].classList.remove("is-on");
+        els["dialogue-text"].textContent = "";
+      }
+
+      /* ---------- desk items / drag ---------- */
+      let zTop = 10;
+
+      function bindDrag(el, opts) {
+        const item = {
+          el: el,
+          x: opts.x,
+          y: opts.y,
+          w: opts.w,
+          h: opts.h,
+          onClick: opts.onClick || null,
+          dragging: false,
+          moved: false,
+          ready: true,
+          pid: null,
+          sx: 0,
+          sy: 0,
+          ox: 0,
+          oy: 0
+        };
+        place(item);
+        el.addEventListener("pointerdown", (e) => onDown(e, item));
+        el.addEventListener("dragstart", (e) => e.preventDefault());
+        return item;
+      }
+
+      function deskBox() {
+        return els.desk.getBoundingClientRect();
+      }
+
+      function clampItem(item) {
+        const box = deskBox();
+        const maxX = Math.max(0, box.width - item.w);
+        const maxY = Math.max(0, box.height - item.h);
+        item.x = Math.min(maxX, Math.max(0, item.x));
+        item.y = Math.min(maxY, Math.max(0, item.y));
+      }
+
+      function place(item) {
+        item.el.style.left = item.x + "px";
+        item.el.style.top = item.y + "px";
+      }
+
+      function onDown(e, item) {
+        if (e.button !== 0) return;
+        if (e.target.closest("#db-terminal, #stamps, input, textarea, button")) return;
+        if (item.el.classList.contains("passport") && (state.busy || !item.ready)) return;
+        e.preventDefault();
+        e.stopPropagation();
+        item.dragging = true;
+        item.moved = false;
+        item.pid = e.pointerId;
+        item.sx = e.clientX;
+        item.sy = e.clientY;
+        item.ox = item.x;
+        item.oy = item.y;
+        item.el.classList.remove("is-spawning");
+        item.el.style.transition = "none";
+        item.el.style.zIndex = String(++zTop);
+        item.el.classList.add("is-lifted");
+        try { item.el.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        item._move = (ev) => onMove(ev, item);
+        item._up = (ev) => onUp(ev, item);
+        window.addEventListener("pointermove", item._move);
+        window.addEventListener("pointerup", item._up);
+        window.addEventListener("pointercancel", item._up);
+      }
+
+      function onMove(e, item) {
+        if (!item.dragging || e.pointerId !== item.pid) return;
+        e.preventDefault();
+        const dx = e.clientX - item.sx;
+        const dy = e.clientY - item.sy;
+        if (Math.hypot(dx, dy) > 4) item.moved = true;
+        item.x = item.ox + dx;
+        item.y = item.oy + dy;
+        clampItem(item);
+        const tilt = Math.max(-7, Math.min(7, dx * 0.06));
+        item.el.style.left = item.x + "px";
+        item.el.style.top = item.y + "px";
+        item.el.style.transform = "scale(1.045) rotate(" + tilt + "deg)";
+      }
+
+      function unbindDragWindow(item) {
+        if (item._move) window.removeEventListener("pointermove", item._move);
+        if (item._up) {
+          window.removeEventListener("pointerup", item._up);
+          window.removeEventListener("pointercancel", item._up);
+        }
+        item._move = null;
+        item._up = null;
+      }
+
+      function onUp(e, item) {
+        if (!item.dragging || (item.pid !== null && e.pointerId !== item.pid)) return;
+        item.dragging = false;
+        item.el.classList.remove("is-lifted");
+        item.el.style.transform = "";
+        unbindDragWindow(item);
+        try { item.el.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        if (!item.moved && item.onClick) item.onClick();
+      }
+
+      function spawnPassport(traveler) {
+        clearPassport();
+        const el = document.createElement("div");
+        el.className = "desk-item passport is-spawning";
+        el.style.setProperty("--cover", traveler.cover);
+        el.innerHTML =
+          '<div class="mast">GALACTIC UNION</div>' +
+          '<div class="ptype">PASSPORT</div>' +
+          '<div class="row2">' +
+            '<div class="photo"><div class="mug ' + traveler.species + '"></div></div>' +
+            '<div class="ids">ISSUING WORLD<br/>' + traveler.origin.toUpperCase() + "<br/><br/>BEARER<br/>AUTHORIZED</div>" +
+          "</div>" +
+          '<div class="field"><label>NAME</label><div class="data">' + traveler.name + "</div></div>" +
+          '<div class="field"><label>ORIGIN</label><div class="data">' + traveler.origin + "</div></div>" +
+          '<div class="field"><label>PROFESSION</label><div class="data">' + traveler.profession + "</div></div>" +
+          '<div class="field"><label>EXPIRATION DATE</label><div class="data">' + fmtDate(traveler.exp) + "</div></div>" +
+          '<div class="alias-row"><span>ALIAS CODE</span><span class="alias-code">' + traveler.alias + "</span></div>" +
+          '<div class="serial">' + traveler.serial + "</div>" +
+          '<div class="bars"></div>' +
+          '<div class="stamp-mark" id="stamp-mark"></div>';
+
+        const desk = els.desk;
+        const box = desk.getBoundingClientRect();
+        const startX = box.width * 0.38;
+        const startY = -40;
+        const endX = box.width * 0.22;
+        const endY = 36;
+        el.style.left = startX + "px";
+        el.style.top = startY + "px";
+        el.style.opacity = "0";
+        el.style.transform = "rotate(-10deg) translateY(-12px)";
+        desk.appendChild(el);
+
+        requestAnimationFrame(() => {
+          el.style.opacity = "1";
+          el.style.left = endX + "px";
+          el.style.top = endY + "px";
+          el.style.transform = "rotate(-2deg)";
+        });
+
+        const item = {
+          el: el,
+          x: endX,
+          y: endY,
+          w: 214,
+          h: 318,
+          onClick: null,
+          dragging: false,
+          moved: false,
+          ready: false,
+          pid: null,
+          sx: 0, sy: 0, ox: 0, oy: 0
+        };
+
+        let armed = false;
+        const enable = () => {
+          if (armed) return;
+          if (state.passportEl !== el) return;
+          armed = true;
+          item.ready = true;
+          el.classList.remove("is-spawning");
+          el.style.transition = "none";
+          el.style.transform = "";
+          el.addEventListener("pointerdown", (e) => onDown(e, item));
+          el.addEventListener("dragstart", (e) => e.preventDefault());
+          state.busy = false;
+          setStamps(true);
+          startProcessTimer();
+        };
+
+        el.addEventListener("transitionend", function te(ev) {
+          if (ev.propertyName === "left" || ev.propertyName === "top") {
+            el.removeEventListener("transitionend", te);
+            enable();
+          }
+        });
+        setTimeout(enable, 680);
+
+        sfx("paper");
+        state.passportEl = el;
+        state.drag = item;
+      }
+
+      function clearPassport() {
+        if (state.passportEl && state.passportEl.parentNode) {
+          state.passportEl.parentNode.removeChild(state.passportEl);
+        }
+        state.passportEl = null;
+        state.drag = null;
+      }
+
+      function setStamps(on) {
+        els["btn-approve"].disabled = !on;
+        els["btn-deny"].disabled = !on;
+        if (els["btn-quarantine"]) els["btn-quarantine"].disabled = !on;
+      }
+
+      let processTimer = 0;
+      let processEndsAt = 0;
+
+      function clearProcessTimer() {
+        if (processTimer) {
+          clearInterval(processTimer);
+          processTimer = 0;
+        }
+      }
+
+      function updateTimerUI(ratio, msLeft) {
+        const fill = els["pt-fill"];
+        const secs = els["pt-secs"];
+        if (!fill || !secs) return;
+        const r = Math.max(0, Math.min(1, ratio));
+        fill.style.transform = "scaleX(" + r + ")";
+        const left = Math.ceil((msLeft == null ? r * PROCESS_SECONDS * 1000 : msLeft) / 1000);
+        secs.textContent = String(left);
+        const low = r <= 0.32;
+        fill.classList.toggle("is-low", low && r > 0);
+        fill.classList.toggle("is-dead", r <= 0);
+        secs.classList.toggle("is-low", low);
+      }
+
+      function startProcessTimer() {
+        clearProcessTimer();
+        processEndsAt = Date.now() + PROCESS_SECONDS * 1000;
+        updateTimerUI(1, PROCESS_SECONDS * 1000);
+        processTimer = setInterval(function () {
+          const left = Math.max(0, processEndsAt - Date.now());
+          updateTimerUI(left / (PROCESS_SECONDS * 1000), left);
+          if (left <= 0) {
+            clearProcessTimer();
+            onProcessExpired();
+          }
+        }, 50);
+      }
+
+      function onProcessExpired() {
+        if (!state.traveler || !els["screen-booth"].classList.contains("is-on")) return;
+        if (state.busy && !state.passportEl) return;
+        state.busy = true;
+        setStamps(false);
+        closeRulebook();
+        hideDialogue();
+        stopTalk();
+        state.credits = Math.max(0, state.credits - EXPIRE_FINE);
+        state.incorrect += 1;
+        state.dayIncorrect += 1;
+        state.citations += 1;
+        sfx("bad");
+        flashScreen("red");
+        shakeBooth();
+        els["citation-why"].textContent = "PROCESSING EXPIRED. Entrant left the window. −10 credits.";
+        const c = els.citation;
+        c.classList.remove("is-on");
+        void c.offsetWidth;
+        c.classList.add("is-on");
+        setTimeout(() => c.classList.remove("is-on"), 1650);
+        floatDelta(-EXPIRE_FINE);
+        flashCredits(-1);
+        setCreditsDisplay();
+        updatePanel();
+        const dead = state.credits <= 0;
+        setTimeout(() => depart("deny", dead), 700);
+      }
+
+      /* ---------- clock ---------- */
+      function tickClock() {
+        const today = todayFor(state.day);
+        const progress = state.travelerIndex / TRAVELERS_PER_DAY;
+        const minutes = Math.floor(6 * 60 + progress * 11 * 60);
+        const h = String(Math.floor(minutes / 60)).padStart(2, "0");
+        const m = String(minutes % 60).padStart(2, "0");
+        els.clock.textContent = h + ":" + m + "  ·  " + fmtDate(today);
+      }
+
+      /* ---------- flow ---------- */
+      function startGame() {
+        ctx();
+        state.day = 1;
+        state.credits = START_CREDITS;
+        state.travelerIndex = 0;
+        state.citations = 0;
+        state.correct = 0;
+        state.incorrect = 0;
+        state.dayCorrect = 0;
+        state.dayIncorrect = 0;
+        state.busy = false;
+        state.traveler = null;
+        clearProcessTimer();
+        stopTalk();
+        clearPassport();
+        resetTerminal();
+        updateTimerUI(1, PROCESS_SECONDS * 1000);
+        fillBriefing();
+        showScreen("screen-briefing");
+      }
+
+      function enterBooth() {
+        clearProcessTimer();
+        stopTalk();
+        updatePanel();
+        tickClock();
+        showScreen("screen-booth");
+        hideDialogue();
+        els["alien-stage"].className = "";
+        els["alien-stage"].innerHTML = "";
+        state.travelerIndex = 0;
+        state.dayCorrect = 0;
+        state.dayIncorrect = 0;
+        setStamps(false);
+        setTimeout(nextTraveler, 500);
+      }
+
+      function nextTraveler() {
+        if (state.credits <= 0) return gameOver();
+        if (state.travelerIndex >= TRAVELERS_PER_DAY) return endDay();
+        state.busy = true;
+        setStamps(false);
+        clearProcessTimer();
+        hideDialogue();
+        stopTalk();
+        resetTerminal();
+        const t = generateTraveler();
+        state.traveler = t;
+        els["alien-stage"].className = "";
+        requestAnimationFrame(() => showAlien(t.species));
+        sfx("arrive");
+        setTimeout(() => typeDialogue(t.line), 700);
+        setTimeout(() => spawnPassport(t), 1100);
+        updatePanel();
+        tickClock();
+      }
+
+      function expectedAction(traveler) {
+        if (traveler.dbWanted) return "quarantine";
+        const rules = rulesFor(state.day).filter((r) => r.id !== "alias_wanted");
+        const viol = violationsOf(traveler, rules);
+        return viol.length === 0 ? "approve" : "deny";
+      }
+
+      function judge(action) {
+        if (state.busy || !state.traveler || !state.passportEl) return;
+        if (action !== "approve" && action !== "deny" && action !== "quarantine") return;
+        state.busy = true;
+        setStamps(false);
+        clearProcessTimer();
+        closeRulebook();
+        sfx("stamp");
+
+        const rules = rulesFor(state.day).filter((r) => r.id !== "alias_wanted");
+        const viol = violationsOf(state.traveler, rules);
+        const expected = expectedAction(state.traveler);
+        const correct = action === expected;
+
+        const mark = state.passportEl.querySelector(".stamp-mark");
+        if (mark) {
+          if (action === "quarantine") {
+            mark.textContent = "QUARANTINE";
+            mark.className = "stamp-mark is-on qx";
+            playQuarantineFx();
+          } else {
+            mark.textContent = action === "approve" ? "APPROVED" : "DENIED";
+            mark.className = "stamp-mark is-on " + (action === "approve" ? "ok" : "no");
+          }
+        }
+
+        if (correct) {
+          state.credits += PAY;
+          state.correct += 1;
+          state.dayCorrect += 1;
+          sfx("ok");
+          flashScreen(action === "quarantine" ? "yellow" : "green");
+          floatDelta(PAY);
+          flashCredits(1);
+        } else {
+          state.credits = Math.max(0, state.credits - FINE);
+          state.incorrect += 1;
+          state.dayIncorrect += 1;
+          state.citations += 1;
+          sfx("bad");
+          flashScreen("red");
+          shakeBooth();
+          showCitation(action, expected, viol);
+          floatDelta(-FINE);
+          flashCredits(-1);
+        }
+        setCreditsDisplay();
+        updatePanel();
+
+        const dead = state.credits <= 0;
+        setTimeout(() => depart(action, dead), correct ? 700 : 1100);
+      }
+
+      function playQuarantineFx() {
+        const slam = els["qx-slam"];
+        if (!slam) return;
+        slam.classList.remove("is-on");
+        void slam.offsetWidth;
+        slam.classList.add("is-on");
+        setTimeout(() => slam.classList.remove("is-on"), 900);
+      }
+
+      function depart(action, dead) {
+        hideDialogue();
+        stopTalk();
+        clearProcessTimer();
+        hideAlien(action);
+        if (state.passportEl) {
+          const el = state.passportEl;
+          const item = state.drag;
+          el.classList.add("is-leaving");
+          el.style.transition = "";
+          const box = deskBox();
+          let destX = box.width + 20;
+          if (action === "approve") destX = -240;
+          if (action === "quarantine") destX = el.offsetLeft;
+          el.style.left = destX + "px";
+          if (action === "quarantine") el.style.top = (box.height + 20) + "px";
+          el.style.opacity = "0";
+          if (item) {
+            item.x = destX;
+          }
+        }
+        state.travelerIndex += 1;
+        updatePanel();
+        tickClock();
+        setTimeout(() => {
+          clearPassport();
+          if (dead) gameOver();
+          else if (state.travelerIndex >= TRAVELERS_PER_DAY) endDay();
+          else nextTraveler();
+        }, 800);
+      }
+
+      function flashScreen(kind) {
+        const el = els.flash;
+        el.className = kind;
+        void el.offsetWidth;
+        setTimeout(() => { el.className = ""; }, 700);
+      }
+
+      function shakeBooth() {
+        els.booth.classList.remove("is-shake");
+        void els.booth.offsetWidth;
+        els.booth.classList.add("is-shake");
+        setTimeout(() => els.booth.classList.remove("is-shake"), 450);
+      }
+
+      function showCitation(action, expected, viol) {
+        let why;
+        if (expected === "quarantine" && action !== "quarantine") {
+          why = action === "deny"
+            ? "WANTED subject was denied. Quarantine is required."
+            : "WANTED subject was admitted. Quarantine is required.";
+        } else if (action === "quarantine" && expected !== "quarantine") {
+          why = "Non-wanted entrant was quarantined without cause.";
+        } else if (action === "approve" && expected === "deny") {
+          why = viol[0]
+            ? "Protocol broken: " + viol[0].text
+            : "Invalid entrant was admitted.";
+        } else {
+          why = "Valid papers. Entrant was refused without cause.";
+        }
+        els["citation-why"].textContent = why;
+        const c = els.citation;
+        c.classList.remove("is-on");
+        void c.offsetWidth;
+        c.classList.add("is-on");
+        setTimeout(() => c.classList.remove("is-on"), 1650);
+      }
+
+      function endDay() {
+        clearProcessTimer();
+        stopTalk();
+        if (state.day >= DAYS.length) return victory();
+        els["dayend-title"].textContent = "Day " + state.day + " ended";
+        const next = DAYS[state.day];
+        els["dayend-ledger"].innerHTML =
+          row("Travelers processed", String(TRAVELERS_PER_DAY)) +
+          row("Correct judgments", String(state.dayCorrect)) +
+          row("Citations", String(state.dayIncorrect)) +
+          row("Credits on hand", state.credits + " cr") +
+          (next ? row("Tomorrow", next.title) : "");
+        showScreen("screen-dayend");
+      }
+
+      function row(k, v) {
+        return '<div class="row"><span>' + k + "</span><span>" + v + "</span></div>";
+      }
+
+      function advanceDay() {
+        state.day += 1;
+        fillBriefing();
+        showScreen("screen-briefing");
+      }
+
+      function gameOver() {
+        clearProcessTimer();
+        stopTalk();
+        setStamps(false);
+        els["gameover-ledger"].innerHTML =
+          row("Days served", String(state.day)) +
+          row("Final credits", state.credits + " cr") +
+          row("Correct", String(state.correct)) +
+          row("Citations", String(state.citations));
+        showScreen("screen-gameover");
+      }
+
+      function victory() {
+        clearProcessTimer();
+        stopTalk();
+        els["victory-ledger"].innerHTML =
+          row("Days completed", String(DAYS.length)) +
+          row("Credits remaining", state.credits + " cr") +
+          row("Correct judgments", String(state.correct)) +
+          row("Citations", String(state.citations));
+        showScreen("screen-victory");
+      }
+
+      function toggleMute() {
+        state.muted = !state.muted;
+        els["btn-mute"].textContent = state.muted ? "Sound: Off" : "Sound: On";
+        if (!state.muted) sfx("click");
+      }
+
+      function typingInField() {
+        const el = document.activeElement;
+        if (!el) return false;
+        if (el.closest && el.closest("#db-terminal")) return true;
+        const tag = (el.tagName || "").toLowerCase();
+        return tag === "input" || tag === "textarea" || !!el.isContentEditable;
+      }
+
+      function resetTerminal() {
+        if (!els["term-input"]) return;
+        els["term-input"].value = "";
+        const out = els["term-output"];
+        out.textContent = "READY.";
+        out.className = "";
+      }
+
+      function searchAlias() {
+        const raw = (els["term-input"].value || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 4);
+        els["term-input"].value = raw;
+        const out = els["term-output"];
+        out.className = "";
+        if (raw.length !== 4) {
+          out.textContent = "ENTER 4-CHAR ALIAS.";
+          out.className = "is-miss";
+          sfx("click");
+          return;
+        }
+        if (!state.traveler) {
+          out.textContent = "NO ENTRANT AT WINDOW.";
+          out.className = "is-miss";
+          sfx("click");
+          return;
+        }
+        if (raw !== state.traveler.alias) {
+          out.textContent = "NO RECORD FOUND.";
+          out.className = "is-miss";
+          sfx("term");
+          return;
+        }
+        if (state.traveler.dbWanted) {
+          out.textContent = "WANTED - ARREST ON SIGHT";
+          out.className = "is-wanted";
+          sfx("wanted");
+        } else {
+          out.textContent = "CLEARED";
+          out.className = "is-clear";
+          sfx("term");
+        }
+      }
+
+      /* ---------- boot ---------- */
+      function init() {
+        cacheEls();
+        bindDrag(els["rulebook-book"], {
+          x: 28, y: 48, w: 118, h: 154, onClick: openRulebook
+        });
+
+        els["btn-start"].addEventListener("click", startGame);
+        els["btn-enter"].addEventListener("click", enterBooth);
+        els["btn-nextday"].addEventListener("click", advanceDay);
+        els["btn-retry"].addEventListener("click", startGame);
+        els["btn-again"].addEventListener("click", startGame);
+        els["btn-rulebook"].addEventListener("click", openRulebook);
+        els["btn-close-book"].addEventListener("click", closeRulebook);
+        els["rulebook-modal"].addEventListener("click", (e) => {
+          if (e.target === els["rulebook-modal"]) closeRulebook();
+        });
+        els["btn-mute"].addEventListener("click", toggleMute);
+        els["btn-approve"].addEventListener("click", () => judge("approve"));
+        els["btn-deny"].addEventListener("click", () => judge("deny"));
+        els["btn-quarantine"].addEventListener("click", () => judge("quarantine"));
+
+        const term = els["db-terminal"];
+        ["pointerdown", "pointerup", "pointermove", "click"].forEach((ev) => {
+          term.addEventListener(ev, (e) => e.stopPropagation());
+        });
+        els["term-input"].addEventListener("keydown", (e) => {
+          e.stopPropagation();
+          if (e.key === "Enter") {
+            e.preventDefault();
+            searchAlias();
+          }
+        });
+        els["term-input"].addEventListener("keyup", (e) => e.stopPropagation());
+        els["term-input"].addEventListener("keypress", (e) => e.stopPropagation());
+        els["term-input"].addEventListener("input", () => {
+          els["term-input"].value = els["term-input"].value
+            .toUpperCase()
+            .replace(/[^A-Z0-9]/g, "")
+            .slice(0, 4);
+        });
+        els["term-search"].addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          searchAlias();
+        });
+
+        window.addEventListener("keydown", (e) => {
+          if (typingInField()) return;
+          if (e.repeat) return;
+          if (e.key === "Escape") closeRulebook();
+          if (e.key === "r" || e.key === "R") {
+            if (els["rulebook-modal"].classList.contains("is-on")) closeRulebook();
+            else if (els["screen-booth"].classList.contains("is-on")) openRulebook();
+          }
+          if (!els["screen-booth"].classList.contains("is-on")) return;
+          if (els["rulebook-modal"].classList.contains("is-on")) return;
+          if (e.key === "a" || e.key === "A") judge("approve");
+          if (e.key === "d" || e.key === "D") judge("deny");
+          if (e.key === "q" || e.key === "Q") judge("quarantine");
+        });
+
+        window.addEventListener("resize", () => {
+          if (state.drag) {
+            clampItem(state.drag);
+            place(state.drag);
+          }
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>
