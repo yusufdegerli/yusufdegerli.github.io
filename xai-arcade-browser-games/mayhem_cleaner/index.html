@@ -2049,16 +2049,48 @@
     // =========================================================================
     // Input
     // =========================================================================
-    overlay.addEventListener("click", () => controls.lock());
+    // Pointer lock can be refused: on touch devices, in sandboxed iframes, or when
+    // re-requested within ~1 s of pressing Esc. requestPointerLock() returns a promise
+    // in current browsers, so a refusal used to surface as an unhandled rejection and
+    // left the player stuck on this screen with no explanation.
+    const goLabel = document.querySelector("#panel .go");
+    const canLock = "requestPointerLock" in document.body;
+    let lockPending = false;
+
+    function onLockFailed() {
+      lockPending = false;
+      goLabel.textContent = canLock
+        ? "MOUSE CAPTURE WAS BLOCKED — CLICK AGAIN IN A MOMENT"
+        : "THIS GAME NEEDS A MOUSE AND KEYBOARD";
+    }
+
+    function requestLock() {
+      if (controls.isLocked || lockPending) return;
+      if (!canLock) return onLockFailed();
+      lockPending = true;
+      let request;
+      try {
+        request = controls.domElement.requestPointerLock();
+      } catch (err) {
+        return onLockFailed();
+      }
+      // Older browsers return undefined and report failure via "pointerlockerror".
+      Promise.resolve(request).then(() => { lockPending = false; }, onLockFailed);
+    }
+
+    if (!canLock) onLockFailed();
+    overlay.addEventListener("click", requestLock);
+    document.addEventListener("pointerlockerror", onLockFailed);
 
     controls.addEventListener("lock", () => {
+      lockPending = false;
       overlay.classList.add("hidden");
       ensureAudio();
     });
 
     controls.addEventListener("unlock", () => {
       overlay.classList.remove("hidden");
-      document.querySelector("#panel .go").textContent = "CLICK TO RESUME";
+      goLabel.textContent = "CLICK TO RESUME";
     });
 
     document.addEventListener("mousedown", (e) => {
